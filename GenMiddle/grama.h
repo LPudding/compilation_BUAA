@@ -20,7 +20,7 @@ void varState();
 
 int statementClassifer();
 
-void valueTable();
+void valueTable(string funcName);
 
 void returnFuncStatement();
 
@@ -32,7 +32,7 @@ int term(string& name);
 
 int expression(string& name);
 
-void condition();
+void condition(string& condi);
 
 void loopStatement();
 

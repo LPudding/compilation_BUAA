@@ -1,5 +1,4 @@
 #include "includeH.h"
-
 //middle code
 extern middleCodeTable middleTable;
 
@@ -297,15 +296,40 @@ void callFuncSentence(middleCode midCode) {
 }
 
 void pushParaSentence(middleCode midCode) {
-
+	int remain, all;
+	remain = stoi(midCode.op3) >> 16;
+	all = stoi(midCode.op3) << 16 >> 16;
+	loadVarToReg(midCode.op1, 0, "$t1");
+	dispatch(midCode.op3);
+	mips_code << "    sw $t1 -" + to_string((all - remain + 1) << 2) << "($sp)" << endl;
 }
 
 void conditionSentence(middleCode midCode) {
-
+	mips_code << "# " + midCode.op2 + " " + midCode.op1 + " " + midCode.op3 << endl;
+	loadVarToReg(midCode.op2, 0, "$t0");
+	loadVarToReg(midCode.op3, 0, "$t1");
+	mips_code << "    sub $t0 $t0 $t1" << endl;
 }
 
 void conditionJumpSentence(middleCode midCode) {
-
+	if (condi(">=", "BNZ") || condi("<", "BZ")) {
+		mips_code << "    bgez $t0 " + midCode.op1 << endl;
+	}
+	else if (condi(">", "BNZ") || condi("<=", "BZ")) {
+		mips_code << "    bgtz $t0 " + midCode.op1 << endl;
+	}
+	else if (condi("<=", "BNZ") || condi(">", "BZ")) {
+		mips_code << "    blez $t0 " + midCode.op1 << endl;
+	}
+	else if (condi("<", "BNZ") || condi(">=", "BZ")) {
+		mips_code << "    bltz $t0 " + midCode.op1 << endl;
+	}
+	else if (condi("==", "BNZ") || condi("!=", "BZ")) {
+		mips_code << "    beq $t0 $0 " + midCode.op1 << endl;
+	}
+	else if (condi("!=", "BNZ") || condi("==", "BZ")) {
+		mips_code << "    bne $t0 $0 " + midCode.op1 << endl;
+	}
 }
 
 void constDefineSentence(middleCode midCode) {
@@ -351,10 +375,12 @@ void sentence(middleCode midCode) {
 		mips_code << midCode.op1 + ":" << endl;
 	}
 	else if (midCode.Type == "GOTO") {
-		mips_code << "goto " + midCode.op1 << endl;
+		mips_code << "    j " + midCode.op1 << endl;
 	}
 	else if (midCode.Type == "CONDITION") {
 		conditionSentence(midCode);
+	}
+	else if (midCode.Type == "BNZ" || midCode.Type == "BZ") {
 		conditionJumpSentence(midCode);
 	}
 	else if (midCode.Type == "CONST") {

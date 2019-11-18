@@ -1,5 +1,6 @@
 #pragma once
 
+#define condi(x,y) (midCode.op2 == x && midCode.Type == y)
 
 void translate();
 

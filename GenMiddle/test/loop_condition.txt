@@ -1,0 +1,63 @@
+const int const1 = 5,const2 = -1,const3 = 0,const4 = 10086;
+const char const5 = '-', const6 = 'l';
+int var1,var2;
+char var3,var4;
+
+void main() {
+    int var5;
+    char const7;
+    if (const5 == '-') {
+        if (const5 <= 108) {
+            printf("yes1");
+        } else {
+            printf("no1");
+        }
+    } else {
+        printf("no2");
+    }
+    if (const5 >= const6) {
+        printf("yes2");
+    }
+    for (var5 = 0;var5 < const1;var++) {
+         
+    }
+    if (var5 == const1) {
+        printf("yes3");
+    }
+    do {
+        var5 = var5 + 1;
+    } while (var <= 10)
+    if (var5 == 10) {
+        printf("yes4");
+    }
+    while (var5 <= 20) {
+        var5 = var + 3;
+    }
+    if (var5 == 22) {
+        printf("yes5");
+    }
+    if (var5 >= 22) {
+        printf("yes6");
+    }
+    if (var5 <= 22) {
+        printf("yes7");
+    }
+    if (var5 != 22) {
+        
+    }
+    else {
+        printf("yes8);
+    }
+    if (var5 > 22) {
+        
+    }
+    else {
+        printf("yes9);
+    }
+    if (var5 < 22) {
+        
+    }
+    else {
+        printf("yes10);
+    }
+}

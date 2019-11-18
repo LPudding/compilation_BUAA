@@ -1,12 +1,4 @@
 ﻿  grama.cpp
-  translate.cpp
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(39,20): warning C4018: “<”: 有符号/无符号不匹配
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(45,34): warning C4018: “<”: 有符号/无符号不匹配
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(47,24): warning C4018: “<”: 有符号/无符号不匹配
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(64,28): warning C4018: “>=”: 有符号/无符号不匹配
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(83,29): warning C4018: “<”: 有符号/无符号不匹配
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(90,20): warning C4018: “<”: 有符号/无符号不匹配
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(286,29): warning C4018: “<”: 有符号/无符号不匹配
-  正在生成代码...
-D:\senior3-1\编译\代码\MiddleGen\GenMiddle\translate.cpp(379,20): warning C4018: “<”: 有符号/无符号不匹配
-  GenMiddle.vcxproj -> D:\senior3-1\编译\代码\MiddleGen\GenMiddle\Debug\GenMiddle.exe
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\grama.cpp(306,85): warning C4554: “<<”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\grama.cpp(315,86): warning C4554: “<<”: 检查运算符优先级是否存在的可能的错误；使用括号阐明优先级
+  GenMiddle.vcxproj -> D:\senior3-1\compile\code\MiddleGen\GenMiddle\Debug\GenMiddle.exe

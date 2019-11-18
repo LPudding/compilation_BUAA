@@ -285,7 +285,7 @@ int statementClassifer() {
 	return -1;
 }
 
-void valueTable() {
+void valueTable(string funcName) {
 	string ret;
 	int id = watch(), index = 0, type, num, enable = 1;
 	if (lastFuncCallIndex == -1) {
@@ -303,7 +303,7 @@ void valueTable() {
 	}
 	index++;
 	type = expression(ret);
-	middleTable.addDefine("PUSH_PARA", ret, "", "");
+	middleTable.addDefine("PUSH_PARA", ret, funcName, to_string(num << 16 + num - index));
 	if (enable && index <= num && type != sym_table.functionParaType(index))
 		printError('e');
 	id = watch();
@@ -312,7 +312,7 @@ void valueTable() {
 		printWord(getsym());
 		index++;
 		type = expression(ret);
-		middleTable.addDefine("PUSH_PARA", ret, "", "");
+		middleTable.addDefine("PUSH_PARA", ret, funcName, to_string(num << 16 + num - index));
 		if (enable && index <= num && type != sym_table.functionParaType(index))
 			printError('e');
 		id = watch();
@@ -325,7 +325,9 @@ void valueTable() {
 
 void returnFuncStatement() {
 	int id = watch();
+	string funcName;
 	if (id == 0) {//identify
+		funcName = token;
 		lastFuncCallIndex = sym_table.getFunctionIndex();
 		printWord(getsym());
 		middleTable.addDefine("CALL_FUNC", token, "", "");
@@ -335,7 +337,7 @@ void returnFuncStatement() {
 		//fprintf(fc, "id:%d\n", id);
 		if (id == 30) {//(
 			printWord(getsym());
-			valueTable();
+			valueTable(funcName);
 			id = watch();
 			if (id == 31) //)
 				printWord(getsym());
@@ -347,8 +349,10 @@ void returnFuncStatement() {
 
 void noReturnFuncStatement() {
 	int id = watch();
+	string funcName;
 	if (id == 0) {//identify
 		lastFuncCallIndex = sym_table.getFunctionIndex();
+		funcName = token;
 		printWord(getsym());
 		middleTable.addDefine("CALL_FUNC", token, "", "");
 		if (sym_table.checkExist() == NOEXIST)
@@ -356,7 +360,7 @@ void noReturnFuncStatement() {
 		id = watch();
 		if (id == 30) {//(
 			printWord(getsym());
-			valueTable();
+			valueTable(funcName);
 			id = watch();
 			if (id == 31) {
 				printWord(getsym());
@@ -520,7 +524,7 @@ int expression(string& name) {
 	return type;
 }
 
-void condition() {
+void condition(string& condi) {
 	int id, type1, type2 = VOID;
 	string condi1, condi2;
 	type1 = expression(condi1);
@@ -530,9 +534,11 @@ void condition() {
 		printWord(getsym());
 		type2 = expression(condi2);
 		middleTable.addDefine("CONDITION", op, condi1, condi2);
+		condi = op;
 	}
 	else {
 		middleTable.addDefine("CONDITION", "!=", condi1, "0");
+		condi = "!=";
 	}
 	if (type1 != INT)
 		printError('f');
@@ -553,12 +559,13 @@ void loopStatement() {
 		}
 		string label1 = middleTable.genLabel();
 		middleTable.addDefine("LABEL", label1, "", "");
-		condition(); //condition
+		string condi;
+		condition(condi); //condition
 		id = watch();
 		if (id == 31) {// )
 			printWord(getsym());
 			string label2 = middleTable.genLabel();
-			middleTable.addDefine("BZ", label2, "", "");
+			middleTable.addDefine("BZ", label2, condi, "");
 			statement();//statement
 			middleTable.addDefine("GOTO", label1, "", "");
 			middleTable.addDefine("LABEL", label2, "", "");
@@ -581,14 +588,15 @@ void loopStatement() {
 		if (id == 30) {//(
 			printWord(getsym());
 		}
-		condition();
+		string condi;
+		condition(condi);
 		id = watch();
 		if (id == 31) {//)
 			printWord(getsym());
 		}
 		else
 			printError('l');
-		middleTable.addDefine("BZ", label1, "", "");
+		middleTable.addDefine("BNZ", label1, condi, "");
 	}
 	else if (id == 13) {//for
 		printWord(getsym());
@@ -621,8 +629,9 @@ void loopStatement() {
 				string label1 = middleTable.genLabel();
 				string label2 = middleTable.genLabel();
 				middleTable.addDefine("LABEL", label1, "", "");
-				condition();//condition
-				middleTable.addDefine("BZ", label2, "", "");
+				string condi;
+				condition(condi);//condition
+				middleTable.addDefine("BZ", label2, condi, "");
 				id = watch();
 				if (id == 28) {//;
 					printWord(getsym());
@@ -691,7 +700,8 @@ void conditionStatement() {
 	if (id == 30) { // (
 		printWord(getsym());
 	}
-	condition();
+	string condi;
+	condition(condi);
 	id = watch();
 	if (id == 31) { // )
 		printWord(getsym());
@@ -699,7 +709,7 @@ void conditionStatement() {
 	else
 		printError('l');
 	string label1 = middleTable.genLabel();
-	middleTable.addDefine("BZ", label1, "", "");
+	middleTable.addDefine("BZ", label1, condi, "");
 	statement();
 	id = watch();
 	if (id == 10) {
