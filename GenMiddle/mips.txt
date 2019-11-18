@@ -1,0 +1,577 @@
+.data
+_string_ : .asciiz "\n"
+_var_0 : .word 5
+_var_1 : .word -1
+_var_2 : .word 0
+_var_3 : .word 10086
+_var_4 : .byte 45
+_var_5 : .byte 108
+_var_6 : .word 0
+_var_7 : .word 0
+_var_8 : .byte 0
+_var_9 : .byte 0
+.text
+# ADD const1 const2->LRY0
+# load const1->$t0
+    la $t1 _var_0
+    lw $t0 -0($t1)
+# load const2->$t1
+    la $t1 _var_1
+    lw $t1 -0($t1)
+    add $t0 $t0 $t1
+# store $t0->LRY0
+    sw $t0 -8($sp)
+# ADD LRY0 const3->LRY1
+# load LRY0->$t0
+    lw $t0 -8($sp)
+# load const3->$t1
+    la $t1 _var_2
+    lw $t1 -0($t1)
+    add $t0 $t0 $t1
+# store $t0->LRY1
+    sw $t0 -12($sp)
+# ADD LRY1 0->var1
+# load LRY1->$t0
+    lw $t0 -12($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var1
+    la $t1 _var_6
+    sw $t0 -0($t1)
+# print var1
+# load var1->$a0
+    la $t1 _var_6
+    lw $a0 -0($t1)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# ADD const1 const2->LRY2
+# load const1->$t0
+    la $t1 _var_0
+    lw $t0 -0($t1)
+# load const2->$t1
+    la $t1 _var_1
+    lw $t1 -0($t1)
+    add $t0 $t0 $t1
+# store $t0->LRY2
+    sw $t0 -16($sp)
+# ADD LRY2 const3->LRY3
+# load LRY2->$t0
+    lw $t0 -16($sp)
+# load const3->$t1
+    la $t1 _var_2
+    lw $t1 -0($t1)
+    add $t0 $t0 $t1
+# store $t0->LRY3
+    sw $t0 -20($sp)
+# print LRY3
+# load LRY3->$a0
+    lw $a0 -20($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# SUB -const1 const2->LRY4
+# load -const1->$t0
+    la $t1 _var_0
+    lw $t0 -0($t1)
+    sub $t0 $0 $t0
+# load const2->$t1
+    la $t1 _var_1
+    lw $t1 -0($t1)
+    sub $t0 $t0 $t1
+# store $t0->LRY4
+    sw $t0 -24($sp)
+# SUB LRY4 const3->LRY5
+# load LRY4->$t0
+    lw $t0 -24($sp)
+# load const3->$t1
+    la $t1 _var_2
+    lw $t1 -0($t1)
+    sub $t0 $t0 $t1
+# store $t0->LRY5
+    sw $t0 -28($sp)
+# ADD LRY5 0->var2
+# load LRY5->$t0
+    lw $t0 -28($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var2
+    la $t1 _var_7
+    sw $t0 -0($t1)
+# print var2
+# load var2->$a0
+    la $t1 _var_7
+    lw $a0 -0($t1)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# SUB -const1 const2->LRY6
+# load -const1->$t0
+    la $t1 _var_0
+    lw $t0 -0($t1)
+    sub $t0 $0 $t0
+# load const2->$t1
+    la $t1 _var_1
+    lw $t1 -0($t1)
+    sub $t0 $t0 $t1
+# store $t0->LRY6
+    sw $t0 -32($sp)
+# SUB LRY6 const3->LRY7
+# load LRY6->$t0
+    lw $t0 -32($sp)
+# load const3->$t1
+    la $t1 _var_2
+    lw $t1 -0($t1)
+    sub $t0 $t0 $t1
+# store $t0->LRY7
+    sw $t0 -36($sp)
+# print LRY7
+# load LRY7->$a0
+    lw $a0 -36($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# ADD '5' 0->var3
+# load '5'->$t0
+    li $t0 '5'
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var3
+    la $t1 _var_8
+    sb $t0 -0($t1)
+# print var3
+# load var3->$a0
+    la $t1 _var_8
+    lb $a0 -0($t1)
+    li $v0 11
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print '5'
+# load '5'->$a0
+    li $a0 '5'
+    li $v0 11
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# ADD '6' 0->var4
+# load '6'->$t0
+    li $t0 '6'
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var4
+    la $t1 _var_9
+    sb $t0 -0($t1)
+# print var4
+# load var4->$a0
+    la $t1 _var_9
+    lb $a0 -0($t1)
+    li $v0 11
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print '6'
+# load '6'->$a0
+    li $a0 '6'
+    li $v0 11
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL const5 const6->LRY8
+# load const5->$t0
+    la $t1 _var_4
+    lb $t0 -0($t1)
+# load const6->$t1
+    la $t1 _var_5
+    lb $t1 -0($t1)
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY8
+    sw $t0 -40($sp)
+# ADD LRY8 0->var5
+# load LRY8->$t0
+    lw $t0 -40($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var5
+    sw $t0 -0($sp)
+# print var5
+# load var5->$a0
+    lw $a0 -0($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL const5 const6->LRY9
+# load const5->$t0
+    la $t1 _var_4
+    lb $t0 -0($t1)
+# load const6->$t1
+    la $t1 _var_5
+    lb $t1 -0($t1)
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY9
+    sw $t0 -44($sp)
+# print LRY9
+# load LRY9->$a0
+    lw $a0 -44($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL '6' var5->LRY10
+# load '6'->$t0
+    li $t0 '6'
+# load var5->$t1
+    lw $t1 -0($sp)
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY10
+    sw $t0 -48($sp)
+# ADD LRY10 0->var5
+# load LRY10->$t0
+    lw $t0 -48($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var5
+    sw $t0 -0($sp)
+# print var5
+# load var5->$a0
+    lw $a0 -0($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL '6' var5->LRY11
+# load '6'->$t0
+    li $t0 '6'
+# load var5->$t1
+    lw $t1 -0($sp)
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY11
+    sw $t0 -52($sp)
+# print LRY11
+# load LRY11->$a0
+    lw $a0 -52($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL var5 '6'->LRY12
+# load var5->$t0
+    lw $t0 -0($sp)
+# load '6'->$t1
+    li $t1 '6'
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY12
+    sw $t0 -56($sp)
+# ADD LRY12 0->var5
+# load LRY12->$t0
+    lw $t0 -56($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var5
+    sw $t0 -0($sp)
+# print var5
+# load var5->$a0
+    lw $a0 -0($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL var5 '6'->LRY13
+# load var5->$t0
+    lw $t0 -0($sp)
+# load '6'->$t1
+    li $t1 '6'
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY13
+    sw $t0 -60($sp)
+# print LRY13
+# load LRY13->$a0
+    lw $a0 -60($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL -6 -6->LRY14
+# load -6->$t0
+    li $t0 -6
+# load -6->$t1
+    li $t1 -6
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY14
+    sw $t0 -64($sp)
+# ADD LRY14 0->var5
+# load LRY14->$t0
+    lw $t0 -64($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var5
+    sw $t0 -0($sp)
+# print var5
+# load var5->$a0
+    lw $a0 -0($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL -6 -6->LRY15
+# load -6->$t0
+    li $t0 -6
+# load -6->$t1
+    li $t1 -6
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY15
+    sw $t0 -68($sp)
+# print LRY15
+# load LRY15->$a0
+    lw $a0 -68($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL var5 '5'->LRY16
+# load var5->$t0
+    lw $t0 -0($sp)
+# load '5'->$t1
+    li $t1 '5'
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY16
+    sw $t0 -72($sp)
+# MUL var5 LRY16->LRY17
+# load var5->$t0
+    lw $t0 -0($sp)
+# load LRY16->$t1
+    lw $t1 -72($sp)
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY17
+    sw $t0 -76($sp)
+# ADD LRY17 0->var5
+# load LRY17->$t0
+    lw $t0 -76($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var5
+    sw $t0 -0($sp)
+# print var5
+# load var5->$a0
+    lw $a0 -0($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL var5 '5'->LRY18
+# load var5->$t0
+    lw $t0 -0($sp)
+# load '5'->$t1
+    li $t1 '5'
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY18
+    sw $t0 -80($sp)
+# MUL var5 LRY18->LRY19
+# load var5->$t0
+    lw $t0 -0($sp)
+# load LRY18->$t1
+    lw $t1 -80($sp)
+    mult $t0 $t1
+    mflo $t0
+# store $t0->LRY19
+    sw $t0 -84($sp)
+# print LRY19
+# load LRY19->$a0
+    lw $a0 -84($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# SUB 6 var5->LRY20
+# load 6->$t0
+    li $t0 6
+# load var5->$t1
+    lw $t1 -0($sp)
+    sub $t0 $t0 $t1
+# store $t0->LRY20
+    sw $t0 -88($sp)
+# DIV 6 var5->LRY21
+# load 6->$t0
+    li $t0 6
+# load var5->$t1
+    lw $t1 -0($sp)
+    div $t0 $t1
+    mflo $t0
+# store $t0->LRY21
+    sw $t0 -92($sp)
+# ADD LRY20 LRY21->LRY22
+# load LRY20->$t0
+    lw $t0 -88($sp)
+# load LRY21->$t1
+    lw $t1 -92($sp)
+    add $t0 $t0 $t1
+# store $t0->LRY22
+    sw $t0 -96($sp)
+# ADD LRY22 6->LRY23
+# load LRY22->$t0
+    lw $t0 -96($sp)
+# load 6->$t1
+    li $t1 6
+    add $t0 $t0 $t1
+# store $t0->LRY23
+    sw $t0 -100($sp)
+# SUB LRY23 var5->LRY24
+# load LRY23->$t0
+    lw $t0 -100($sp)
+# load var5->$t1
+    lw $t1 -0($sp)
+    sub $t0 $t0 $t1
+# store $t0->LRY24
+    sw $t0 -104($sp)
+# ADD LRY24 0->var5
+# load LRY24->$t0
+    lw $t0 -104($sp)
+# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+# store $t0->var5
+    sw $t0 -0($sp)
+# print var5
+# load var5->$a0
+    lw $a0 -0($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+# SUB 6 var5->LRY25
+# load 6->$t0
+    li $t0 6
+# load var5->$t1
+    lw $t1 -0($sp)
+    sub $t0 $t0 $t1
+# store $t0->LRY25
+    sw $t0 -108($sp)
+# DIV 6 var5->LRY26
+# load 6->$t0
+    li $t0 6
+# load var5->$t1
+    lw $t1 -0($sp)
+    div $t0 $t1
+    mflo $t0
+# store $t0->LRY26
+    sw $t0 -112($sp)
+# ADD LRY25 LRY26->LRY27
+# load LRY25->$t0
+    lw $t0 -108($sp)
+# load LRY26->$t1
+    lw $t1 -112($sp)
+    add $t0 $t0 $t1
+# store $t0->LRY27
+    sw $t0 -116($sp)
+# ADD LRY27 6->LRY28
+# load LRY27->$t0
+    lw $t0 -116($sp)
+# load 6->$t1
+    li $t1 6
+    add $t0 $t0 $t1
+# store $t0->LRY28
+    sw $t0 -120($sp)
+# SUB LRY28 var5->LRY29
+# load LRY28->$t0
+    lw $t0 -120($sp)
+# load var5->$t1
+    lw $t1 -0($sp)
+    sub $t0 $t0 $t1
+# store $t0->LRY29
+    sw $t0 -124($sp)
+# print LRY29
+# load LRY29->$a0
+    lw $a0 -124($sp)
+    li $v0 1
+    syscall
+# print 
+
+    li $v0 4
+    la $a0 _string_
+    syscall
+exit:
+# program exit
+    li $v0 10
+    syscall
