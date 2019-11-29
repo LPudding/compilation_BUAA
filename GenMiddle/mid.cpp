@@ -24,8 +24,8 @@ string middleCodeTable::addTemp(string aType, string aOp2, string aOp3) {
 	return now;
 }
 
-string middleCodeTable::genLabel() {
-	string now = labelName + to_string(labelCount++);
+string middleCodeTable::genLabel(string type) {
+	string now = type + to_string(labelCount++);
 	return now;
 }
 

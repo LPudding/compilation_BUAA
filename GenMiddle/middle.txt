@@ -1,88 +1,152 @@
-    CONST    const1    INT    5
-    CONST    const2    INT    -1
-    CONST    const3    INT    0
-    CONST    const4    INT    10086
-    CONST    const5    CHAR    -
-    CONST    const6    CHAR    l
-    VAR    var1    INT    0
-    VAR    var2    INT    0
-    VAR    var3    CHAR    0
-    VAR    var4    CHAR    0
+    VAR    arr    INT    1000
+    VAR    tmp    INT    1000
+    PARA    s1    INT    
+    PARA    l1    INT    
+    PARA    s2    INT    
+    PARA    l2    INT    
+    FUNCHEAD    merge        
+    VAR    i    INT    0
+    VAR    j    INT    0
+    VAR    k    INT    0
+    ADD    i    0    0
+    ADD    j    0    0
+    ADD    k    s1    0
+    LABEL    while_Begin0        
+    CONDITION    <    i    l1
+    BZ    while_End1    <    
+    CONDITION    <    j    l2
+    BZ    if2    <    not_If
+    ADD LRY0 s1 i 
+    LOAD_ARR LRY1 arr LRY0 
+    ADD LRY2 s2 j 
+    LOAD_ARR LRY3 arr LRY2 
+    CONDITION    >    LRY1    LRY3
+    BZ    if3    >    not_If
+    ADD LRY4 s2 j 
+    LOAD_ARR LRY5 arr LRY4 
+    STORE_ARR    LRY5    tmp    k
+    ADD LRY6 j 1 
+    ADD    j    LRY6    0
+    GOTO    if_End4        
+    ADD LRY7 s1 i 
+    LOAD_ARR LRY8 arr LRY7 
+    STORE_ARR    LRY8    tmp    k
+    ADD LRY9 i 1 
+    ADD    i    LRY9    0
+    LABEL    if_End4        
+    LABEL    if3        
+    ADD LRY10 k 1 
+    ADD    k    LRY10    0
+    GOTO    if_End5        
+    LABEL    while_Begin6        
+    CONDITION    <    i    l1
+    BZ    while_End7    <    
+    ADD LRY11 s1 i 
+    LOAD_ARR LRY12 arr LRY11 
+    STORE_ARR    LRY12    tmp    k
+    ADD LRY13 k 1 
+    ADD    k    LRY13    0
+    ADD LRY14 i 1 
+    ADD    i    LRY14    0
+    GOTO    while_Begin6        
+    LABEL    while_End7        
+    LABEL    if_End5        
+    LABEL    if2        
+    GOTO    while_Begin0        
+    LABEL    while_End1        
+    LABEL    while_Begin8        
+    CONDITION    <    j    l2
+    BZ    while_End9    <    
+    ADD LRY15 s2 j 
+    LOAD_ARR LRY16 arr LRY15 
+    STORE_ARR    LRY16    tmp    k
+    ADD LRY17 k 1 
+    ADD    k    LRY17    0
+    ADD LRY18 j 1 
+    ADD    j    LRY18    0
+    GOTO    while_Begin8        
+    LABEL    while_End9        
+    ADD    i    s1    0
+    LABEL    for_Begin10        
+    CONDITION    <    i    k
+    BZ    for_End11    <    
+    LOAD_ARR LRY19 tmp i 
+    STORE_ARR    LRY19    arr    i
+    ADD    i    i    1
+    GOTO    for_Begin10        
+    LABEL    for_End11        
+    FUNCRET            
+    FUNCTAIL            
+    PARA    start    INT    
+    PARA    length    INT    
+    FUNCHEAD    inner_merge_sort        
+    VAR    tmp    INT    0
+    VAR    mid    INT    0
+    CONDITION    <=    length    1
+    BZ    if12    <=    not_If
+    FUNCRET            
+    LABEL    if12        
+    CONDITION    ==    length    2
+    BZ    if13    ==    not_If
+    LOAD_ARR LRY20 arr start 
+    ADD LRY21 start 1 
+    LOAD_ARR LRY22 arr LRY21 
+    CONDITION    >    LRY20    LRY22
+    BZ    if14    >    not_If
+    LOAD_ARR LRY23 arr start 
+    ADD    tmp    LRY23    0
+    ADD LRY24 start 1 
+    LOAD_ARR LRY25 arr LRY24 
+    STORE_ARR    LRY25    arr    start
+    ADD LRY26 start 1 
+    STORE_ARR    tmp    arr    LRY26
+    LABEL    if14        
+    FUNCRET            
+    LABEL    if13        
+    DIV LRY27 length 2 
+    ADD    mid    LRY27    0
+    PUSH_PARA    start    inner_merge_sort    131073
+    PUSH_PARA    mid    inner_merge_sort    131072
+    CALL_FUNC    inner_merge_sort        
+    ADD LRY28 start mid 
+    PUSH_PARA    LRY28    inner_merge_sort    131073
+    SUB LRY29 length mid 
+    PUSH_PARA    LRY29    inner_merge_sort    131072
+    CALL_FUNC    inner_merge_sort        
+    PUSH_PARA    start    merge    262147
+    PUSH_PARA    mid    merge    262146
+    ADD LRY30 start mid 
+    PUSH_PARA    LRY30    merge    262145
+    SUB LRY31 length mid 
+    PUSH_PARA    LRY31    merge    262144
+    CALL_FUNC    merge        
+    FUNCRET            
+    FUNCTAIL            
     MAINHEAD            
-    VAR    var5    INT    0
-    VAR    const7    CHAR    0
-    CONDITION    ==    const5    '-'
-    BZ    label0    ==    
-    CONDITION    <=    const5    108
-    BZ    label1    <=    
-    PRINT    yes1    0    
-    GOTO    label2        
-    PRINT    no1    0    
-    LABEL    label2        
-    LABEL    label1        
-    GOTO    label3        
-    PRINT    no2    0    
-    LABEL    label3        
-    LABEL    label0        
-    CONDITION    <=    const5    const6
-    BZ    label4    <=    
-    PRINT    yes2    0    
-    LABEL    label4        
-    ADD    var5    0    0
-    LABEL    label5        
-    CONDITION    <    var5    const1
-    BZ    label6    <    
-    ADD    var5    var5    1
-    GOTO    label5        
-    LABEL    label6        
-    CONDITION    ==    var5    const1
-    BZ    label7    ==    
-    PRINT    yes3    0    
-    LABEL    label7        
-    LABEL    label8        
-    ADD LRY0 var5 1 
-    ADD    var5    LRY0    0
-    CONDITION    <=    var5    10
-    BNZ    label8    <=    
-    CONDITION    ==    var5    11
-    BZ    label9    ==    
-    PRINT    yes4    0    
-    LABEL    label9        
-    LABEL    label10        
-    CONDITION    <=    var5    20
-    BZ    label11    <=    
-    ADD LRY1 var5 3 
-    ADD    var5    LRY1    0
-    GOTO    label10        
-    LABEL    label11        
-    CONDITION    ==    var5    23
-    BZ    label12    ==    
-    PRINT    yes5    0    
-    LABEL    label12        
-    CONDITION    >=    var5    23
-    BZ    label13    >=    
-    PRINT    yes6    0    
-    LABEL    label13        
-    CONDITION    <=    var5    23
-    BZ    label14    <=    
-    PRINT    yes7    0    
-    LABEL    label14        
-    CONDITION    !=    var5    23
-    BZ    label15    !=    
-    GOTO    label16        
-    PRINT    yes8    0    
-    LABEL    label16        
-    LABEL    label15        
-    CONDITION    >    var5    23
-    BZ    label17    >    
-    GOTO    label18        
-    PRINT    yes9    0    
-    LABEL    label18        
-    LABEL    label17        
-    CONDITION    <    var5    23
-    BZ    label19    <    
-    GOTO    label20        
-    PRINT    yes10    0    
-    LABEL    label20        
-    LABEL    label19        
+    VAR    n    INT    0
+    VAR    i    INT    0
+    VAR    a    INT    0
+    PRINT    17373248    0    
+    SCAN    n        
+    ADD    i    0    0
+    LABEL    for_Begin15        
+    CONDITION    <    i    n
+    BZ    for_End16    <    
+    SCAN    a        
+    STORE_ARR    a    arr    i
+    ADD    i    i    1
+    GOTO    for_Begin15        
+    LABEL    for_End16        
+    PUSH_PARA    0    inner_merge_sort    131073
+    PUSH_PARA    n    inner_merge_sort    131072
+    CALL_FUNC    inner_merge_sort        
+    ADD    i    0    0
+    LABEL    for_Begin17        
+    CONDITION    <    i    n
+    BZ    for_End18    <    
+    LOAD_ARR LRY32 arr i 
+    PRINT    LRY32    1    INT
+    ADD    i    i    1
+    GOTO    for_Begin17        
+    LABEL    for_End18        
     EXIT            

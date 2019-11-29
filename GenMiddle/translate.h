@@ -14,11 +14,11 @@ int dispatchReg(string name);
 
 int searchData(string name, string& globalName, string& type);
 
-void dispatch(string name);
+void dispatch(string name,string type);
 
-string loadVarToReg(string name, int no, string regName);
+string loadVarToReg(string name, string no, string regName);
 
-void storeRegToVar(string name, int no, string regName);
+void storeRegToVar(string name, string no, string regName);
 
 void sentence(middleCode midCode);
 

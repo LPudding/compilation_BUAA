@@ -1,0 +1,18 @@
+const int const1 = 5,const2 = -1,const3 = 0,const4 = 10086;
+const char const5 = '-', const6 = 'l';
+int var1,var2;
+char var3,var4;
+void gets(int n) {
+    if (n <= 0) {
+        return;
+    }
+    printf(n);
+    n = n-1;
+    gets(n);
+}
+void main() {
+    int var5;
+    char const7;
+    gets(5);
+
+}

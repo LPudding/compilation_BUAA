@@ -23,6 +23,8 @@ int v0_used = 0;
 //been use:0 
 //wait to be used:1
 
+map<string, vector<string>> funcRecord;
+
 void constDefine() {
 	int id = watch();
 	if (id == 5) {
@@ -290,6 +292,7 @@ void valueTable(string funcName) {
 	int id = watch(), index = 0, type, num, enable = 1;
 	if (lastFuncCallIndex == -1) {
 		enable = 0;
+		num = 0;
 	}
 	else {
 		num = sym_table.table[lastFuncCallIndex].parameterNum;
@@ -303,7 +306,7 @@ void valueTable(string funcName) {
 	}
 	index++;
 	type = expression(ret);
-	middleTable.addDefine("PUSH_PARA", ret, funcName, to_string(num << 16 + num - index));
+	middleTable.addDefine("PUSH_PARA", ret, funcName, to_string((num << 16) + num - index));
 	if (enable && index <= num && type != sym_table.functionParaType(index))
 		printError('e');
 	id = watch();
@@ -312,13 +315,15 @@ void valueTable(string funcName) {
 		printWord(getsym());
 		index++;
 		type = expression(ret);
-		middleTable.addDefine("PUSH_PARA", ret, funcName, to_string(num << 16 + num - index));
+		middleTable.addDefine("PUSH_PARA", ret, funcName, to_string((num << 16) + num - index));
 		if (enable && index <= num && type != sym_table.functionParaType(index))
 			printError('e');
 		id = watch();
 	}
 	if (enable && num != index)
 		printError('d');
+	else
+		middleTable.addDefine("CALL_FUNC", funcName, "", "");
 	if (debug)
 		fprintf(fc, "<值参数表>\n");
 }
@@ -330,7 +335,7 @@ void returnFuncStatement() {
 		funcName = token;
 		lastFuncCallIndex = sym_table.getFunctionIndex();
 		printWord(getsym());
-		middleTable.addDefine("CALL_FUNC", token, "", "");
+		//middleTable.addDefine("CALL_FUNC", token, "", "");
 		if (sym_table.checkExist() == NOEXIST)
 			printError('c');
 		id = watch();
@@ -354,7 +359,7 @@ void noReturnFuncStatement() {
 		lastFuncCallIndex = sym_table.getFunctionIndex();
 		funcName = token;
 		printWord(getsym());
-		middleTable.addDefine("CALL_FUNC", token, "", "");
+		//middleTable.addDefine("CALL_FUNC", token, "", "");
 		if (sym_table.checkExist() == NOEXIST)
 			printError('c');
 		id = watch();
@@ -557,14 +562,14 @@ void loopStatement() {
 		if (id == 30) { // (
 			printWord(getsym());
 		}
-		string label1 = middleTable.genLabel();
+		string label1 = middleTable.genLabel("while_Begin");
 		middleTable.addDefine("LABEL", label1, "", "");
 		string condi;
 		condition(condi); //condition
 		id = watch();
 		if (id == 31) {// )
 			printWord(getsym());
-			string label2 = middleTable.genLabel();
+			string label2 = middleTable.genLabel("while_End");
 			middleTable.addDefine("BZ", label2, condi, "");
 			statement();//statement
 			middleTable.addDefine("GOTO", label1, "", "");
@@ -575,7 +580,7 @@ void loopStatement() {
 	}
 	else if (id == 11) {//do
 		printWord(getsym());
-		string label1 = middleTable.genLabel();
+		string label1 = middleTable.genLabel("do_while_Begin");
 		middleTable.addDefine("LABEL", label1, "", "");
 		statement();//statement
 		id = watch();
@@ -626,8 +631,8 @@ void loopStatement() {
 				}
 				else
 					printError('k');
-				string label1 = middleTable.genLabel();
-				string label2 = middleTable.genLabel();
+				string label1 = middleTable.genLabel("for_Begin");
+				string label2 = middleTable.genLabel("for_End");
 				middleTable.addDefine("LABEL", label1, "", "");
 				string condi;
 				condition(condi);//condition
@@ -708,12 +713,12 @@ void conditionStatement() {
 	}
 	else
 		printError('l');
-	string label1 = middleTable.genLabel();
-	middleTable.addDefine("BZ", label1, condi, "");
+	string label1 = middleTable.genLabel("if");
+	middleTable.addDefine("BZ", label1, condi, "not_If");
 	statement();
 	id = watch();
 	if (id == 10) {
-		string label2 = middleTable.genLabel();
+		string label2 = middleTable.genLabel("if_End");
 		middleTable.addDefine("GOTO", label2, "", "");
 		printWord(getsym());
 		statement();
@@ -831,7 +836,6 @@ void assignStatement() {
 			else
 				printError('m');
 		}
-
 		// = expression
 		id = watch();
 		if (id == 27) { //=
@@ -865,7 +869,7 @@ void funcReturnStatement() {
 			printWord(getsym());
 			string rec;
 			type = expression(rec);
-			middleTable.addDefine("RET", rec, "", "");
+			middleTable.addDefine("FUNCRET", rec, "", "");
 			if (sym_table.valueType != type)
 				printError('h');
 			id = watch();
@@ -874,6 +878,9 @@ void funcReturnStatement() {
 			}
 			else
 				printError('l');
+		}
+		else {
+			middleTable.addDefine("FUNCRET", "", "", "");
 		}
 	}
 	if (debug)
@@ -1008,19 +1015,21 @@ void recordNoFunc() {
 
 void returnFunc() {
 	int id = watch(), lastId, num = 0;
+	string iden;
+	vector<string> nameList;//record paraName
 	if (id == 5 || id == 6) {
 		printWord(getsym());// int/char
 		lastId = id;
 		id = watch();
 		if (id == 0) {
 			if (lastId == 5) {
-				string iden = token;
+				iden = token;
 				middleTable.addDefine("FUNC", iden, "INT", "");
 				sym_table.inFunction(INT); // record a function 
 				sym_table.add(FUNCTION, INT);
 			}
 			else {
-				string iden = token;
+				iden = token;
 				middleTable.addDefine("FUNC", iden, "CHAR", "");
 				sym_table.inFunction(CHAR); // record a function 
 				sym_table.add(FUNCTION, CHAR);
@@ -1044,11 +1053,13 @@ void returnFunc() {
 					if (lastId == 5) {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "INT", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, INT);
 					}
 					else {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "CHAR", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, CHAR);
 					}
 					num++;
@@ -1070,19 +1081,21 @@ void returnFunc() {
 					if (lastId == 5) {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "INT", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, INT);
 					}
 					else {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "CHAR", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, CHAR);
 					}
 					num++;
 				}
 				id = watch();
 			}
-			middleTable.addDefine("FUNCHEAD", "", "", "");
 			sym_table.setParaNum(num);
+			funcRecord[iden] = nameList;
 			/**/
 			if (debug)
 				fprintf(fc, "<参数表>\n");
@@ -1092,6 +1105,7 @@ void returnFunc() {
 			else
 				printError('l');
 			id = watch();
+			middleTable.addDefine("FUNCHEAD", iden, "", "");
 			if (id == 34)  //{
 				printWord(getsym());
 			/**/
@@ -1101,6 +1115,7 @@ void returnFunc() {
 			if (id == 35) //}
 				printWord(getsym());
 			sym_table.outFunction();
+			//middleTable.addDefine("FUNCRET", "", "", "");
 			middleTable.addDefine("FUNCTAIL", "", "", "");
 
 		}
@@ -1111,11 +1126,14 @@ void returnFunc() {
 
 void noReturnFunc() {
 	int id = watch(), lastId, num = 0;
+	string iden;
+	vector<string> nameList;//record paraName
 	if (id == 7) {
 		printWord(getsym());// void
 		id = watch();
 		if (id == 0) {
 			printWord(getsym());// identify
+			iden = token;
 			sym_table.inFunction(VOID);
 			sym_table.add(FUNCTION, VOID);
 			//recordNoFunc();
@@ -1131,10 +1149,18 @@ void noReturnFunc() {
 				id = watch();
 				if (id == 0) {
 					num++;
-					if (lastId == 5)
+					if (lastId == 5) {
+						string iden(token);
+						middleTable.addDefine("PARA", iden, "INT", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, INT);
-					else
+					}
+					else {
+						string iden(token);
+						middleTable.addDefine("PARA", iden, "CHAR", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, CHAR);
+					}
 					printWord(getsym());
 				}
 			}
@@ -1150,16 +1176,24 @@ void noReturnFunc() {
 				id = watch();
 				if (id == 0) {
 					num++;
-					if (lastId == 5)
+					if (lastId == 5) {
+						string iden(token);
+						middleTable.addDefine("PARA", iden, "INT", "");
+						nameList.push_back(iden);
 						sym_table.add(PARAMETER, INT);
-					else
+					}
+					else {
 						sym_table.add(PARAMETER, CHAR);
+						string iden(token);
+						nameList.push_back(iden);
+						middleTable.addDefine("PARA", iden, "CHAR", "");
+
+					}
 					printWord(getsym());
 				}
 				id = watch();
 			}
 			sym_table.setParaNum(num);
-			middleTable.addDefine("FUNCHEAD", "", "", "");
 			/**/
 			if (debug)
 				fprintf(fc, "<参数表>\n");
@@ -1170,6 +1204,7 @@ void noReturnFunc() {
 			else
 				printError('l');
 			id = watch();
+			middleTable.addDefine("FUNCHEAD", iden, "", "");
 			if (id == 34) { //{
 				printWord(getsym());
 			}
@@ -1181,6 +1216,8 @@ void noReturnFunc() {
 				printWord(getsym());
 			}
 			sym_table.outFunction();
+			funcRecord[iden] = nameList;
+			middleTable.addDefine("FUNCRET", "", "", "");
 			middleTable.addDefine("FUNCTAIL", "", "", "");
 		}
 	}
@@ -1259,4 +1296,5 @@ void project() {
 	if (debug)
 		fprintf(fc, "<程序>\n");
 	middleTable.midFile.close();
+	
 }

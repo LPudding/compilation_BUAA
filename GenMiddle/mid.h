@@ -30,7 +30,7 @@ public:
 
 	string addTemp(string aType, string aOp2, string aOp3);
 
-	string genLabel();
+	string genLabel(string type);
 };
 
 bool isConst(string ret);
