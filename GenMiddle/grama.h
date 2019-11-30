@@ -24,7 +24,7 @@ int statementClassifer();
 
 void valueTable(string funcName);
 
-void returnFuncStatement();
+void returnFuncStatement(string& name);
 
 void noReturnFuncStatement();
 

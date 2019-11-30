@@ -1,16 +1,6 @@
 .data
-_string_0 : .asciiz "17373248\n"
-_array_0 : .word 0:1000
-_array_1 : .word 0:1000
+_string_ : .asciiz "\n"
 .text
-# print _string_0
-    li $v0 4
-    la $a0 _string_0
-    syscall
-# read n
-    li $v0 5
-    syscall
-    sw $v0 -0($sp)
 # ADD 0 0->i
 				# load 0->$t0
     li $t0 0
@@ -18,827 +8,155 @@ _array_1 : .word 0:1000
     li $t1 0
     add $t0 $t0 $t1
 				# store $t0->i
-    sw $t0 -4($sp)
-for_Begin15:
-# i < n
-				# load i->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-				# load n->$t1
-				# offset: 0 no: 0
-    lw $t1 -0($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 for_End16
-# read a
-    li $v0 5
-    syscall
-    sw $v0 -8($sp)
-# store_arr a -> arr[i]
-				# load a->$t3
-				# offset: 8 no: 0
-    lw $t3 -8($sp)
-				# store $t3->arr
-    la $t1 _array_0
-				# load i->$t2
-				# offset: 4 no: 0
-    lw $t2 -4($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD i 1->i
-				# load i->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -4($sp)
-    j for_Begin15
-for_End16:
-# call function inner_merge_sort
-    addi $s0 $sp -12
+    sw $t0 -0($sp)
+# ADD 1 0->j
+				# load 1->$t0
+    li $t0 1
 				# load 0->$t1
     li $t1 0
-# para_name:0
-    sw $t1 -8($s0)
-				# load n->$t1
+    add $t0 $t0 $t1
+				# store $t0->j
+    sw $t0 -4($sp)
+# ADD 2 0->k
+				# load 2->$t0
+    li $t0 2
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->k
+    sw $t0 -8($sp)
+# call function fun
+    addi $s0 $sp -12
+				# load i->$t1
 				# offset: 0 no: 0
     lw $t1 -0($sp)
-# para_name:n
+# para_name:i
+    sw $t1 -8($s0)
+				# load j->$t1
+				# offset: 4 no: 0
+    lw $t1 -4($sp)
+# para_name:j
     sw $t1 -12($s0)
+				# load i->$t1
+				# offset: 0 no: 0
+    lw $t1 -0($sp)
+# para_name:i
+    sw $t1 -16($s0)
+				# load j->$t1
+				# offset: 4 no: 0
+    lw $t1 -4($sp)
+# para_name:j
+    sw $t1 -20($s0)
+				# load k->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+# para_name:k
+    sw $t1 -24($s0)
     move $sp $s0
     li $t1 12
     sw $t1 0($s0)
-    jal inner_merge_sort
-# ADD 0 0->i
-				# load 0->$t0
-    li $t0 0
+    jal fun
+# ADD RET 0->LRY1
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->LRY1
+    sw $t0 -12($sp)
+# call function fun
+    addi $s0 $sp -16
+				# load LRY1->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:LRY1
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 16
+    sw $t1 0($s0)
+    jal fun
+# ADD RET 0->LRY2
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->LRY2
+    sw $t0 -16($sp)
+# ADD LRY2 0->k
+				# load LRY2->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
 				# load 0->$t1
     li $t1 0
     add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -4($sp)
-for_Begin17:
-# i < n
-				# load i->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-				# load n->$t1
-				# offset: 0 no: 0
-    lw $t1 -0($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 for_End18
-# load_arr arr[i] -> LRY32
-				# load arr->$t1
-				# offset: -1 no: i
-    la $t1 _array_0
-				# load i->$t2
-				# offset: 4 no: 0
-    lw $t2 -4($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY32
-    sw $t1 -12($sp)
-# print LRY32
-				# load LRY32->$a0
-				# offset: 12 no: 0
-    lw $a0 -12($sp)
+				# store $t0->k
+    sw $t0 -8($sp)
+# print k
+				# load k->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
     li $v0 1
     syscall
-# ADD i 1->i
-				# load i->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -4($sp)
-    j for_Begin17
-for_End18:
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
 exit:
 # program exit
     li $v0 10
     syscall
-merge:
+fun:
     sw $ra -4($sp)
 # in func______
-# ADD 0 0->i
-				# load 0->$t0
-    li $t0 0
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -24($sp)
-# ADD 0 0->j
-				# load 0->$t0
-    li $t0 0
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->j
-    sw $t0 -28($sp)
-# ADD s1 0->k
-				# load s1->$t0
+# ADD a b->LRY0
+				# load a->$t0
 				# offset: 8 no: 0
     lw $t0 -8($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->k
-    sw $t0 -32($sp)
-while_Begin0:
-# i < l1
-				# load i->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load l1->$t1
+				# load b->$t1
 				# offset: 12 no: 0
     lw $t1 -12($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 while_End1
-# j < l2
-				# load j->$t0
-				# offset: 28 no: 0
-    lw $t0 -28($sp)
-				# load l2->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 if2
-# ADD s1 i->LRY0
-				# load s1->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load i->$t1
-				# offset: 24 no: 0
-    lw $t1 -24($sp)
     add $t0 $t0 $t1
 				# store $t0->LRY0
-    sw $t0 -36($sp)
-# load_arr arr[LRY0] -> LRY1
-				# load arr->$t1
-				# offset: -1 no: LRY0
-    la $t1 _array_0
-				# load LRY0->$t2
-				# offset: 36 no: 0
-    lw $t2 -36($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY1
-    sw $t1 -40($sp)
-# ADD s2 j->LRY2
-				# load s2->$t0
-				# offset: 16 no: 0
-    lw $t0 -16($sp)
-				# load j->$t1
-				# offset: 28 no: 0
-    lw $t1 -28($sp)
-    add $t0 $t0 $t1
-				# store $t0->LRY2
-    sw $t0 -44($sp)
-# load_arr arr[LRY2] -> LRY3
-				# load arr->$t1
-				# offset: -1 no: LRY2
-    la $t1 _array_0
-				# load LRY2->$t2
-				# offset: 44 no: 0
-    lw $t2 -44($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY3
-    sw $t1 -48($sp)
-# LRY1 > LRY3
-				# load LRY1->$t0
-				# offset: 40 no: 0
-    lw $t0 -40($sp)
-				# load LRY3->$t1
-				# offset: 48 no: 0
-    lw $t1 -48($sp)
-    sub $t0 $t0 $t1
-    blez $t0 if3
-# ADD s2 j->LRY4
-				# load s2->$t0
-				# offset: 16 no: 0
-    lw $t0 -16($sp)
-				# load j->$t1
-				# offset: 28 no: 0
-    lw $t1 -28($sp)
-    add $t0 $t0 $t1
-				# store $t0->LRY4
-    sw $t0 -52($sp)
-# load_arr arr[LRY4] -> LRY5
-				# load arr->$t1
-				# offset: -1 no: LRY4
-    la $t1 _array_0
-				# load LRY4->$t2
-				# offset: 52 no: 0
-    lw $t2 -52($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY5
-    sw $t1 -56($sp)
-# store_arr LRY5 -> tmp[k]
-				# load LRY5->$t3
-				# offset: 56 no: 0
-    lw $t3 -56($sp)
-				# store $t3->tmp
-    la $t1 _array_1
-				# load k->$t2
-				# offset: 32 no: 0
-    lw $t2 -32($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD j 1->LRY6
-				# load j->$t0
-				# offset: 28 no: 0
-    lw $t0 -28($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY6
-    sw $t0 -60($sp)
-# ADD LRY6 0->j
-				# load LRY6->$t0
-				# offset: 60 no: 0
-    lw $t0 -60($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->j
-    sw $t0 -28($sp)
-    j if_End4
-# ADD s1 i->LRY7
-				# load s1->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load i->$t1
-				# offset: 24 no: 0
-    lw $t1 -24($sp)
-    add $t0 $t0 $t1
-				# store $t0->LRY7
-    sw $t0 -64($sp)
-# load_arr arr[LRY7] -> LRY8
-				# load arr->$t1
-				# offset: -1 no: LRY7
-    la $t1 _array_0
-				# load LRY7->$t2
-				# offset: 64 no: 0
-    lw $t2 -64($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY8
-    sw $t1 -68($sp)
-# store_arr LRY8 -> tmp[k]
-				# load LRY8->$t3
-				# offset: 68 no: 0
-    lw $t3 -68($sp)
-				# store $t3->tmp
-    la $t1 _array_1
-				# load k->$t2
-				# offset: 32 no: 0
-    lw $t2 -32($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD i 1->LRY9
-				# load i->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY9
-    sw $t0 -72($sp)
-# ADD LRY9 0->i
-				# load LRY9->$t0
-				# offset: 72 no: 0
-    lw $t0 -72($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -24($sp)
-if_End4:
-if3:
-# ADD k 1->LRY10
-				# load k->$t0
-				# offset: 32 no: 0
-    lw $t0 -32($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY10
-    sw $t0 -76($sp)
-# ADD LRY10 0->k
-				# load LRY10->$t0
-				# offset: 76 no: 0
-    lw $t0 -76($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->k
-    sw $t0 -32($sp)
-    j if_End5
-while_Begin6:
-# i < l1
-				# load i->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load l1->$t1
-				# offset: 12 no: 0
-    lw $t1 -12($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 while_End7
-# ADD s1 i->LRY11
-				# load s1->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load i->$t1
-				# offset: 24 no: 0
-    lw $t1 -24($sp)
-    add $t0 $t0 $t1
-				# store $t0->LRY11
-    sw $t0 -80($sp)
-# load_arr arr[LRY11] -> LRY12
-				# load arr->$t1
-				# offset: -1 no: LRY11
-    la $t1 _array_0
-				# load LRY11->$t2
-				# offset: 80 no: 0
-    lw $t2 -80($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY12
-    sw $t1 -84($sp)
-# store_arr LRY12 -> tmp[k]
-				# load LRY12->$t3
-				# offset: 84 no: 0
-    lw $t3 -84($sp)
-				# store $t3->tmp
-    la $t1 _array_1
-				# load k->$t2
-				# offset: 32 no: 0
-    lw $t2 -32($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD k 1->LRY13
-				# load k->$t0
-				# offset: 32 no: 0
-    lw $t0 -32($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY13
-    sw $t0 -88($sp)
-# ADD LRY13 0->k
-				# load LRY13->$t0
-				# offset: 88 no: 0
-    lw $t0 -88($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->k
-    sw $t0 -32($sp)
-# ADD i 1->LRY14
-				# load i->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY14
-    sw $t0 -92($sp)
-# ADD LRY14 0->i
-				# load LRY14->$t0
-				# offset: 92 no: 0
-    lw $t0 -92($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -24($sp)
-    j while_Begin6
-while_End7:
-if_End5:
-if2:
-    j while_Begin0
-while_End1:
-while_Begin8:
-# j < l2
-				# load j->$t0
-				# offset: 28 no: 0
-    lw $t0 -28($sp)
-				# load l2->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 while_End9
-# ADD s2 j->LRY15
-				# load s2->$t0
-				# offset: 16 no: 0
-    lw $t0 -16($sp)
-				# load j->$t1
-				# offset: 28 no: 0
-    lw $t1 -28($sp)
-    add $t0 $t0 $t1
-				# store $t0->LRY15
-    sw $t0 -96($sp)
-# load_arr arr[LRY15] -> LRY16
-				# load arr->$t1
-				# offset: -1 no: LRY15
-    la $t1 _array_0
-				# load LRY15->$t2
-				# offset: 96 no: 0
-    lw $t2 -96($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY16
-    sw $t1 -100($sp)
-# store_arr LRY16 -> tmp[k]
-				# load LRY16->$t3
-				# offset: 100 no: 0
-    lw $t3 -100($sp)
-				# store $t3->tmp
-    la $t1 _array_1
-				# load k->$t2
-				# offset: 32 no: 0
-    lw $t2 -32($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD k 1->LRY17
-				# load k->$t0
-				# offset: 32 no: 0
-    lw $t0 -32($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY17
-    sw $t0 -104($sp)
-# ADD LRY17 0->k
-				# load LRY17->$t0
-				# offset: 104 no: 0
-    lw $t0 -104($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->k
-    sw $t0 -32($sp)
-# ADD j 1->LRY18
-				# load j->$t0
-				# offset: 28 no: 0
-    lw $t0 -28($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY18
-    sw $t0 -108($sp)
-# ADD LRY18 0->j
-				# load LRY18->$t0
-				# offset: 108 no: 0
-    lw $t0 -108($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->j
-    sw $t0 -28($sp)
-    j while_Begin8
-while_End9:
-# ADD s1 0->i
-				# load s1->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -24($sp)
-for_Begin10:
-# i < k
-				# load i->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load k->$t1
-				# offset: 32 no: 0
-    lw $t1 -32($sp)
-    sub $t0 $t0 $t1
-    bgez $t0 for_End11
-# load_arr tmp[i] -> LRY19
-				# load tmp->$t1
-				# offset: -1 no: i
-    la $t1 _array_1
-				# load i->$t2
-				# offset: 24 no: 0
-    lw $t2 -24($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY19
-    sw $t1 -112($sp)
-# store_arr LRY19 -> arr[i]
-				# load LRY19->$t3
-				# offset: 112 no: 0
-    lw $t3 -112($sp)
-				# store $t3->arr
-    la $t1 _array_0
-				# load i->$t2
-				# offset: 24 no: 0
-    lw $t2 -24($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD i 1->i
-				# load i->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->i
-    sw $t0 -24($sp)
-    j for_Begin10
-for_End11:
-    lw $t1 0($sp)
-    lw $ra -4($sp)
-    add $sp $sp $t1
-    jr $ra
-# out func______
-inner_merge_sort:
-    sw $ra -4($sp)
-# in func______
-# length <= 1
-				# load length->$t0
-				# offset: 12 no: 0
-    lw $t0 -12($sp)
-				# load 1->$t1
-    li $t1 1
-    sub $t0 $t0 $t1
-    bgtz $t0 if12
-    lw $t1 0($sp)
-    lw $ra -4($sp)
-    add $sp $sp $t1
-    jr $ra
-if12:
-# length == 2
-				# load length->$t0
-				# offset: 12 no: 0
-    lw $t0 -12($sp)
-				# load 2->$t1
-    li $t1 2
-    sub $t0 $t0 $t1
-    bne $t0 $0 if13
-# load_arr arr[start] -> LRY20
-				# load arr->$t1
-				# offset: -1 no: start
-    la $t1 _array_0
-				# load start->$t2
-				# offset: 8 no: 0
-    lw $t2 -8($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY20
-    sw $t1 -24($sp)
-# ADD start 1->LRY21
-				# load start->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY21
-    sw $t0 -28($sp)
-# load_arr arr[LRY21] -> LRY22
-				# load arr->$t1
-				# offset: -1 no: LRY21
-    la $t1 _array_0
-				# load LRY21->$t2
-				# offset: 28 no: 0
-    lw $t2 -28($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY22
-    sw $t1 -32($sp)
-# LRY20 > LRY22
-				# load LRY20->$t0
-				# offset: 24 no: 0
-    lw $t0 -24($sp)
-				# load LRY22->$t1
-				# offset: 32 no: 0
-    lw $t1 -32($sp)
-    sub $t0 $t0 $t1
-    blez $t0 if14
-# load_arr arr[start] -> LRY23
-				# load arr->$t1
-				# offset: -1 no: start
-    la $t1 _array_0
-				# load start->$t2
-				# offset: 8 no: 0
-    lw $t2 -8($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY23
-    sw $t1 -36($sp)
-# ADD LRY23 0->tmp
-				# load LRY23->$t0
-				# offset: 36 no: 0
-    lw $t0 -36($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->tmp
-    sw $t0 -16($sp)
-# ADD start 1->LRY24
-				# load start->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY24
-    sw $t0 -40($sp)
-# load_arr arr[LRY24] -> LRY25
-				# load arr->$t1
-				# offset: -1 no: LRY24
-    la $t1 _array_0
-				# load LRY24->$t2
-				# offset: 40 no: 0
-    lw $t2 -40($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    lw $t1 0($t1)
-				# store $t1->LRY25
-    sw $t1 -44($sp)
-# store_arr LRY25 -> arr[start]
-				# load LRY25->$t3
-				# offset: 44 no: 0
-    lw $t3 -44($sp)
-				# store $t3->arr
-    la $t1 _array_0
-				# load start->$t2
-				# offset: 8 no: 0
-    lw $t2 -8($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-# ADD start 1->LRY26
-				# load start->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load 1->$t1
-    li $t1 1
-    add $t0 $t0 $t1
-				# store $t0->LRY26
-    sw $t0 -48($sp)
-# store_arr tmp -> arr[LRY26]
-				# load tmp->$t3
-				# offset: 16 no: 0
-    lw $t3 -16($sp)
-				# store $t3->arr
-    la $t1 _array_0
-				# load LRY26->$t2
-				# offset: 48 no: 0
-    lw $t2 -48($sp)
-    sll $t2 $t2 2
-    add $t1 $t1 $t2
-    sw $t3 0($t1)
-if14:
-    lw $t1 0($sp)
-    lw $ra -4($sp)
-    add $sp $sp $t1
-    jr $ra
-if13:
-# DIV length 2->LRY27
-				# load length->$t0
-				# offset: 12 no: 0
-    lw $t0 -12($sp)
-				# load 2->$t1
-    li $t1 2
-    div $t0 $t1
-    mflo $t0
-				# store $t0->LRY27
-    sw $t0 -52($sp)
-# ADD LRY27 0->mid
-				# load LRY27->$t0
-				# offset: 52 no: 0
-    lw $t0 -52($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->mid
     sw $t0 -20($sp)
-# call function inner_merge_sort
-    addi $s0 $sp -56
-				# load start->$t1
-				# offset: 8 no: 0
-    lw $t1 -8($sp)
-# para_name:start
-    sw $t1 -8($s0)
-				# load mid->$t1
+# ADD LRY0 0->c
+				# load LRY0->$t0
 				# offset: 20 no: 0
-    lw $t1 -20($sp)
-# para_name:mid
-    sw $t1 -12($s0)
-    move $sp $s0
-    li $t1 56
-    sw $t1 0($s0)
-    jal inner_merge_sort
-# ADD start mid->LRY28
-				# load start->$t0
-				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load mid->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
+    lw $t0 -20($sp)
+				# load 0->$t1
+    li $t1 0
     add $t0 $t0 $t1
-				# store $t0->LRY28
-    sw $t0 -56($sp)
-# SUB length mid->LRY29
-				# load length->$t0
-				# offset: 12 no: 0
-    lw $t0 -12($sp)
-				# load mid->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
-    sub $t0 $t0 $t1
-				# store $t0->LRY29
-    sw $t0 -60($sp)
-# call function inner_merge_sort
-    addi $s0 $sp -64
-				# load LRY28->$t1
-				# offset: 56 no: 0
-    lw $t1 -56($sp)
-# para_name:LRY28
-    sw $t1 -8($s0)
-				# load LRY29->$t1
-				# offset: 60 no: 0
-    lw $t1 -60($sp)
-# para_name:LRY29
-    sw $t1 -12($s0)
-    move $sp $s0
-    li $t1 64
-    sw $t1 0($s0)
-    jal inner_merge_sort
-# ADD start mid->LRY30
-				# load start->$t0
+				# store $t0->c
+    sw $t0 -16($sp)
+# print a
+				# load a->$a0
 				# offset: 8 no: 0
-    lw $t0 -8($sp)
-				# load mid->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
-    add $t0 $t0 $t1
-				# store $t0->LRY30
-    sw $t0 -64($sp)
-# SUB length mid->LRY31
-				# load length->$t0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print b
+				# load b->$a0
 				# offset: 12 no: 0
-    lw $t0 -12($sp)
-				# load mid->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
-    sub $t0 $t0 $t1
-				# store $t0->LRY31
-    sw $t0 -68($sp)
-# call function merge
-    addi $s0 $sp -72
-				# load start->$t1
-				# offset: 8 no: 0
-    lw $t1 -8($sp)
-# para_name:start
-    sw $t1 -8($s0)
-				# load mid->$t1
-				# offset: 20 no: 0
-    lw $t1 -20($sp)
-# para_name:mid
-    sw $t1 -12($s0)
-				# load LRY30->$t1
-				# offset: 64 no: 0
-    lw $t1 -64($sp)
-# para_name:LRY30
-    sw $t1 -16($s0)
-				# load LRY31->$t1
-				# offset: 68 no: 0
-    lw $t1 -68($sp)
-# para_name:LRY31
-    sw $t1 -20($s0)
-    move $sp $s0
-    li $t1 72
-    sw $t1 0($s0)
-    jal merge
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print c
+				# load c->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+				# load c->$v0
+				# offset: 16 no: 0
+    lw $v0 -16($sp)
     lw $t1 0($sp)
     lw $ra -4($sp)
     add $sp $sp $t1

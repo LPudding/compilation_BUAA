@@ -23,6 +23,8 @@ void getChar() {
 
 void addToken() {
 	token[tokenIndex++] = ch;
+	if (ch == '\\') 
+		token[tokenIndex++] = '\\';
 	token[tokenIndex] = '\0';
 	//printf("%c %c\n",token[tokenIndex-1],ch);
 }

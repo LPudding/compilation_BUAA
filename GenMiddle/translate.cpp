@@ -42,7 +42,7 @@ void dotData_gen() {
 		mips_code << stringName + to_string(i) + " : .asciiz \"" + stringTable[i] + "\\n\"" << endl;
 		stringTable[i] = stringName + to_string(i);
 	}
-	//mips_code << stringName + " : .asciiz \"\\n\"" << endl;
+	mips_code << stringName + " : .asciiz \"\\n\"" << endl;
 	//var and array
 	for (int i = 0, j = 0, k = 0; i < globalTable.size() * 2; i++) {
 		int length = stoi(globalTable[i % globalTable.size()].op3);
@@ -149,7 +149,7 @@ string loadVarToReg(string name, string no, string regName) {
 			mips_code << "    li $t2 " + index << endl;
 			mips_code << "    add $t1 $t1 $t2" << endl;
 			mips_code << "    sub $t1 $sp $t1" << endl;
-			mips_code << "    lw " + regName + "0($t1)" << endl;
+			mips_code << "    lw " + regName + " 0($t1)" << endl;
 		}
 		
 	}
@@ -195,7 +195,7 @@ void storeRegToVar(string name, string no,string regName) {
 			mips_code << "    li $t2 " + index << endl;
 			mips_code << "    add $t1 $t1 $t2" << endl;
 			mips_code << "    sub $t1 $sp $t1" << endl;
-			mips_code << "    sw " + regName + "0($t1)" << endl;
+			mips_code << "    sw " + regName + " 0($t1)" << endl;
 		}
 	}
 	else if (index == -1) {
@@ -242,13 +242,13 @@ void printSentence(middleCode midCode) {
 			mips_code << "    li $v0 11" << endl;
 		}
 		mips_code << "    syscall" << endl;
+		if (midCode.op3 != "0") {
+			mips_code << "# print \\n" << endl;
+			mips_code << "    li $v0 4" << endl;
+			mips_code << "    la $a0 " + stringName << endl;
+			mips_code << "    syscall" << endl;
+		}
 	}
-	/*if (midCode.op3 != "0") {
-		mips_code << "# print \n" << endl;
-		mips_code << "    li $v0 4" << endl;
-		mips_code << "    la $a0 " + stringName << endl;
-		mips_code << "    syscall" << endl;
-	}*/
 }
 
 void scanSentence(middleCode midCode) {

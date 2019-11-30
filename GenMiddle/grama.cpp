@@ -328,7 +328,7 @@ void valueTable(string funcName) {
 		fprintf(fc, "<值参数表>\n");
 }
 
-void returnFuncStatement() {
+void returnFuncStatement(string& name) {
 	int id = watch();
 	string funcName;
 	if (id == 0) {//identify
@@ -347,6 +347,7 @@ void returnFuncStatement() {
 			if (id == 31) //)
 				printWord(getsym());
 		}
+		name = middleTable.addTemp("ADD", "RET", "0");
 	}
 	if (debug)
 		fprintf(fc, "<有返回值函数调用语句>\n");
@@ -403,7 +404,7 @@ int factor(string& name) {//may be a question
 		if (!flag) {
 			if (sym_table.checkExist() == NOEXIST && watchTwice() == 30) {
 				printError('c');
-				returnFuncStatement();
+				returnFuncStatement(name);
 				if (debug)
 					fprintf(fc, "<因子>\n");
 				return NOEXIST;
@@ -431,12 +432,11 @@ int factor(string& name) {//may be a question
 		}
 		else {
 			type = sym_table.checkExist();
-			if (v0_used) {
+			/*if (v0_used) {
 				middleTable.addDefine("MOV","$v1","$v0","");
 				v0_used = 0;
-			}
-			returnFuncStatement();
-			name = "RET";
+			}*/
+			returnFuncStatement(name);
 		}
 	}
 	else if (id == 30) { // (
@@ -713,18 +713,19 @@ void conditionStatement() {
 	}
 	else
 		printError('l');
-	string label1 = middleTable.genLabel("if");
-	middleTable.addDefine("BZ", label1, condi, "not_If");
+	string label1 = middleTable.genLabel("not_If");
+	middleTable.addDefine("BZ", label1, condi, "");
 	statement();
 	id = watch();
 	if (id == 10) {
 		string label2 = middleTable.genLabel("if_End");
 		middleTable.addDefine("GOTO", label2, "", "");
+		middleTable.addDefine("LABEL", label1, "", "");
 		printWord(getsym());
 		statement();
 		middleTable.addDefine("LABEL", label2, "", "");
-	}
-	middleTable.addDefine("LABEL", label1, "", "");
+	} else
+		middleTable.addDefine("LABEL", label1, "", "");
 	if (debug)
 		fprintf(fc, "<条件语句>\n");
 }
@@ -927,7 +928,8 @@ void statement() {
 			printError('k');
 	}
 	else if (type == RETURN) {
-		returnFuncStatement();
+		string name;
+		returnFuncStatement(name);
 		id = watch();
 		if (id == 28) {
 			printWord(getsym());
