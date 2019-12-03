@@ -20,5 +20,5 @@
 #include"translate.h"
 
 using namespace std;
-
+extern FILE* fp, * fl, * fc, * fe;
 #pragma warning(disable:4996)

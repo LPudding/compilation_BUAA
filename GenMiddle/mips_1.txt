@@ -1,0 +1,3749 @@
+.data
+_string_0 : .asciiz "************************************************\n"
+_string_1 : .asciiz "Start testing assign & exp:\n"
+_string_2 : .asciiz "************************************************\n"
+_string_3 : .asciiz "Start testing if & while:\n"
+_string_4 : .asciiz "************************************************\n"
+_string_5 : .asciiz "Start testing switch:\n"
+_string_6 : .asciiz "************************************************\n"
+_string_7 : .asciiz "Start testing parameter:\n"
+_string_8 : .asciiz "************************************************\n"
+_string_9 : .asciiz "take\n"
+_string_10 : .asciiz "from\n"
+_string_11 : .asciiz "to\n"
+_string_12 : .asciiz "!@\\n#$^&*()Qqaa123[];',./\n"
+_string_13 : .asciiz "!@\\n#$^&*()Qqaa123[];',./\n"
+_string_14 : .asciiz "!@\\n#$^&*()Qqaa123[];',./\n"
+_string_15 : .asciiz "INPUT of func_ret_int_1:\n"
+_string_16 : .asciiz "OPERATE of func_ret_int_1:\n"
+_string_ : .asciiz "\n"
+_var_0 : .word 12345679
+_var_1 : .word 0
+_var_2 : .word -0
+_var_3 : .word -12345679
+_var_4 : .byte '9'
+_var_5 : .byte '_'
+_var_6 : .byte '+'
+_var_7 : .byte '*'
+_var_8 : .word 0
+_var_9 : .byte 0
+_var_10 : .word 0
+_var_11 : .byte 0
+_array_0 : .word 0:5
+_array_1 : .word 0:5
+_array_2 : .word 0:5
+_array_3 : .word 0:5
+_array_4 : .word 0:10
+.text
+# print _string_0
+    li $v0 4
+    la $a0 _string_0
+    syscall
+# print _string_1
+    li $v0 4
+    la $a0 _string_1
+    syscall
+# call function testAssignAndExp
+    addi $s0 $sp 0
+    move $sp $s0
+    li $t1 0
+    sw $t1 0($s0)
+    jal testAssignAndExp
+# print _string_2
+    li $v0 4
+    la $a0 _string_2
+    syscall
+# print _string_3
+    li $v0 4
+    la $a0 _string_3
+    syscall
+# call function testIfWhile
+    addi $s0 $sp 0
+    move $sp $s0
+    li $t1 0
+    sw $t1 0($s0)
+    jal testIfWhile
+# print _string_4
+    li $v0 4
+    la $a0 _string_4
+    syscall
+# print _string_5
+    li $v0 4
+    la $a0 _string_5
+    syscall
+# call function testSwitch
+    addi $s0 $sp 0
+    move $sp $s0
+    li $t1 0
+    sw $t1 0($s0)
+    jal testSwitch
+# print _string_6
+    li $v0 4
+    la $a0 _string_6
+    syscall
+# print _string_7
+    li $v0 4
+    la $a0 _string_7
+    syscall
+# call function testPara
+    addi $s0 $sp 0
+    move $sp $s0
+    li $t1 0
+    sw $t1 0($s0)
+    jal testPara
+# print _string_8
+    li $v0 4
+    la $a0 _string_8
+    syscall
+# exit:
+# program exit
+    li $v0 10
+    syscall
+# exit:
+# program exit
+    li $v0 10
+    syscall
+hanoi:
+    sw $ra -4($sp)
+# in func______
+# n > 0
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    li $t1 0
+    sub $t0 $t0 $t1
+    blez $t0 not_If0
+# SUB n 1->INT0
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT0
+    sw $t0 -24($sp)
+# call function hanoi
+    addi $s0 $sp -28
+				# load INT0->$t1
+				# offset: 24 no: 0
+    lw $t1 -24($sp)
+# para_name:INT0
+    sw $t1 -8($s0)
+				# load from->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:from
+    sw $t1 -12($s0)
+				# load to->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:to
+    sw $t1 -16($s0)
+				# load tmp->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:tmp
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 28
+    sw $t1 0($s0)
+    jal hanoi
+# print _string_9
+    li $v0 4
+    la $a0 _string_9
+    syscall
+# print n
+				# load n->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print _string_10
+    li $v0 4
+    la $a0 _string_10
+    syscall
+# print from
+				# load from->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print _string_11
+    li $v0 4
+    la $a0 _string_11
+    syscall
+# print to
+				# load to->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# SUB n 1->INT1
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT1
+    sw $t0 -28($sp)
+# call function hanoi
+    addi $s0 $sp -32
+				# load INT1->$t1
+				# offset: 28 no: 0
+    lw $t1 -28($sp)
+# para_name:INT1
+    sw $t1 -8($s0)
+				# load tmp->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:tmp
+    sw $t1 -12($s0)
+				# load from->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:from
+    sw $t1 -16($s0)
+				# load to->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:to
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 32
+    sw $t1 0($s0)
+    jal hanoi
+not_If0:
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+Fibonacci:
+    sw $ra -4($sp)
+# in func______
+# n == 0
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    li $t1 0
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If1
+				# load 0->$v0
+    li $v0 0
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+not_If1:
+# n == 1
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If2
+				# load 1->$v0
+    li $v0 1
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+not_If2:
+# SUB n 1->INT2
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT2
+    sw $t0 -12($sp)
+# call function Fibonacci
+    addi $s0 $sp -16
+				# load INT2->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:INT2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 16
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT3
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT3
+    sw $t0 -16($sp)
+# SUB n 2->INT4
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    sub $t0 $t0 $t1
+				# store $t0->INT4
+    sw $t0 -20($sp)
+# call function Fibonacci
+    addi $s0 $sp -24
+				# load INT4->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:INT4
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT5
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT5
+    sw $t0 -24($sp)
+# ADD INT3 INT5->INT6
+				# load INT3->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load INT5->$t1
+				# offset: 24 no: 0
+    lw $t1 -24($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT6
+    sw $t0 -28($sp)
+				# load INT6->$v0
+				# offset: 28 no: 0
+    lw $v0 -28($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+fac:
+    sw $ra -4($sp)
+# in func______
+# n == 1
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If3
+				# load 1->$v0
+    li $v0 1
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+not_If3:
+# SUB n 1->INT7
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT7
+    sw $t0 -12($sp)
+# call function fac
+    addi $s0 $sp -16
+				# load INT7->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:INT7
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 16
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT8
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT8
+    sw $t0 -16($sp)
+# MUL n INT8->INT9
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT8->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT9
+    sw $t0 -20($sp)
+				# load INT9->$v0
+				# offset: 20 no: 0
+    lw $v0 -20($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+initGlobalArray:
+    sw $ra -4($sp)
+# in func______
+# store_arr 0 -> global_int_array_1[0]
+				# load 0->$t3
+    li $t3 0
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 0($t1)
+# store_arr 1 -> global_int_array_1[1]
+				# load 1->$t3
+    li $t3 1
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 4($t1)
+# load_arr global_int_array_1[0] -> INT10
+				# load global_int_array_1->$t1
+				# offset: -1 no: 0
+    la $t1 _array_0
+    lw $t1 0($t1)
+				# store $t1->INT10
+    sw $t1 -8($sp)
+# load_arr global_int_array_1[1] -> INT11
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+				# store $t1->INT11
+    sw $t1 -12($sp)
+# ADD INT10 INT11->INT12
+				# load INT10->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT11->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT12
+    sw $t0 -16($sp)
+# store_arr INT12 -> global_int_array_1[2]
+				# load INT12->$t3
+				# offset: 16 no: 0
+    lw $t3 -16($sp)
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 8($t1)
+# load_arr global_int_array_1[2] -> INT13
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+				# store $t1->INT13
+    sw $t1 -20($sp)
+# load_arr global_int_array_1[1] -> INT14
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+				# store $t1->INT14
+    sw $t1 -24($sp)
+# ADD INT13 INT14->INT15
+				# load INT13->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load INT14->$t1
+				# offset: 24 no: 0
+    lw $t1 -24($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT15
+    sw $t0 -28($sp)
+# store_arr INT15 -> global_int_array_1[3]
+				# load INT15->$t3
+				# offset: 28 no: 0
+    lw $t3 -28($sp)
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 12($t1)
+# load_arr global_int_array_1[3] -> INT16
+				# load global_int_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_0
+    lw $t1 12($t1)
+				# store $t1->INT16
+    sw $t1 -32($sp)
+# load_arr global_int_array_1[2] -> INT17
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+				# store $t1->INT17
+    sw $t1 -36($sp)
+# ADD INT16 INT17->INT18
+				# load INT16->$t0
+				# offset: 32 no: 0
+    lw $t0 -32($sp)
+				# load INT17->$t1
+				# offset: 36 no: 0
+    lw $t1 -36($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT18
+    sw $t0 -40($sp)
+# store_arr INT18 -> global_int_array_1[4]
+				# load INT18->$t3
+				# offset: 40 no: 0
+    lw $t3 -40($sp)
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 16($t1)
+# load_arr global_int_array_1[1] -> INT19
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+				# store $t1->INT19
+    sw $t1 -44($sp)
+# store_arr INT19 -> global_int_array_2[0]
+				# load INT19->$t3
+				# offset: 44 no: 0
+    lw $t3 -44($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 0($t1)
+# load_arr global_int_array_2[0] -> INT20
+				# load global_int_array_2->$t1
+				# offset: -1 no: 0
+    la $t1 _array_2
+    lw $t1 0($t1)
+				# store $t1->INT20
+    sw $t1 -48($sp)
+# load_arr global_int_array_1[2] -> INT21
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+				# store $t1->INT21
+    sw $t1 -52($sp)
+# MUL INT20 INT21->INT22
+				# load INT20->$t0
+				# offset: 48 no: 0
+    lw $t0 -48($sp)
+				# load INT21->$t1
+				# offset: 52 no: 0
+    lw $t1 -52($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT22
+    sw $t0 -56($sp)
+# store_arr INT22 -> global_int_array_2[1]
+				# load INT22->$t3
+				# offset: 56 no: 0
+    lw $t3 -56($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 4($t1)
+# load_arr global_int_array_2[1] -> INT23
+				# load global_int_array_2->$t1
+				# offset: -1 no: 1
+    la $t1 _array_2
+    lw $t1 4($t1)
+				# store $t1->INT23
+    sw $t1 -60($sp)
+# load_arr global_int_array_1[3] -> INT24
+				# load global_int_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_0
+    lw $t1 12($t1)
+				# store $t1->INT24
+    sw $t1 -64($sp)
+# MUL INT23 INT24->INT25
+				# load INT23->$t0
+				# offset: 60 no: 0
+    lw $t0 -60($sp)
+				# load INT24->$t1
+				# offset: 64 no: 0
+    lw $t1 -64($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT25
+    sw $t0 -68($sp)
+# store_arr INT25 -> global_int_array_2[2]
+				# load INT25->$t3
+				# offset: 68 no: 0
+    lw $t3 -68($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 8($t1)
+# load_arr global_int_array_2[2] -> INT26
+				# load global_int_array_2->$t1
+				# offset: -1 no: 2
+    la $t1 _array_2
+    lw $t1 8($t1)
+				# store $t1->INT26
+    sw $t1 -72($sp)
+# load_arr global_int_array_1[4] -> INT27
+				# load global_int_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_0
+    lw $t1 16($t1)
+				# store $t1->INT27
+    sw $t1 -76($sp)
+# MUL INT26 INT27->INT28
+				# load INT26->$t0
+				# offset: 72 no: 0
+    lw $t0 -72($sp)
+				# load INT27->$t1
+				# offset: 76 no: 0
+    lw $t1 -76($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT28
+    sw $t0 -80($sp)
+# store_arr INT28 -> global_int_array_2[3]
+				# load INT28->$t3
+				# offset: 80 no: 0
+    lw $t3 -80($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 12($t1)
+# load_arr global_int_array_2[3] -> INT29
+				# load global_int_array_2->$t1
+				# offset: -1 no: 3
+    la $t1 _array_2
+    lw $t1 12($t1)
+				# store $t1->INT29
+    sw $t1 -84($sp)
+# load_arr global_int_array_1[4] -> INT30
+				# load global_int_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_0
+    lw $t1 16($t1)
+				# store $t1->INT30
+    sw $t1 -88($sp)
+# DIV INT29 INT30->INT31
+				# load INT29->$t0
+				# offset: 84 no: 0
+    lw $t0 -84($sp)
+				# load INT30->$t1
+				# offset: 88 no: 0
+    lw $t1 -88($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT31
+    sw $t0 -92($sp)
+# store_arr INT31 -> global_int_array_2[4]
+				# load INT31->$t3
+				# offset: 92 no: 0
+    lw $t3 -92($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 16($t1)
+# store_arr 'a' -> global_char_array_1[0]
+				# load 'a'->$t3
+    li $t3 'a'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 0($t1)
+# store_arr 'A' -> global_char_array_1[1]
+				# load 'A'->$t3
+    li $t3 'A'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 4($t1)
+# store_arr 'z' -> global_char_array_1[2]
+				# load 'z'->$t3
+    li $t3 'z'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 8($t1)
+# store_arr 'Z' -> global_char_array_1[3]
+				# load 'Z'->$t3
+    li $t3 'Z'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 12($t1)
+# store_arr '_' -> global_char_array_1[4]
+				# load '_'->$t3
+    li $t3 '_'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 16($t1)
+# store_arr '+' -> global_char_array_2[0]
+				# load '+'->$t3
+    li $t3 '+'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 0($t1)
+# store_arr '-' -> global_char_array_2[1]
+				# load '-'->$t3
+    li $t3 '-'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 4($t1)
+# store_arr '*' -> global_char_array_2[2]
+				# load '*'->$t3
+    li $t3 '*'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 8($t1)
+# store_arr '/' -> global_char_array_2[3]
+				# load '/'->$t3
+    li $t3 '/'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 12($t1)
+# store_arr '6' -> global_char_array_2[4]
+				# load '6'->$t3
+    li $t3 '6'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 16($t1)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+assignGlobal:
+    sw $ra -4($sp)
+# in func______
+# ADD a 0->global_int_1
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->global_int_1
+    la $t1 _var_8
+    sw $t0 0($t1)
+# ADD b 0->global_char_1
+				# load b->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->global_char_1
+    la $t1 _var_9
+    sb $t0 0($t1)
+# ADD c 0->global_int_2
+				# load c->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->global_int_2
+    la $t1 _var_10
+    sw $t0 0($t1)
+# ADD d 0->global_char_2
+				# load d->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->global_char_2
+    la $t1 _var_11
+    sb $t0 0($t1)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+printGlobalConst:
+    sw $ra -4($sp)
+# in func______
+# print const_int_1
+				# load const_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_int_2
+				# load const_int_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_1
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_int_3
+				# load const_int_3->$a0
+				# offset: -1 no: 0
+    la $t1 _var_2
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_int_4
+				# load const_int_4->$a0
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_char_1
+				# load const_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_4
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_char_2
+				# load const_char_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_5
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_char_3
+				# load const_char_3->$a0
+				# offset: -1 no: 0
+    la $t1 _var_6
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print const_char_4
+				# load const_char_4->$a0
+				# offset: -1 no: 0
+    la $t1 _var_7
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+printGlobalVar:
+    sw $ra -4($sp)
+# in func______
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print global_int_2
+				# load global_int_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_10
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print global_char_2
+				# load global_char_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_11
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+printGlobalArray:
+    sw $ra -4($sp)
+# in func______
+# load_arr global_int_array_1[0] -> INT32
+				# load global_int_array_1->$t1
+				# offset: -1 no: 0
+    la $t1 _array_0
+    lw $t1 0($t1)
+				# store $t1->INT32
+    sw $t1 -8($sp)
+# print INT32
+				# load INT32->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_1[1] -> INT33
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+				# store $t1->INT33
+    sw $t1 -12($sp)
+# print INT33
+				# load INT33->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_1[2] -> INT34
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+				# store $t1->INT34
+    sw $t1 -16($sp)
+# print INT34
+				# load INT34->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_1[3] -> INT35
+				# load global_int_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_0
+    lw $t1 12($t1)
+				# store $t1->INT35
+    sw $t1 -20($sp)
+# print INT35
+				# load INT35->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_1[4] -> INT36
+				# load global_int_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_0
+    lw $t1 16($t1)
+				# store $t1->INT36
+    sw $t1 -24($sp)
+# print INT36
+				# load INT36->$a0
+				# offset: 24 no: 0
+    lw $a0 -24($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_2[0] -> INT37
+				# load global_int_array_2->$t1
+				# offset: -1 no: 0
+    la $t1 _array_2
+    lw $t1 0($t1)
+				# store $t1->INT37
+    sw $t1 -28($sp)
+# print INT37
+				# load INT37->$a0
+				# offset: 28 no: 0
+    lw $a0 -28($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_2[1] -> INT38
+				# load global_int_array_2->$t1
+				# offset: -1 no: 1
+    la $t1 _array_2
+    lw $t1 4($t1)
+				# store $t1->INT38
+    sw $t1 -32($sp)
+# print INT38
+				# load INT38->$a0
+				# offset: 32 no: 0
+    lw $a0 -32($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_2[2] -> INT39
+				# load global_int_array_2->$t1
+				# offset: -1 no: 2
+    la $t1 _array_2
+    lw $t1 8($t1)
+				# store $t1->INT39
+    sw $t1 -36($sp)
+# print INT39
+				# load INT39->$a0
+				# offset: 36 no: 0
+    lw $a0 -36($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_2[3] -> INT40
+				# load global_int_array_2->$t1
+				# offset: -1 no: 3
+    la $t1 _array_2
+    lw $t1 12($t1)
+				# store $t1->INT40
+    sw $t1 -40($sp)
+# print INT40
+				# load INT40->$a0
+				# offset: 40 no: 0
+    lw $a0 -40($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_int_array_2[4] -> INT41
+				# load global_int_array_2->$t1
+				# offset: -1 no: 4
+    la $t1 _array_2
+    lw $t1 16($t1)
+				# store $t1->INT41
+    sw $t1 -44($sp)
+# print INT41
+				# load INT41->$a0
+				# offset: 44 no: 0
+    lw $a0 -44($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_1[0] -> INT42
+				# load global_char_array_1->$t1
+				# offset: -1 no: 0
+    la $t1 _array_1
+    lb $t1 0($t1)
+				# store $t1->INT42
+    sw $t1 -48($sp)
+# print INT42
+				# load INT42->$a0
+				# offset: 48 no: 0
+    lw $a0 -48($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_1[1] -> INT43
+				# load global_char_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_1
+    lb $t1 4($t1)
+				# store $t1->INT43
+    sw $t1 -52($sp)
+# print INT43
+				# load INT43->$a0
+				# offset: 52 no: 0
+    lw $a0 -52($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_1[2] -> INT44
+				# load global_char_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_1
+    lb $t1 8($t1)
+				# store $t1->INT44
+    sw $t1 -56($sp)
+# print INT44
+				# load INT44->$a0
+				# offset: 56 no: 0
+    lw $a0 -56($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_1[3] -> INT45
+				# load global_char_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_1
+    lb $t1 12($t1)
+				# store $t1->INT45
+    sw $t1 -60($sp)
+# print INT45
+				# load INT45->$a0
+				# offset: 60 no: 0
+    lw $a0 -60($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_1[4] -> INT46
+				# load global_char_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_1
+    lb $t1 16($t1)
+				# store $t1->INT46
+    sw $t1 -64($sp)
+# print INT46
+				# load INT46->$a0
+				# offset: 64 no: 0
+    lw $a0 -64($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_2[0] -> INT47
+				# load global_char_array_2->$t1
+				# offset: -1 no: 0
+    la $t1 _array_3
+    lb $t1 0($t1)
+				# store $t1->INT47
+    sw $t1 -68($sp)
+# print INT47
+				# load INT47->$a0
+				# offset: 68 no: 0
+    lw $a0 -68($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_2[1] -> INT48
+				# load global_char_array_2->$t1
+				# offset: -1 no: 1
+    la $t1 _array_3
+    lb $t1 4($t1)
+				# store $t1->INT48
+    sw $t1 -72($sp)
+# print INT48
+				# load INT48->$a0
+				# offset: 72 no: 0
+    lw $a0 -72($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_2[2] -> INT49
+				# load global_char_array_2->$t1
+				# offset: -1 no: 2
+    la $t1 _array_3
+    lb $t1 8($t1)
+				# store $t1->INT49
+    sw $t1 -76($sp)
+# print INT49
+				# load INT49->$a0
+				# offset: 76 no: 0
+    lw $a0 -76($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_2[3] -> INT50
+				# load global_char_array_2->$t1
+				# offset: -1 no: 3
+    la $t1 _array_3
+    lb $t1 12($t1)
+				# store $t1->INT50
+    sw $t1 -80($sp)
+# print INT50
+				# load INT50->$a0
+				# offset: 80 no: 0
+    lw $a0 -80($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr global_char_array_2[4] -> INT51
+				# load global_char_array_2->$t1
+				# offset: -1 no: 4
+    la $t1 _array_3
+    lb $t1 16($t1)
+				# store $t1->INT51
+    sw $t1 -84($sp)
+# print INT51
+				# load INT51->$a0
+				# offset: 84 no: 0
+    lw $a0 -84($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testGlobal:
+    sw $ra -4($sp)
+# in func______
+# call function initGlobalArray
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal initGlobalArray
+# call function assignGlobal
+    addi $s0 $sp -8
+				# load const_int_1->$t1
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $t1 0($t1)
+# para_name:const_int_1
+    sw $t1 -8($s0)
+				# load const_char_1->$t1
+				# offset: -1 no: 0
+    la $t1 _var_4
+    lb $t1 0($t1)
+# para_name:const_char_1
+    sw $t1 -12($s0)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+# para_name:const_int_4
+    sw $t1 -16($s0)
+				# load const_char_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_7
+    lb $t1 0($t1)
+# para_name:const_char_4
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal assignGlobal
+# call function printGlobalConst
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal printGlobalConst
+# call function printGlobalVar
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal printGlobalVar
+# call function printGlobalArray
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal printGlobalArray
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testReturnInt:
+    sw $ra -4($sp)
+# in func______
+# ADD a 1->INT52
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT52
+    sw $t0 -12($sp)
+				# load INT52->$v0
+				# offset: 12 no: 0
+    lw $v0 -12($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testReturnChar:
+    sw $ra -4($sp)
+# in func______
+# a == 1
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If4
+				# load 'a'->$v0
+    li $v0 'a'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    j if_End5
+not_If4:
+# a == 2
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If6
+				# load 'b'->$v0
+    li $v0 'b'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    j if_End7
+not_If6:
+# a == 3
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 3->$t1
+    li $t1 3
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If8
+				# load 'c'->$v0
+    li $v0 'c'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+not_If8:
+if_End7:
+if_End5:
+				# load '_'->$v0
+    li $v0 '_'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testReturn:
+    sw $ra -4($sp)
+# in func______
+# call function fac
+    addi $s0 $sp -8
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT53
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT53
+    sw $t0 -8($sp)
+# call function fac
+    addi $s0 $sp -12
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 12
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT54
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT54
+    sw $t0 -12($sp)
+# ADD INT53 INT54->INT55
+				# load INT53->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT54->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT55
+    sw $t0 -16($sp)
+# call function Fibonacci
+    addi $s0 $sp -20
+				# load INT55->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:INT55
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 20
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT56
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT56
+    sw $t0 -20($sp)
+# call function testReturnInt
+    addi $s0 $sp -24
+				# load INT56->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:INT56
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT57
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT57
+    sw $t0 -24($sp)
+# print INT57
+				# load INT57->$a0
+				# offset: 24 no: 0
+    lw $a0 -24($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# call function testReturnChar
+    addi $s0 $sp -28
+				# load 1->$t1
+    li $t1 1
+# para_name:1
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 28
+    sw $t1 0($s0)
+    jal testReturnChar
+# ADD RET 0->CHAR0
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->CHAR0
+    sw $t0 -28($sp)
+# print CHAR0
+				# load CHAR0->$a0
+				# offset: 28 no: 0
+    lw $a0 -28($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# call function testReturnChar
+    addi $s0 $sp -32
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 32
+    sw $t1 0($s0)
+    jal testReturnChar
+# ADD RET 0->CHAR1
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->CHAR1
+    sw $t0 -32($sp)
+# print CHAR1
+				# load CHAR1->$a0
+				# offset: 32 no: 0
+    lw $a0 -32($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# call function testReturnChar
+    addi $s0 $sp -36
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 36
+    sw $t1 0($s0)
+    jal testReturnChar
+# ADD RET 0->CHAR2
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->CHAR2
+    sw $t0 -36($sp)
+# print CHAR2
+				# load CHAR2->$a0
+				# offset: 36 no: 0
+    lw $a0 -36($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# call function testReturnChar
+    addi $s0 $sp -40
+				# load 4->$t1
+    li $t1 4
+# para_name:4
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 40
+    sw $t1 0($s0)
+    jal testReturnChar
+# ADD RET 0->CHAR3
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->CHAR3
+    sw $t0 -40($sp)
+# print CHAR3
+				# load CHAR3->$a0
+				# offset: 40 no: 0
+    lw $a0 -40($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testAssignAndExp:
+    sw $ra -4($sp)
+# in func______
+# const_int_1 -> 1
+    li $t0 1
+    sw $t0 -12($sp)
+# const_int_2 -> -1
+    li $t0 -1
+    sw $t0 -16($sp)
+# const_int_3 -> 0
+    li $t0 0
+    sw $t0 -20($sp)
+# const_char_1 -> 'a'
+    li $t0 'a'
+    sw $t0 -24($sp)
+# const_char_2 -> 'A'
+    li $t0 'A'
+    sw $t0 -28($sp)
+# const_char_3 -> 'b'
+    li $t0 'b'
+    sw $t0 -32($sp)
+# call function Fibonacci
+    addi $s0 $sp -76
+				# load 5->$t1
+    li $t1 5
+# para_name:5
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 76
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT58
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT58
+    sw $t0 -76($sp)
+# call function Fibonacci
+    addi $s0 $sp -80
+				# load INT58->$t1
+				# offset: 76 no: 0
+    lw $t1 -76($sp)
+# para_name:INT58
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 80
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT59
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT59
+    sw $t0 -80($sp)
+# call function Fibonacci
+    addi $s0 $sp -84
+				# load INT59->$t1
+				# offset: 80 no: 0
+    lw $t1 -80($sp)
+# para_name:INT59
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 84
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT60
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT60
+    sw $t0 -84($sp)
+# MUL const_int_2 const_int_4->INT61
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT61
+    sw $t0 -88($sp)
+# DIV const_int_1 INT61->INT62
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT61->$t1
+				# offset: 88 no: 0
+    lw $t1 -88($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT62
+    sw $t0 -92($sp)
+# ADD INT60 INT62->INT63
+				# load INT60->$t0
+				# offset: 84 no: 0
+    lw $t0 -84($sp)
+				# load INT62->$t1
+				# offset: 92 no: 0
+    lw $t1 -92($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT63
+    sw $t0 -96($sp)
+# call function fac
+    addi $s0 $sp -100
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 100
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT64
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT64
+    sw $t0 -100($sp)
+# DIV INT63 INT64->INT65
+				# load INT63->$t0
+				# offset: 96 no: 0
+    lw $t0 -96($sp)
+				# load INT64->$t1
+				# offset: 100 no: 0
+    lw $t1 -100($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT65
+    sw $t0 -104($sp)
+# ADD const_int_1 INT65->INT66
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT65->$t1
+				# offset: 104 no: 0
+    lw $t1 -104($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT66
+    sw $t0 -108($sp)
+# ADD INT66 0->int_temp_1
+				# load INT66->$t0
+				# offset: 108 no: 0
+    lw $t0 -108($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->int_temp_1
+    sw $t0 -32($sp)
+# call function fac
+    addi $s0 $sp -112
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 112
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT67
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT67
+    sw $t0 -112($sp)
+# call function fac
+    addi $s0 $sp -116
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 116
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT68
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT68
+    sw $t0 -116($sp)
+# ADD INT67 INT68->INT69
+				# load INT67->$t0
+				# offset: 112 no: 0
+    lw $t0 -112($sp)
+				# load INT68->$t1
+				# offset: 116 no: 0
+    lw $t1 -116($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT69
+    sw $t0 -120($sp)
+# call function fac
+    addi $s0 $sp -124
+				# load INT69->$t1
+				# offset: 120 no: 0
+    lw $t1 -120($sp)
+# para_name:INT69
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 124
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT70
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT70
+    sw $t0 -124($sp)
+# ADD INT70 0->int_temp_2
+				# load INT70->$t0
+				# offset: 124 no: 0
+    lw $t0 -124($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->int_temp_2
+    sw $t0 -36($sp)
+# call function testReturnInt
+    addi $s0 $sp -128
+				# load 0->$t1
+    li $t1 0
+# para_name:0
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 128
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT71
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT71
+    sw $t0 -128($sp)
+# store_arr INT71 -> int_array[const_int_3]
+				# load INT71->$t3
+				# offset: 128 no: 0
+    lw $t3 -128($sp)
+				# store $t3->int_array
+				# load const_int_3->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    sw $t3 0($t1)
+# MUL const_int_2 const_int_4->INT72
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT72
+    sw $t0 -132($sp)
+# call function testReturnInt
+    addi $s0 $sp -136
+				# load 0->$t1
+    li $t1 0
+# para_name:0
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 136
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT73
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT73
+    sw $t0 -136($sp)
+# MUL INT73 const_int_4->INT74
+				# load INT73->$t0
+				# offset: 136 no: 0
+    lw $t0 -136($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT74
+    sw $t0 -140($sp)
+# ADD INT72 INT74->INT75
+				# load INT72->$t0
+				# offset: 132 no: 0
+    lw $t0 -132($sp)
+				# load INT74->$t1
+				# offset: 140 no: 0
+    lw $t1 -140($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT75
+    sw $t0 -144($sp)
+# SUB const_int_1 INT75->INT76
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT75->$t1
+				# offset: 144 no: 0
+    lw $t1 -144($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT76
+    sw $t0 -148($sp)
+# call function testReturnInt
+    addi $s0 $sp -152
+				# load const_int_1->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+# para_name:const_int_1
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 152
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT77
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT77
+    sw $t0 -152($sp)
+# ADD const_int_1 INT77->INT78
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT77->$t1
+				# offset: 152 no: 0
+    lw $t1 -152($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT78
+    sw $t0 -156($sp)
+# store_arr INT78 -> int_array[INT76]
+				# load INT78->$t3
+				# offset: 156 no: 0
+    lw $t3 -156($sp)
+				# store $t3->int_array
+				# load INT76->$t1
+				# offset: 148 no: 0
+    lw $t1 -148($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    sw $t3 0($t1)
+# load_arr int_array[const_int_3] -> INT79
+				# load int_array->$t1
+				# offset: 40 no: const_int_3
+				# load const_int_3->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+				# store $t1->INT79
+    sw $t1 -160($sp)
+# MUL const_int_2 const_int_4->INT80
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT80
+    sw $t0 -164($sp)
+# call function testReturnInt
+    addi $s0 $sp -168
+				# load 0->$t1
+    li $t1 0
+# para_name:0
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 168
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT81
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT81
+    sw $t0 -168($sp)
+# MUL INT81 const_int_4->INT82
+				# load INT81->$t0
+				# offset: 168 no: 0
+    lw $t0 -168($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT82
+    sw $t0 -172($sp)
+# ADD INT80 INT82->INT83
+				# load INT80->$t0
+				# offset: 164 no: 0
+    lw $t0 -164($sp)
+				# load INT82->$t1
+				# offset: 172 no: 0
+    lw $t1 -172($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT83
+    sw $t0 -176($sp)
+# SUB const_int_1 INT83->INT84
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT83->$t1
+				# offset: 176 no: 0
+    lw $t1 -176($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT84
+    sw $t0 -180($sp)
+# load_arr int_array[INT84] -> INT85
+				# load int_array->$t1
+				# offset: 40 no: INT84
+				# load INT84->$t1
+				# offset: 180 no: 0
+    lw $t1 -180($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+				# store $t1->INT85
+    sw $t1 -184($sp)
+# SUB 'b' 'a'->INT86
+				# load 'b'->$t0
+    li $t0 'b'
+				# load 'a'->$t1
+    li $t1 'a'
+    sub $t0 $t0 $t1
+				# store $t0->INT86
+    sw $t0 -188($sp)
+# MUL INT85 INT86->INT87
+				# load INT85->$t0
+				# offset: 184 no: 0
+    lw $t0 -184($sp)
+				# load INT86->$t1
+				# offset: 188 no: 0
+    lw $t1 -188($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT87
+    sw $t0 -192($sp)
+# SUB INT79 INT87->INT88
+				# load INT79->$t0
+				# offset: 160 no: 0
+    lw $t0 -160($sp)
+				# load INT87->$t1
+				# offset: 192 no: 0
+    lw $t1 -192($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT88
+    sw $t0 -196($sp)
+# ADD INT88 0->int_temp_3
+				# load INT88->$t0
+				# offset: 196 no: 0
+    lw $t0 -196($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->int_temp_3
+    sw $t0 -52($sp)
+# load_arr int_array[0] -> INT89
+				# load int_array->$t1
+				# offset: 40 no: 0
+    lw $t1 -40($sp)
+				# store $t1->INT89
+    sw $t1 -200($sp)
+# call function testReturnChar
+    addi $s0 $sp -204
+				# load INT89->$t1
+				# offset: 200 no: 0
+    lw $t1 -200($sp)
+# para_name:INT89
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 204
+    sw $t1 0($s0)
+    jal testReturnChar
+# ADD RET 0->CHAR4
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->CHAR4
+    sw $t0 -204($sp)
+# store_arr CHAR4 -> char_array[0]
+				# load CHAR4->$t3
+				# offset: 204 no: 0
+    lw $t3 -204($sp)
+				# store $t3->char_array
+    sw $t3 -60($sp)
+# MUL const_int_2 const_int_4->INT90
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT90
+    sw $t0 -208($sp)
+# call function testReturnInt
+    addi $s0 $sp -212
+				# load 0->$t1
+    li $t1 0
+# para_name:0
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 212
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT91
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT91
+    sw $t0 -212($sp)
+# MUL INT91 const_int_4->INT92
+				# load INT91->$t0
+				# offset: 212 no: 0
+    lw $t0 -212($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT92
+    sw $t0 -216($sp)
+# ADD INT90 INT92->INT93
+				# load INT90->$t0
+				# offset: 208 no: 0
+    lw $t0 -208($sp)
+				# load INT92->$t1
+				# offset: 216 no: 0
+    lw $t1 -216($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT93
+    sw $t0 -220($sp)
+# SUB const_int_1 INT93->INT94
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT93->$t1
+				# offset: 220 no: 0
+    lw $t1 -220($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT94
+    sw $t0 -224($sp)
+# load_arr int_array[1] -> INT95
+				# load int_array->$t1
+				# offset: 40 no: 1
+    lw $t1 -44($sp)
+				# store $t1->INT95
+    sw $t1 -228($sp)
+# ADD INT95 const_int_1->INT96
+				# load INT95->$t0
+				# offset: 228 no: 0
+    lw $t0 -228($sp)
+				# load const_int_1->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT96
+    sw $t0 -232($sp)
+# call function testReturnChar
+    addi $s0 $sp -236
+				# load INT96->$t1
+				# offset: 232 no: 0
+    lw $t1 -232($sp)
+# para_name:INT96
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 236
+    sw $t1 0($s0)
+    jal testReturnChar
+# ADD RET 0->CHAR5
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->CHAR5
+    sw $t0 -236($sp)
+# store_arr CHAR5 -> char_array[INT94]
+				# load CHAR5->$t3
+				# offset: 236 no: 0
+    lw $t3 -236($sp)
+				# store $t3->char_array
+				# load INT94->$t1
+				# offset: 224 no: 0
+    lw $t1 -224($sp)
+    sll $t1 $t1 2
+    li $t2 60
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    sw $t3 0($t1)
+# load_arr char_array[0] -> INT97
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+				# store $t1->INT97
+    sw $t1 -240($sp)
+# ADD INT97 0->char_temp_1
+				# load INT97->$t0
+				# offset: 240 no: 0
+    lw $t0 -240($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->char_temp_1
+    sw $t0 -56($sp)
+# MUL const_int_2 const_int_4->INT98
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT98
+    sw $t0 -244($sp)
+# call function testReturnInt
+    addi $s0 $sp -248
+				# load 0->$t1
+    li $t1 0
+# para_name:0
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 248
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT99
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT99
+    sw $t0 -248($sp)
+# MUL INT99 const_int_4->INT100
+				# load INT99->$t0
+				# offset: 248 no: 0
+    lw $t0 -248($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT100
+    sw $t0 -252($sp)
+# ADD INT98 INT100->INT101
+				# load INT98->$t0
+				# offset: 244 no: 0
+    lw $t0 -244($sp)
+				# load INT100->$t1
+				# offset: 252 no: 0
+    lw $t1 -252($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT101
+    sw $t0 -256($sp)
+# SUB const_int_1 INT101->INT102
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT101->$t1
+				# offset: 256 no: 0
+    lw $t1 -256($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT102
+    sw $t0 -260($sp)
+# load_arr char_array[INT102] -> INT103
+				# load char_array->$t1
+				# offset: 60 no: INT102
+				# load INT102->$t1
+				# offset: 260 no: 0
+    lw $t1 -260($sp)
+    sll $t1 $t1 2
+    li $t2 60
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+				# store $t1->INT103
+    sw $t1 -264($sp)
+# ADD INT103 0->char_temp_2
+				# load INT103->$t0
+				# offset: 264 no: 0
+    lw $t0 -264($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->char_temp_2
+    sw $t0 -72($sp)
+# print int_temp_1
+				# load int_temp_1->$a0
+				# offset: 32 no: 0
+    lw $a0 -32($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print int_temp_2
+				# load int_temp_2->$a0
+				# offset: 36 no: 0
+    lw $a0 -36($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print int_temp_3
+				# load int_temp_3->$a0
+				# offset: 52 no: 0
+    lw $a0 -52($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr int_array[const_int_3] -> INT104
+				# load int_array->$t1
+				# offset: 40 no: const_int_3
+				# load const_int_3->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+				# store $t1->INT104
+    sw $t1 -268($sp)
+# print INT104
+				# load INT104->$a0
+				# offset: 268 no: 0
+    lw $a0 -268($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# MUL const_int_2 const_int_4->INT105
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT105
+    sw $t0 -272($sp)
+# call function testReturnInt
+    addi $s0 $sp -276
+				# load 0->$t1
+    li $t1 0
+# para_name:0
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 276
+    sw $t1 0($s0)
+    jal testReturnInt
+# ADD RET 0->INT106
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT106
+    sw $t0 -276($sp)
+# MUL INT106 const_int_4->INT107
+				# load INT106->$t0
+				# offset: 276 no: 0
+    lw $t0 -276($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT107
+    sw $t0 -280($sp)
+# ADD INT105 INT107->INT108
+				# load INT105->$t0
+				# offset: 272 no: 0
+    lw $t0 -272($sp)
+				# load INT107->$t1
+				# offset: 280 no: 0
+    lw $t1 -280($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT108
+    sw $t0 -284($sp)
+# SUB const_int_1 INT108->INT109
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT108->$t1
+				# offset: 284 no: 0
+    lw $t1 -284($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT109
+    sw $t0 -288($sp)
+# load_arr int_array[INT109] -> INT110
+				# load int_array->$t1
+				# offset: 40 no: INT109
+				# load INT109->$t1
+				# offset: 288 no: 0
+    lw $t1 -288($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+				# store $t1->INT110
+    sw $t1 -292($sp)
+# print INT110
+				# load INT110->$a0
+				# offset: 292 no: 0
+    lw $a0 -292($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print char_temp_1
+				# load char_temp_1->$a0
+				# offset: 56 no: 0
+    lw $a0 -56($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print char_temp_2
+				# load char_temp_2->$a0
+				# offset: 72 no: 0
+    lw $a0 -72($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr char_array[0] -> INT111
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+				# store $t1->INT111
+    sw $t1 -296($sp)
+# print INT111
+				# load INT111->$a0
+				# offset: 296 no: 0
+    lw $a0 -296($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr char_array[const_int_1] -> INT112
+				# load char_array->$t1
+				# offset: 60 no: const_int_1
+				# load const_int_1->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+    sll $t1 $t1 2
+    li $t2 60
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+				# store $t1->INT112
+    sw $t1 -300($sp)
+# print INT112
+				# load INT112->$a0
+				# offset: 300 no: 0
+    lw $a0 -300($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# load_arr char_array[0] -> INT113
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+				# store $t1->INT113
+    sw $t1 -304($sp)
+# load_arr char_array[0] -> INT114
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+				# store $t1->INT114
+    sw $t1 -308($sp)
+# MUL INT114 char_temp_2->INT115
+				# load INT114->$t0
+				# offset: 308 no: 0
+    lw $t0 -308($sp)
+				# load char_temp_2->$t1
+				# offset: 72 no: 0
+    lw $t1 -72($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT115
+    sw $t0 -312($sp)
+# ADD INT113 INT115->INT116
+				# load INT113->$t0
+				# offset: 304 no: 0
+    lw $t0 -304($sp)
+				# load INT115->$t1
+				# offset: 312 no: 0
+    lw $t1 -312($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT116
+    sw $t0 -316($sp)
+# MUL char_temp_1 INT116->INT117
+				# load char_temp_1->$t0
+				# offset: 56 no: 0
+    lw $t0 -56($sp)
+				# load INT116->$t1
+				# offset: 316 no: 0
+    lw $t1 -316($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT117
+    sw $t0 -320($sp)
+# print INT117
+				# load INT117->$a0
+				# offset: 320 no: 0
+    lw $a0 -320($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testIO:
+    sw $ra -4($sp)
+# in func______
+# read global_int_1
+    li $v0 5
+    syscall
+    la $t0 _var_8
+    sw $v0 0($t0)# read global_char_1
+    li $v0 12
+    syscall
+    la $t0 _var_9
+    sw $v0 0($t0)# print _string_12
+    li $v0 4
+    la $a0 _string_12
+    syscall
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# read global_int_1
+    li $v0 5
+    syscall
+    la $t0 _var_8
+    sw $v0 0($t0)# read global_char_1
+    li $v0 12
+    syscall
+    la $t0 _var_9
+    sw $v0 0($t0)# print _string_13
+    li $v0 4
+    la $a0 _string_13
+    syscall
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# read global_char_1
+    li $v0 12
+    syscall
+    la $t0 _var_9
+    sw $v0 0($t0)# read global_int_1
+    li $v0 5
+    syscall
+    la $t0 _var_8
+    sw $v0 0($t0)# print _string_14
+    li $v0 4
+    la $a0 _string_14
+    syscall
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testIfWhile:
+    sw $ra -4($sp)
+# in func______
+# ADD 10 0->k
+				# load 10->$t0
+    li $t0 10
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->k
+    sw $t0 -16($sp)
+# ADD '+' 0->a
+				# load '+'->$t0
+    li $t0 '+'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->a
+    sw $t0 -20($sp)
+# ADD '-' 0->b
+				# load '-'->$t0
+    li $t0 '-'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->b
+    sw $t0 -24($sp)
+# ADD '*' 0->c
+				# load '*'->$t0
+    li $t0 '*'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->c
+    sw $t0 -28($sp)
+# ADD '/' 0->d
+				# load '/'->$t0
+    li $t0 '/'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->d
+    sw $t0 -32($sp)
+# k > 0
+				# load k->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 0->$t1
+    li $t1 0
+    sub $t0 $t0 $t1
+    blez $t0 not_If9
+# k <= 10
+				# load k->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 10->$t1
+    li $t1 10
+    sub $t0 $t0 $t1
+    bgtz $t0 not_If10
+# ADD 0 0->i
+				# load 0->$t0
+    li $t0 0
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i
+    sw $t0 -8($sp)
+while_Begin11:
+# DIV k 2->INT118
+				# load k->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT118
+    sw $t0 -36($sp)
+# i < INT118
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT118->$t1
+				# offset: 36 no: 0
+    lw $t1 -36($sp)
+    sub $t0 $t0 $t1
+    bgez $t0 while_End12
+# DIV i 2->INT119
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT119
+    sw $t0 -40($sp)
+# MUL INT119 2->INT120
+				# load INT119->$t0
+				# offset: 40 no: 0
+    lw $t0 -40($sp)
+				# load 2->$t1
+    li $t1 2
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT120
+    sw $t0 -44($sp)
+# SUB i INT120->INT121
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT120->$t1
+				# offset: 44 no: 0
+    lw $t1 -44($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT121
+    sw $t0 -48($sp)
+# INT121 == 0
+				# load INT121->$t0
+				# offset: 48 no: 0
+    lw $t0 -48($sp)
+				# load 0->$t1
+    li $t1 0
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If13
+# store_arr a -> global_char_array_3[i]
+				# load a->$t3
+				# offset: 20 no: 0
+    lw $t3 -20($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+    j if_End14
+not_If13:
+# DIV i 2->INT122
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT122
+    sw $t0 -52($sp)
+# MUL INT122 2->INT123
+				# load INT122->$t0
+				# offset: 52 no: 0
+    lw $t0 -52($sp)
+				# load 2->$t1
+    li $t1 2
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT123
+    sw $t0 -56($sp)
+# SUB i INT123->INT124
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT123->$t1
+				# offset: 56 no: 0
+    lw $t1 -56($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT124
+    sw $t0 -60($sp)
+# INT124 == 1
+				# load INT124->$t0
+				# offset: 60 no: 0
+    lw $t0 -60($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If15
+# store_arr b -> global_char_array_3[i]
+				# load b->$t3
+				# offset: 24 no: 0
+    lw $t3 -24($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+not_If15:
+if_End14:
+# load_arr global_char_array_3[i] -> INT125
+				# load global_char_array_3->$t1
+				# offset: -1 no: i
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    lb $t1 0($t1)
+				# store $t1->INT125
+    sw $t1 -64($sp)
+# print INT125
+				# load INT125->$a0
+				# offset: 64 no: 0
+    lw $a0 -64($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# ADD i 1->INT126
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT126
+    sw $t0 -68($sp)
+# ADD INT126 0->i
+				# load INT126->$t0
+				# offset: 68 no: 0
+    lw $t0 -68($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i
+    sw $t0 -8($sp)
+    j while_Begin11
+while_End12:
+while_Begin16:
+# i < k
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load k->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sub $t0 $t0 $t1
+    bgez $t0 while_End17
+# DIV i 2->INT127
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT127
+    sw $t0 -72($sp)
+# MUL INT127 2->INT128
+				# load INT127->$t0
+				# offset: 72 no: 0
+    lw $t0 -72($sp)
+				# load 2->$t1
+    li $t1 2
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT128
+    sw $t0 -76($sp)
+# SUB i INT128->INT129
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT128->$t1
+				# offset: 76 no: 0
+    lw $t1 -76($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT129
+    sw $t0 -80($sp)
+# INT129 == 0
+				# load INT129->$t0
+				# offset: 80 no: 0
+    lw $t0 -80($sp)
+				# load 0->$t1
+    li $t1 0
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If18
+# store_arr c -> global_char_array_3[i]
+				# load c->$t3
+				# offset: 28 no: 0
+    lw $t3 -28($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+    j if_End19
+not_If18:
+# store_arr d -> global_char_array_3[i]
+				# load d->$t3
+				# offset: 32 no: 0
+    lw $t3 -32($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+if_End19:
+# load_arr global_char_array_3[i] -> INT130
+				# load global_char_array_3->$t1
+				# offset: -1 no: i
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    lb $t1 0($t1)
+				# store $t1->INT130
+    sw $t1 -84($sp)
+# print INT130
+				# load INT130->$a0
+				# offset: 84 no: 0
+    lw $a0 -84($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# ADD i 1->INT131
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT131
+    sw $t0 -88($sp)
+# ADD INT131 0->i
+				# load INT131->$t0
+				# offset: 88 no: 0
+    lw $t0 -88($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i
+    sw $t0 -8($sp)
+    j while_Begin16
+while_End17:
+not_If10:
+not_If9:
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testSwitch:
+    sw $ra -4($sp)
+# in func______
+# sum -> 3
+    li $t0 3
+    sw $t0 -12($sp)
+# ADD 0 0->i
+				# load 0->$t0
+    li $t0 0
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i
+    sw $t0 -16($sp)
+# ADD 0 0->int_1
+				# load 0->$t0
+    li $t0 0
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->int_1
+    sw $t0 -12($sp)
+while_Begin20:
+# i < sum
+				# load i->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load sum->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+    sub $t0 $t0 $t1
+    bgez $t0 while_End21
+# int_1 == 0
+				# load int_1->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 0->$t1
+    li $t1 0
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If22
+# ADD 'a' 0->char_1
+				# load 'a'->$t0
+    li $t0 'a'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->char_1
+    sw $t0 -20($sp)
+# print char_1
+				# load char_1->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    j if_End23
+not_If22:
+# int_1 == 1
+				# load int_1->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If24
+# ADD 'b' 0->char_1
+				# load 'b'->$t0
+    li $t0 'b'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->char_1
+    sw $t0 -20($sp)
+# print char_1
+				# load char_1->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    j if_End25
+not_If24:
+# ADD const_char_2 0->char_1
+				# load const_char_2->$t0
+				# offset: -1 no: 0
+    la $t1 _var_5
+    lb $t0 0($t1)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->char_1
+    sw $t0 -20($sp)
+# print char_1
+				# load char_1->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+if_End25:
+if_End23:
+# char_1 == 'a'
+				# load char_1->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 'a'->$t1
+    li $t1 'a'
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If26
+# ADD i 1->INT132
+				# load i->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT132
+    sw $t0 -24($sp)
+# ADD INT132 0->int_1
+				# load INT132->$t0
+				# offset: 24 no: 0
+    lw $t0 -24($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->int_1
+    sw $t0 -12($sp)
+# print int_1
+				# load int_1->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    j if_End27
+not_If26:
+# char_1 == 'b'
+				# load char_1->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 'b'->$t1
+    li $t1 'b'
+    sub $t0 $t0 $t1
+    bne $t0 $0 not_If28
+# ADD sum 0->int_1
+				# load sum->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->int_1
+    sw $t0 -12($sp)
+# print int_1
+				# load int_1->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+not_If28:
+if_End27:
+# ADD i 1->INT133
+				# load i->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT133
+    sw $t0 -28($sp)
+# ADD INT133 0->i
+				# load INT133->$t0
+				# offset: 28 no: 0
+    lw $t0 -28($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i
+    sw $t0 -16($sp)
+    j while_Begin20
+while_End21:
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+func_ret_int_1:
+    sw $ra -4($sp)
+# in func______
+# print _string_15
+    li $v0 4
+    la $a0 _string_15
+    syscall
+# print i_1
+				# load i_1->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print i_2
+				# load i_2->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print c_1
+				# load c_1->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print c_2
+				# load c_2->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# ADD i_1 0->i_temp
+				# load i_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i_temp
+    sw $t0 -24($sp)
+# ADD i_2 0->i_1
+				# load i_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i_1
+    sw $t0 -8($sp)
+# ADD i_temp 0->i_2
+				# load i_temp->$t0
+				# offset: 24 no: 0
+    lw $t0 -24($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i_2
+    sw $t0 -12($sp)
+# ADD c_1 0->c_temp
+				# load c_1->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->c_temp
+    sw $t0 -28($sp)
+# ADD c_2 0->c_1
+				# load c_2->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->c_1
+    sw $t0 -16($sp)
+# ADD c_temp 0->c_2
+				# load c_temp->$t0
+				# offset: 28 no: 0
+    lw $t0 -28($sp)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->c_2
+    sw $t0 -20($sp)
+# print _string_16
+    li $v0 4
+    la $a0 _string_16
+    syscall
+# print i_1
+				# load i_1->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print i_2
+				# load i_2->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print c_1
+				# load c_1->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+# print c_2
+				# load c_2->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+				# load i_1->$v0
+				# offset: 8 no: 0
+    lw $v0 -8($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testPara:
+    sw $ra -4($sp)
+# in func______
+# ADD const_int_1 0->i
+				# load const_int_1->$t0
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $t0 0($t1)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->i
+    sw $t0 -8($sp)
+# ADD const_int_4 0->j
+				# load const_int_4->$t0
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t0 0($t1)
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->j
+    sw $t0 -12($sp)
+# ADD 'A' 0->c
+				# load 'A'->$t0
+    li $t0 'A'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->c
+    sw $t0 -16($sp)
+# ADD 'Z' 0->d
+				# load 'Z'->$t0
+    li $t0 'Z'
+				# load 0->$t1
+    li $t1 0
+    add $t0 $t0 $t1
+				# store $t0->d
+    sw $t0 -20($sp)
+# call function func_ret_int_1
+    addi $s0 $sp -24
+				# load i->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+# para_name:i
+    sw $t1 -8($s0)
+				# load j->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:j
+    sw $t1 -12($s0)
+				# load c->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:c
+    sw $t1 -16($s0)
+				# load d->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:d
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal func_ret_int_1
+# ADD RET 0->INT134
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT134
+    sw $t0 -24($sp)
+# print INT134
+				# load INT134->$a0
+				# offset: 24 no: 0
+    lw $a0 -24($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______
+testRecursion:
+    sw $ra -4($sp)
+# in func______
+# call function fac
+    addi $s0 $sp -8
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT135
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT135
+    sw $t0 -8($sp)
+# call function fac
+    addi $s0 $sp -12
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 12
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT136
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT136
+    sw $t0 -12($sp)
+# MUL INT135 INT136->INT137
+				# load INT135->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT136->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+    mult $t0 $t1
+    mflo $t0
+				# store $t0->INT137
+    sw $t0 -16($sp)
+# call function Fibonacci
+    addi $s0 $sp -20
+				# load INT137->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:INT137
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 20
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT138
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT138
+    sw $t0 -20($sp)
+# call function Fibonacci
+    addi $s0 $sp -24
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT139
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT139
+    sw $t0 -24($sp)
+# call function Fibonacci
+    addi $s0 $sp -28
+				# load 4->$t1
+    li $t1 4
+# para_name:4
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 28
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT140
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT140
+    sw $t0 -28($sp)
+# ADD INT139 INT140->INT141
+				# load INT139->$t0
+				# offset: 24 no: 0
+    lw $t0 -24($sp)
+				# load INT140->$t1
+				# offset: 28 no: 0
+    lw $t1 -28($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT141
+    sw $t0 -32($sp)
+# call function fac
+    addi $s0 $sp -36
+				# load INT141->$t1
+				# offset: 32 no: 0
+    lw $t1 -32($sp)
+# para_name:INT141
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 36
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT142
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT142
+    sw $t0 -36($sp)
+# SUB INT138 INT142->INT143
+				# load INT138->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load INT142->$t1
+				# offset: 36 no: 0
+    lw $t1 -36($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT143
+    sw $t0 -40($sp)
+# call function Fibonacci
+    addi $s0 $sp -44
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 44
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT144
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT144
+    sw $t0 -44($sp)
+# call function Fibonacci
+    addi $s0 $sp -48
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 48
+    sw $t1 0($s0)
+    jal Fibonacci
+# ADD RET 0->INT145
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT145
+    sw $t0 -48($sp)
+# ADD INT144 INT145->INT146
+				# load INT144->$t0
+				# offset: 44 no: 0
+    lw $t0 -44($sp)
+				# load INT145->$t1
+				# offset: 48 no: 0
+    lw $t1 -48($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT146
+    sw $t0 -52($sp)
+# call function fac
+    addi $s0 $sp -56
+				# load INT146->$t1
+				# offset: 52 no: 0
+    lw $t1 -52($sp)
+# para_name:INT146
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 56
+    sw $t1 0($s0)
+    jal fac
+# ADD RET 0->INT147
+				# load 0->$t1
+    li $t1 0
+    add $t0 $v0 $t1
+				# store $t0->INT147
+    sw $t0 -56($sp)
+# DIV INT143 INT147->INT148
+				# load INT143->$t0
+				# offset: 40 no: 0
+    lw $t0 -40($sp)
+				# load INT147->$t1
+				# offset: 56 no: 0
+    lw $t1 -56($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT148
+    sw $t0 -60($sp)
+# call function hanoi
+    addi $s0 $sp -64
+				# load INT148->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+# para_name:INT148
+    sw $t1 -8($s0)
+				# load 'a'->$t1
+    li $t1 'a'
+# para_name:'a'
+    sw $t1 -12($s0)
+				# load 'b'->$t1
+    li $t1 'b'
+# para_name:'b'
+    sw $t1 -16($s0)
+				# load 'c'->$t1
+    li $t1 'c'
+# para_name:'c'
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 64
+    sw $t1 0($s0)
+    jal hanoi
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+# out func______

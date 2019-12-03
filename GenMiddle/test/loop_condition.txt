@@ -15,10 +15,10 @@ void main() {
     } else {
         printf("no2");
     }
-    if (const5 >= const6) {
+    if (const5 <= const6) {
         printf("yes2");
     }
-    for (var5 = 0;var5 < const1;var++) {
+    for (var5 = 0;var5 < const1;var5=var5+1) {
          
     }
     if (var5 == const1) {
@@ -26,38 +26,38 @@ void main() {
     }
     do {
         var5 = var5 + 1;
-    } while (var <= 10)
-    if (var5 == 10) {
+    } while (var5 <= 10)
+    if (var5 == 11) {
         printf("yes4");
     }
     while (var5 <= 20) {
-        var5 = var + 3;
+        var5 = var5 + 3;
     }
-    if (var5 == 22) {
+    if (var5 == 23) {
         printf("yes5");
     }
-    if (var5 >= 22) {
+    if (var5 >= 23) {
         printf("yes6");
     }
-    if (var5 <= 22) {
+    if (var5 <= 23) {
         printf("yes7");
     }
-    if (var5 != 22) {
+    if (var5 != 23) {
         
     }
     else {
-        printf("yes8);
+        printf("yes8");
     }
-    if (var5 > 22) {
+    if (var5 > 23) {
+        printf("no8")
+    }
+    else {
+        printf("yes9");
+    }
+    if (var5 < 23) {
         
     }
     else {
-        printf("yes9);
-    }
-    if (var5 < 22) {
-        
-    }
-    else {
-        printf("yes10);
+        printf("yes10");
     }
 }

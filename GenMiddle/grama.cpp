@@ -23,7 +23,8 @@ int v0_used = 0;
 //been use:0 
 //wait to be used:1
 
-map<string, vector<string>> funcRecord;
+//Type name
+map<string, vector<middleCode>> funcParaRecord;
 
 void constDefine() {
 	int id = watch();
@@ -88,7 +89,7 @@ void constDefine() {
 		if (watch() == 2) {
 			printWord(getsym()); //char
 			string alpha(token);
-			middleTable.addDefine("CONST", iden, "CHAR", alpha);
+			middleTable.addDefine("CONST", iden, "CHAR", "\'" + alpha + "\'");
 		}
 		else {
 			printError('o');
@@ -104,7 +105,7 @@ void constDefine() {
 			if (watch() == 2) {
 				printWord(getsym()); //char
 				string alpha(token);
-				middleTable.addDefine("CONST", iden, "CHAR", alpha);
+				middleTable.addDefine("CONST", iden, "CHAR", "\'" + alpha + "\'");
 			}
 			else {
 				printError('o');
@@ -289,6 +290,7 @@ int statementClassifer() {
 
 void valueTable(string funcName) {
 	string ret;
+	cout << "valueTable" << endl;
 	int id = watch(), index = 0, type, num, enable = 1;
 	if (lastFuncCallIndex == -1) {
 		enable = 0;
@@ -298,6 +300,7 @@ void valueTable(string funcName) {
 		num = sym_table.table[lastFuncCallIndex].parameterNum;
 	}
 	if (id == 31) {//empty
+		middleTable.addDefine("CALL_FUNC", funcName, "", "");
 		if (enable && num != 0)
 			printError('d');
 		if (debug)
@@ -316,8 +319,10 @@ void valueTable(string funcName) {
 		index++;
 		type = expression(ret);
 		middleTable.addDefine("PUSH_PARA", ret, funcName, to_string((num << 16) + num - index));
-		if (enable && index <= num && type != sym_table.functionParaType(index))
+		if (enable && index <= num && type != sym_table.functionParaType(index)) {
 			printError('e');
+			//cout << "index: "+to_string(index)+" now:" << type << " required:" << sym_table.functionParaType(index)<<" name:"+sym_table.table[lastFuncCallIndex+index].name << endl;
+		}
 		id = watch();
 	}
 	if (enable && num != index)
@@ -330,7 +335,7 @@ void valueTable(string funcName) {
 
 void returnFuncStatement(string& name) {
 	int id = watch();
-	string funcName;
+	string funcName,type;
 	if (id == 0) {//identify
 		funcName = token;
 		lastFuncCallIndex = sym_table.getFunctionIndex();
@@ -338,7 +343,9 @@ void returnFuncStatement(string& name) {
 		//middleTable.addDefine("CALL_FUNC", token, "", "");
 		if (sym_table.checkExist() == NOEXIST)
 			printError('c');
+		type = (sym_table.checkExist() == INT) ? "INT" : "CHAR";
 		id = watch();
+		cout << "call_func" << endl;
 		//fprintf(fc, "id:%d\n", id);
 		if (id == 30) {//(
 			printWord(getsym());
@@ -347,7 +354,12 @@ void returnFuncStatement(string& name) {
 			if (id == 31) //)
 				printWord(getsym());
 		}
-		name = middleTable.addTemp("ADD", "RET", "0");
+		if (type == "INT")
+			name = middleTable.addIntTemp("ADD", "RET", "0");
+		else if (type == "CHAR") {
+			name = middleTable.addCharTemp("ADD", "RET", "0");
+
+		}
 	}
 	if (debug)
 		fprintf(fc, "<有返回值函数调用语句>\n");
@@ -364,6 +376,7 @@ void noReturnFuncStatement() {
 		if (sym_table.checkExist() == NOEXIST)
 			printError('c');
 		id = watch();
+		cout << "call_func" << endl;
 		if (id == 30) {//(
 			printWord(getsym());
 			valueTable(funcName);
@@ -419,7 +432,7 @@ int factor(string& name) {//may be a question
 				string ind;
 				printWord(getsym());// [
 				arrayType = expression(ind); //expression
-				name = middleTable.addTemp("LOAD_ARR", name, ind);
+				name = middleTable.addIntTemp("LOAD_ARR", name, ind);
 				if (arrayType != INT)
 					printError('i');
 				id = watch();
@@ -466,7 +479,7 @@ int term(string& name) {
 		string ret1;
 		printWord(getsym());
 		factor(ret1);
-		ret = middleTable.addTemp(id == 19 ? "MUL" : "DIV", ret, ret1);
+		ret = middleTable.addIntTemp(id == 19 ? "MUL" : "DIV", ret, ret1);
 		id = watch();
 		type = INT;
 	}
@@ -518,7 +531,7 @@ int expression(string& name) {
 		string ret1;
 		printWord(getsym());
 		term(ret1);
-		ret = middleTable.addTemp(id == 17 ? "ADD" : "SUB", ret, ret1);
+		ret = middleTable.addIntTemp(id == 17 ? "ADD" : "SUB", ret, ret1);
 		id = watch();
 		type = INT;
 	}
@@ -790,11 +803,11 @@ void printfStatement() { //string may be a question
 		printWord(getsym());
 		string rec;
 		int type = expression(rec);
-		middleTable.addDefine("PRINT", rec, "1", type ? "INT" : "CHAR");
+		middleTable.addDefine("PRINT", rec, "1", "1");
 	}
 	else if (watch() == 3 && watchTwice() == 31) {//string )
 		printWord(getsym());
-		middleTable.addDefine("PRINT", token, "0", "");
+		middleTable.addDefine("PRINT", token, "0", "1");
 		if (debug)
 			fprintf(fc, "<字符串>\n");
 	}
@@ -1018,7 +1031,7 @@ void recordNoFunc() {
 void returnFunc() {
 	int id = watch(), lastId, num = 0;
 	string iden;
-	vector<string> nameList;//record paraName
+	vector<middleCode> nameList;//record paraName
 	if (id == 5 || id == 6) {
 		printWord(getsym());// int/char
 		lastId = id;
@@ -1055,13 +1068,13 @@ void returnFunc() {
 					if (lastId == 5) {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "INT", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("INT",iden,"",""));
 						sym_table.add(PARAMETER, INT);
 					}
 					else {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "CHAR", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("CHAR", iden, "", ""));
 						sym_table.add(PARAMETER, CHAR);
 					}
 					num++;
@@ -1083,13 +1096,13 @@ void returnFunc() {
 					if (lastId == 5) {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "INT", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("INT", iden, "", ""));
 						sym_table.add(PARAMETER, INT);
 					}
 					else {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "CHAR", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("CHAR", iden, "", ""));
 						sym_table.add(PARAMETER, CHAR);
 					}
 					num++;
@@ -1097,7 +1110,7 @@ void returnFunc() {
 				id = watch();
 			}
 			sym_table.setParaNum(num);
-			funcRecord[iden] = nameList;
+			funcParaRecord[iden] = nameList;
 			/**/
 			if (debug)
 				fprintf(fc, "<参数表>\n");
@@ -1129,7 +1142,7 @@ void returnFunc() {
 void noReturnFunc() {
 	int id = watch(), lastId, num = 0;
 	string iden;
-	vector<string> nameList;//record paraName
+	vector<middleCode> nameList;//record paraName
 	if (id == 7) {
 		printWord(getsym());// void
 		id = watch();
@@ -1154,13 +1167,13 @@ void noReturnFunc() {
 					if (lastId == 5) {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "INT", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("INT",iden,"",""));
 						sym_table.add(PARAMETER, INT);
 					}
 					else {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "CHAR", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("CHAR", iden, "", ""));
 						sym_table.add(PARAMETER, CHAR);
 					}
 					printWord(getsym());
@@ -1181,13 +1194,13 @@ void noReturnFunc() {
 					if (lastId == 5) {
 						string iden(token);
 						middleTable.addDefine("PARA", iden, "INT", "");
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("INT", iden, "", ""));
 						sym_table.add(PARAMETER, INT);
 					}
 					else {
 						sym_table.add(PARAMETER, CHAR);
 						string iden(token);
-						nameList.push_back(iden);
+						nameList.push_back(middleCode("CHAR", iden, "", ""));
 						middleTable.addDefine("PARA", iden, "CHAR", "");
 
 					}
@@ -1218,7 +1231,7 @@ void noReturnFunc() {
 				printWord(getsym());
 			}
 			sym_table.outFunction();
-			funcRecord[iden] = nameList;
+			funcParaRecord[iden] = nameList;
 			middleTable.addDefine("FUNCRET", "", "", "");
 			middleTable.addDefine("FUNCTAIL", "", "", "");
 		}

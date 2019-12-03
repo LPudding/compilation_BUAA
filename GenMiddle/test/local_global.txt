@@ -1,0 +1,13 @@
+const int a=5;
+void fun(int a){
+    int a;
+    a = 55;
+    printf(a);
+}
+
+void main(){
+    int a;
+    a = -1;
+    printf(a);
+    fun(a);
+}

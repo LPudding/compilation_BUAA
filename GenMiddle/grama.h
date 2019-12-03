@@ -10,7 +10,7 @@
 #define FUNCRETURN 8
 #define EMPTY 9
 
-extern map<string, vector<string>> funcRecord;
+extern map<string, vector<middleCode>> funcParaRecord;
 
 void constDefine();
 

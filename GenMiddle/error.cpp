@@ -146,7 +146,7 @@ symTable sym_table;
 void printError(char ch) {
 	if (!isPrint && enable) {
 		printf("%d %c\n", lineNum, ch);
-		//fprintf(fe, "%d %c\n", lineNum, ch);
+		fprintf(fe, "%d %c\n", lineNum, ch);
 		isPrint = true;
 	}
 }

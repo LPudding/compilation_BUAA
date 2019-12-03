@@ -1,2 +1,16 @@
 ﻿  grama.cpp
+  translate.cpp
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(55,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(61,34): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(63,24): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(78,28): warning C4018: “>=”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(99,29): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(107,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(369,29): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(389,11): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(516,21): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(545,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(569,20): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(587,20): warning C4018: “<”: 有符号/无符号不匹配
   GenMiddle.vcxproj -> D:\senior3-1\compile\code\MiddleGen\GenMiddle\Debug\GenMiddle.exe

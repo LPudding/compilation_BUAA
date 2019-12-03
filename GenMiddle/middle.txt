@@ -1,32 +1,7 @@
-    FUNC    fun    INT    
-    PARA    a    INT    
-    PARA    b    INT    
-    PARA    c    INT    
-    FUNCHEAD    fun        
-    ADD LRY0 a b 
-    ADD    c    LRY0    0
-    PRINT    a    1    INT
-    PRINT    b    1    INT
-    PRINT    c    1    INT
-    FUNCRET    c        
-    FUNCTAIL            
     MAINHEAD            
-    VAR    i    INT    0
-    VAR    j    INT    0
-    VAR    k    INT    0
-    ADD    i    0    0
-    ADD    j    1    0
-    ADD    k    2    0
-    PUSH_PARA    i    fun    196610
-    PUSH_PARA    j    fun    196609
-    PUSH_PARA    i    fun    196610
-    PUSH_PARA    j    fun    196609
-    PUSH_PARA    k    fun    196608
-    CALL_FUNC    fun        
-    ADD LRY1 RET 0 
-    PUSH_PARA    LRY1    fun    196608
-    CALL_FUNC    fun        
-    ADD LRY2 RET 0 
-    ADD    k    LRY2    0
-    PRINT    k    1    INT
+    VAR    n    INT    0
+    ADD    INT0    -'a'    'b'
+    ADD    n    INT0    0
+    PRINT    a+b    0    0
+    PRINT    n    1    1
     EXIT            

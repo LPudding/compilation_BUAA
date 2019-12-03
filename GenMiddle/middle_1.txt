@@ -1,0 +1,643 @@
+    CONST    const_int_1    INT    12345679
+    CONST    const_int_2    INT    0
+    CONST    const_int_3    INT    -0
+    CONST    const_int_4    INT    -12345679
+    CONST    const_char_1    CHAR    '9'
+    CONST    const_char_2    CHAR    '_'
+    CONST    const_char_3    CHAR    '+'
+    CONST    const_char_4    CHAR    '*'
+    VAR    global_int_array_1    INT    5
+    VAR    global_int_1    INT    0
+    VAR    global_char_array_1    CHAR    5
+    VAR    global_char_1    CHAR    0
+    VAR    global_int_2    INT    0
+    VAR    global_int_array_2    INT    5
+    VAR    global_char_2    CHAR    0
+    VAR    global_char_array_2    CHAR    5
+    VAR    global_char_array_3    CHAR    10
+    PARA    n    INT    
+    PARA    from    CHAR    
+    PARA    tmp    CHAR    
+    PARA    to    CHAR    
+    FUNCHEAD    hanoi        
+    CONDITION    >    n    0
+    BZ    not_If0    >    
+    SUB    INT0    n    1
+    PUSH_PARA    INT0    hanoi    262147
+    PUSH_PARA    from    hanoi    262146
+    PUSH_PARA    to    hanoi    262145
+    PUSH_PARA    tmp    hanoi    262144
+    CALL_FUNC    hanoi        
+    PRINT    take    0    
+    PRINT    n    1    INT
+    PRINT    from    0    
+    PRINT    from    1    INT
+    PRINT    to    0    
+    PRINT    to    1    INT
+    SUB    INT1    n    1
+    PUSH_PARA    INT1    hanoi    262147
+    PUSH_PARA    tmp    hanoi    262146
+    PUSH_PARA    from    hanoi    262145
+    PUSH_PARA    to    hanoi    262144
+    CALL_FUNC    hanoi        
+    LABEL    not_If0        
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    Fibonacci    INT    
+    PARA    n    INT    
+    FUNCHEAD    Fibonacci        
+    CONDITION    ==    n    0
+    BZ    not_If1    ==    
+    FUNCRET    0        
+    LABEL    not_If1        
+    CONDITION    ==    n    1
+    BZ    not_If2    ==    
+    FUNCRET    1        
+    LABEL    not_If2        
+    SUB    INT2    n    1
+    PUSH_PARA    INT2    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT3    RET    0
+    SUB    INT4    n    2
+    PUSH_PARA    INT4    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT5    RET    0
+    ADD    INT6    INT3    INT5
+    FUNCRET    INT6        
+    FUNCTAIL            
+    FUNC    fac    INT    
+    PARA    n    INT    
+    FUNCHEAD    fac        
+    CONDITION    ==    n    1
+    BZ    not_If3    ==    
+    FUNCRET    1        
+    LABEL    not_If3        
+    SUB    INT7    n    1
+    PUSH_PARA    INT7    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT8    RET    0
+    MUL    INT9    n    INT8
+    FUNCRET    INT9        
+    FUNCTAIL            
+    FUNCHEAD    initGlobalArray        
+    STORE_ARR    0    global_int_array_1    0
+    STORE_ARR    1    global_int_array_1    1
+    LOAD_ARR    INT10    global_int_array_1    0
+    LOAD_ARR    INT11    global_int_array_1    1
+    ADD    INT12    INT10    INT11
+    STORE_ARR    INT12    global_int_array_1    2
+    LOAD_ARR    INT13    global_int_array_1    2
+    LOAD_ARR    INT14    global_int_array_1    1
+    ADD    INT15    INT13    INT14
+    STORE_ARR    INT15    global_int_array_1    3
+    LOAD_ARR    INT16    global_int_array_1    3
+    LOAD_ARR    INT17    global_int_array_1    2
+    ADD    INT18    INT16    INT17
+    STORE_ARR    INT18    global_int_array_1    4
+    LOAD_ARR    INT19    global_int_array_1    1
+    STORE_ARR    INT19    global_int_array_2    0
+    LOAD_ARR    INT20    global_int_array_2    0
+    LOAD_ARR    INT21    global_int_array_1    2
+    MUL    INT22    INT20    INT21
+    STORE_ARR    INT22    global_int_array_2    1
+    LOAD_ARR    INT23    global_int_array_2    1
+    LOAD_ARR    INT24    global_int_array_1    3
+    MUL    INT25    INT23    INT24
+    STORE_ARR    INT25    global_int_array_2    2
+    LOAD_ARR    INT26    global_int_array_2    2
+    LOAD_ARR    INT27    global_int_array_1    4
+    MUL    INT28    INT26    INT27
+    STORE_ARR    INT28    global_int_array_2    3
+    LOAD_ARR    INT29    global_int_array_2    3
+    LOAD_ARR    INT30    global_int_array_1    4
+    DIV    INT31    INT29    INT30
+    STORE_ARR    INT31    global_int_array_2    4
+    STORE_ARR    'a'    global_char_array_1    0
+    STORE_ARR    'A'    global_char_array_1    1
+    STORE_ARR    'z'    global_char_array_1    2
+    STORE_ARR    'Z'    global_char_array_1    3
+    STORE_ARR    '_'    global_char_array_1    4
+    STORE_ARR    '+'    global_char_array_2    0
+    STORE_ARR    '-'    global_char_array_2    1
+    STORE_ARR    '*'    global_char_array_2    2
+    STORE_ARR    '/'    global_char_array_2    3
+    STORE_ARR    '6'    global_char_array_2    4
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    PARA    a    INT    
+    PARA    b    CHAR    
+    PARA    c    INT    
+    PARA    d    CHAR    
+    FUNCHEAD    assignGlobal        
+    ADD    global_int_1    a    0
+    ADD    global_char_1    b    0
+    ADD    global_int_2    c    0
+    ADD    global_char_2    d    0
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    printGlobalConst        
+    PRINT    const_int_1    1    INT
+    PRINT    const_int_2    1    INT
+    PRINT    const_int_3    1    INT
+    PRINT    const_int_4    1    INT
+    PRINT    const_char_1    1    INT
+    PRINT    const_char_2    1    INT
+    PRINT    const_char_3    1    INT
+    PRINT    const_char_4    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    printGlobalVar        
+    PRINT    global_int_1    1    INT
+    PRINT    global_int_2    1    INT
+    PRINT    global_char_1    1    INT
+    PRINT    global_char_2    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    printGlobalArray        
+    LOAD_ARR    INT32    global_int_array_1    0
+    PRINT    INT32    1    INT
+    LOAD_ARR    INT33    global_int_array_1    1
+    PRINT    INT33    1    INT
+    LOAD_ARR    INT34    global_int_array_1    2
+    PRINT    INT34    1    INT
+    LOAD_ARR    INT35    global_int_array_1    3
+    PRINT    INT35    1    INT
+    LOAD_ARR    INT36    global_int_array_1    4
+    PRINT    INT36    1    INT
+    LOAD_ARR    INT37    global_int_array_2    0
+    PRINT    INT37    1    INT
+    LOAD_ARR    INT38    global_int_array_2    1
+    PRINT    INT38    1    INT
+    LOAD_ARR    INT39    global_int_array_2    2
+    PRINT    INT39    1    INT
+    LOAD_ARR    INT40    global_int_array_2    3
+    PRINT    INT40    1    INT
+    LOAD_ARR    INT41    global_int_array_2    4
+    PRINT    INT41    1    INT
+    LOAD_ARR    INT42    global_char_array_1    0
+    PRINT    INT42    1    INT
+    LOAD_ARR    INT43    global_char_array_1    1
+    PRINT    INT43    1    INT
+    LOAD_ARR    INT44    global_char_array_1    2
+    PRINT    INT44    1    INT
+    LOAD_ARR    INT45    global_char_array_1    3
+    PRINT    INT45    1    INT
+    LOAD_ARR    INT46    global_char_array_1    4
+    PRINT    INT46    1    INT
+    LOAD_ARR    INT47    global_char_array_2    0
+    PRINT    INT47    1    INT
+    LOAD_ARR    INT48    global_char_array_2    1
+    PRINT    INT48    1    INT
+    LOAD_ARR    INT49    global_char_array_2    2
+    PRINT    INT49    1    INT
+    LOAD_ARR    INT50    global_char_array_2    3
+    PRINT    INT50    1    INT
+    LOAD_ARR    INT51    global_char_array_2    4
+    PRINT    INT51    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    testGlobal        
+    CALL_FUNC    initGlobalArray        
+    PUSH_PARA    const_int_1    assignGlobal    262147
+    PUSH_PARA    const_char_1    assignGlobal    262146
+    PUSH_PARA    const_int_4    assignGlobal    262145
+    PUSH_PARA    const_char_4    assignGlobal    262144
+    CALL_FUNC    assignGlobal        
+    CALL_FUNC    printGlobalConst        
+    CALL_FUNC    printGlobalVar        
+    CALL_FUNC    printGlobalArray        
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    testReturnInt    INT    
+    PARA    a    INT    
+    FUNCHEAD    testReturnInt        
+    ADD    INT52    a    1
+    FUNCRET    INT52        
+    FUNCTAIL            
+    FUNC    testReturnChar    CHAR    
+    PARA    a    INT    
+    FUNCHEAD    testReturnChar        
+    CONDITION    ==    a    1
+    BZ    not_If4    ==    
+    FUNCRET    'a'        
+    GOTO    if_End5        
+    LABEL    not_If4        
+    CONDITION    ==    a    2
+    BZ    not_If6    ==    
+    FUNCRET    'b'        
+    GOTO    if_End7        
+    LABEL    not_If6        
+    CONDITION    ==    a    3
+    BZ    not_If8    ==    
+    FUNCRET    'c'        
+    LABEL    not_If8        
+    LABEL    if_End7        
+    LABEL    if_End5        
+    FUNCRET    '_'        
+    FUNCTAIL            
+    FUNCHEAD    testReturn        
+    PUSH_PARA    3    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT53    RET    0
+    PUSH_PARA    2    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT54    RET    0
+    ADD    INT55    INT53    INT54
+    PUSH_PARA    INT55    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT56    RET    0
+    PUSH_PARA    INT56    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT57    RET    0
+    PRINT    INT57    1    INT
+    PUSH_PARA    1    testReturnChar    65536
+    CALL_FUNC    testReturnChar        
+    ADD    CHAR0    RET    0
+    PRINT    CHAR0    1    INT
+    PUSH_PARA    2    testReturnChar    65536
+    CALL_FUNC    testReturnChar        
+    ADD    CHAR1    RET    0
+    PRINT    CHAR1    1    INT
+    PUSH_PARA    3    testReturnChar    65536
+    CALL_FUNC    testReturnChar        
+    ADD    CHAR2    RET    0
+    PRINT    CHAR2    1    INT
+    PUSH_PARA    4    testReturnChar    65536
+    CALL_FUNC    testReturnChar        
+    ADD    CHAR3    RET    0
+    PRINT    CHAR3    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    testAssignAndExp        
+    CONST    const_int_1    INT    1
+    CONST    const_int_2    INT    -1
+    CONST    const_int_3    INT    0
+    CONST    const_char_1    CHAR    'a'
+    CONST    const_char_2    CHAR    'A'
+    CONST    const_char_3    CHAR    'b'
+    VAR    int_temp_1    INT    0
+    VAR    int_temp_2    INT    0
+    VAR    int_array    INT    2
+    VAR    int_temp_3    INT    0
+    VAR    char_temp_1    CHAR    0
+    VAR    char_array    CHAR    2
+    VAR    char_temp_2    CHAR    0
+    PUSH_PARA    5    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT58    RET    0
+    PUSH_PARA    INT58    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT59    RET    0
+    PUSH_PARA    INT59    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT60    RET    0
+    MUL    INT61    const_int_2    const_int_4
+    DIV    INT62    const_int_1    INT61
+    ADD    INT63    INT60    INT62
+    PUSH_PARA    3    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT64    RET    0
+    DIV    INT65    INT63    INT64
+    ADD    INT66    const_int_1    INT65
+    ADD    int_temp_1    INT66    0
+    PUSH_PARA    3    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT67    RET    0
+    PUSH_PARA    2    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT68    RET    0
+    ADD    INT69    INT67    INT68
+    PUSH_PARA    INT69    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT70    RET    0
+    ADD    int_temp_2    INT70    0
+    PUSH_PARA    0    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT71    RET    0
+    STORE_ARR    INT71    int_array    const_int_3
+    MUL    INT72    const_int_2    const_int_4
+    PUSH_PARA    0    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT73    RET    0
+    MUL    INT74    INT73    const_int_4
+    ADD    INT75    INT72    INT74
+    SUB    INT76    const_int_1    INT75
+    PUSH_PARA    const_int_1    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT77    RET    0
+    ADD    INT78    const_int_1    INT77
+    STORE_ARR    INT78    int_array    INT76
+    LOAD_ARR    INT79    int_array    const_int_3
+    MUL    INT80    const_int_2    const_int_4
+    PUSH_PARA    0    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT81    RET    0
+    MUL    INT82    INT81    const_int_4
+    ADD    INT83    INT80    INT82
+    SUB    INT84    const_int_1    INT83
+    LOAD_ARR    INT85    int_array    INT84
+    SUB    INT86    'b'    'a'
+    MUL    INT87    INT85    INT86
+    SUB    INT88    INT79    INT87
+    ADD    int_temp_3    INT88    0
+    LOAD_ARR    INT89    int_array    0
+    PUSH_PARA    INT89    testReturnChar    65536
+    CALL_FUNC    testReturnChar        
+    ADD    CHAR4    RET    0
+    STORE_ARR    CHAR4    char_array    0
+    MUL    INT90    const_int_2    const_int_4
+    PUSH_PARA    0    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT91    RET    0
+    MUL    INT92    INT91    const_int_4
+    ADD    INT93    INT90    INT92
+    SUB    INT94    const_int_1    INT93
+    LOAD_ARR    INT95    int_array    1
+    ADD    INT96    INT95    const_int_1
+    PUSH_PARA    INT96    testReturnChar    65536
+    CALL_FUNC    testReturnChar        
+    ADD    CHAR5    RET    0
+    STORE_ARR    CHAR5    char_array    INT94
+    LOAD_ARR    INT97    char_array    0
+    ADD    char_temp_1    INT97    0
+    MUL    INT98    const_int_2    const_int_4
+    PUSH_PARA    0    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT99    RET    0
+    MUL    INT100    INT99    const_int_4
+    ADD    INT101    INT98    INT100
+    SUB    INT102    const_int_1    INT101
+    LOAD_ARR    INT103    char_array    INT102
+    ADD    char_temp_2    INT103    0
+    PRINT    int_temp_1    1    INT
+    PRINT    int_temp_2    1    INT
+    PRINT    int_temp_3    1    INT
+    LOAD_ARR    INT104    int_array    const_int_3
+    PRINT    INT104    1    INT
+    MUL    INT105    const_int_2    const_int_4
+    PUSH_PARA    0    testReturnInt    65536
+    CALL_FUNC    testReturnInt        
+    ADD    INT106    RET    0
+    MUL    INT107    INT106    const_int_4
+    ADD    INT108    INT105    INT107
+    SUB    INT109    const_int_1    INT108
+    LOAD_ARR    INT110    int_array    INT109
+    PRINT    INT110    1    INT
+    PRINT    char_temp_1    1    INT
+    PRINT    char_temp_2    1    INT
+    LOAD_ARR    INT111    char_array    0
+    PRINT    INT111    1    INT
+    LOAD_ARR    INT112    char_array    const_int_1
+    PRINT    INT112    1    INT
+    LOAD_ARR    INT113    char_array    0
+    LOAD_ARR    INT114    char_array    0
+    MUL    INT115    INT114    char_temp_2
+    ADD    INT116    INT113    INT115
+    MUL    INT117    char_temp_1    INT116
+    PRINT    INT117    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    testIO        
+    SCAN    global_int_1        
+    SCAN    global_char_1        
+    PRINT    !@\\n#$^&*()Qqaa123[];',./    0    
+    PRINT    global_int_1    1    INT
+    PRINT    global_char_1    1    INT
+    SCAN    global_int_1        
+    SCAN    global_char_1        
+    PRINT    !@\\n#$^&*()Qqaa123[];',./    0    0
+    PRINT    global_int_1    1    INT
+    PRINT    global_char_1    1    INT
+    SCAN    global_char_1        
+    SCAN    global_int_1        
+    PRINT    !@\\n#$^&*()Qqaa123[];',./    0    0
+    PRINT    global_char_1    1    INT
+    PRINT    global_int_1    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    testIfWhile        
+    VAR    i    INT    0
+    VAR    j    INT    0
+    VAR    k    INT    0
+    VAR    a    CHAR    0
+    VAR    b    CHAR    0
+    VAR    c    CHAR    0
+    VAR    d    CHAR    0
+    ADD    k    10    0
+    ADD    a    '+'    0
+    ADD    b    '-'    0
+    ADD    c    '*'    0
+    ADD    d    '/'    0
+    CONDITION    >    k    0
+    BZ    not_If9    >    
+    CONDITION    <=    k    10
+    BZ    not_If10    <=    
+    ADD    i    0    0
+    LABEL    while_Begin11        
+    DIV    INT118    k    2
+    CONDITION    <    i    INT118
+    BZ    while_End12    <    
+    DIV    INT119    i    2
+    MUL    INT120    INT119    2
+    SUB    INT121    i    INT120
+    CONDITION    ==    INT121    0
+    BZ    not_If13    ==    
+    STORE_ARR    a    global_char_array_3    i
+    GOTO    if_End14        
+    LABEL    not_If13        
+    DIV    INT122    i    2
+    MUL    INT123    INT122    2
+    SUB    INT124    i    INT123
+    CONDITION    ==    INT124    1
+    BZ    not_If15    ==    
+    STORE_ARR    b    global_char_array_3    i
+    LABEL    not_If15        
+    LABEL    if_End14        
+    LOAD_ARR    INT125    global_char_array_3    i
+    PRINT    INT125    1    INT
+    ADD    INT126    i    1
+    ADD    i    INT126    0
+    GOTO    while_Begin11        
+    LABEL    while_End12        
+    LABEL    while_Begin16        
+    CONDITION    <    i    k
+    BZ    while_End17    <    
+    DIV    INT127    i    2
+    MUL    INT128    INT127    2
+    SUB    INT129    i    INT128
+    CONDITION    ==    INT129    0
+    BZ    not_If18    ==    
+    STORE_ARR    c    global_char_array_3    i
+    GOTO    if_End19        
+    LABEL    not_If18        
+    STORE_ARR    d    global_char_array_3    i
+    LABEL    if_End19        
+    LOAD_ARR    INT130    global_char_array_3    i
+    PRINT    INT130    1    INT
+    ADD    INT131    i    1
+    ADD    i    INT131    0
+    GOTO    while_Begin16        
+    LABEL    while_End17        
+    LABEL    not_If10        
+    LABEL    not_If9        
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    testSwitch        
+    CONST    sum    INT    3
+    VAR    int_1    INT    0
+    VAR    i    INT    0
+    VAR    char_1    CHAR    0
+    ADD    i    0    0
+    ADD    int_1    0    0
+    LABEL    while_Begin20        
+    CONDITION    <    i    sum
+    BZ    while_End21    <    
+    CONDITION    ==    int_1    0
+    BZ    not_If22    ==    
+    ADD    char_1    'a'    0
+    PRINT    char_1    1    INT
+    GOTO    if_End23        
+    LABEL    not_If22        
+    CONDITION    ==    int_1    1
+    BZ    not_If24    ==    
+    ADD    char_1    'b'    0
+    PRINT    char_1    1    INT
+    GOTO    if_End25        
+    LABEL    not_If24        
+    ADD    char_1    const_char_2    0
+    PRINT    char_1    1    INT
+    LABEL    if_End25        
+    LABEL    if_End23        
+    CONDITION    ==    char_1    'a'
+    BZ    not_If26    ==    
+    ADD    INT132    i    1
+    ADD    int_1    INT132    0
+    PRINT    int_1    1    INT
+    GOTO    if_End27        
+    LABEL    not_If26        
+    CONDITION    ==    char_1    'b'
+    BZ    not_If28    ==    
+    ADD    int_1    sum    0
+    PRINT    int_1    1    INT
+    LABEL    not_If28        
+    LABEL    if_End27        
+    ADD    INT133    i    1
+    ADD    i    INT133    0
+    GOTO    while_Begin20        
+    LABEL    while_End21        
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    func_ret_int_1    INT    
+    PARA    i_1    INT    
+    PARA    i_2    INT    
+    PARA    c_1    CHAR    
+    PARA    c_2    CHAR    
+    FUNCHEAD    func_ret_int_1        
+    VAR    i_temp    INT    0
+    VAR    c_temp    CHAR    0
+    PRINT    INPUT of func_ret_int_1:    0    
+    PRINT    i_1    1    INT
+    PRINT    i_2    1    INT
+    PRINT    c_1    1    INT
+    PRINT    c_2    1    INT
+    ADD    i_temp    i_1    0
+    ADD    i_1    i_2    0
+    ADD    i_2    i_temp    0
+    ADD    c_temp    c_1    0
+    ADD    c_1    c_2    0
+    ADD    c_2    c_temp    0
+    PRINT    OPERATE of func_ret_int_1:    0    
+    PRINT    i_1    1    INT
+    PRINT    i_2    1    INT
+    PRINT    c_1    1    INT
+    PRINT    c_2    1    INT
+    FUNCRET    i_1        
+    FUNCTAIL            
+    FUNCHEAD    testPara        
+    VAR    i    INT    0
+    VAR    j    INT    0
+    VAR    c    CHAR    0
+    VAR    d    CHAR    0
+    ADD    i    const_int_1    0
+    ADD    j    const_int_4    0
+    ADD    c    'A'    0
+    ADD    d    'Z'    0
+    PUSH_PARA    i    func_ret_int_1    262147
+    PUSH_PARA    j    func_ret_int_1    262146
+    PUSH_PARA    c    func_ret_int_1    262145
+    PUSH_PARA    d    func_ret_int_1    262144
+    CALL_FUNC    func_ret_int_1        
+    ADD    INT134    RET    0
+    PRINT    INT134    1    INT
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    FUNCHEAD    testRecursion        
+    PUSH_PARA    2    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT135    RET    0
+    PUSH_PARA    3    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT136    RET    0
+    MUL    INT137    INT135    INT136
+    PUSH_PARA    INT137    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT138    RET    0
+    PUSH_PARA    3    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT139    RET    0
+    PUSH_PARA    4    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT140    RET    0
+    ADD    INT141    INT139    INT140
+    PUSH_PARA    INT141    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT142    RET    0
+    SUB    INT143    INT138    INT142
+    PUSH_PARA    2    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT144    RET    0
+    PUSH_PARA    3    Fibonacci    65536
+    CALL_FUNC    Fibonacci        
+    ADD    INT145    RET    0
+    ADD    INT146    INT144    INT145
+    PUSH_PARA    INT146    fac    65536
+    CALL_FUNC    fac        
+    ADD    INT147    RET    0
+    DIV    INT148    INT143    INT147
+    PUSH_PARA    INT148    hanoi    262147
+    PUSH_PARA    'a'    hanoi    262146
+    PUSH_PARA    'b'    hanoi    262145
+    PUSH_PARA    'c'    hanoi    262144
+    CALL_FUNC    hanoi        
+    FUNCRET            
+    FUNCRET            
+    FUNCTAIL            
+    MAINHEAD            
+    PRINT    ************************************************    0    
+    PRINT    Start testing assign & exp:    0    
+    CALL_FUNC    testAssignAndExp        
+    PRINT    ************************************************    0    
+    PRINT    Start testing if & while:    0    
+    CALL_FUNC    testIfWhile        
+    PRINT    ************************************************    0    
+    PRINT    Start testing switch:    0    
+    CALL_FUNC    testSwitch        
+    PRINT    ************************************************    0    
+    PRINT    Start testing parameter:    0    
+    CALL_FUNC    testPara        
+    PRINT    ************************************************    0    
+    EXIT            
+    EXIT            

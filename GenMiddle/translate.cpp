@@ -17,16 +17,19 @@ vector<middleCode> stackTable;
 int stackIndex = 0;//current stack index
 int lastIndex;
 
-vector<string> paraList;
+//type name index num
+vector<middleCode> paraList;
 
 void dotData_gen() {
 	bool isGlobal = true;
+	bool isMain = false;
 	for (vector<middleCode>::const_iterator iter = middleTable.table.begin(); iter != middleTable.table.end(); ++iter) {
-		if (iter->Type == "FUNCHEAD" || iter->Type == "MAINHEAD") {
+		if (iter->Type == "FUNCHEAD") {
 			isGlobal = false;
 		}
-		if (iter->Type == "PRINT" && iter->op2 == "0") {//str
-			stringTable.push_back(iter->op1);
+		if (iter->Type == "MAINHEAD") {
+			isGlobal = false;
+			isMain = true;
 		}
 		if (isGlobal && iter->Type == "VAR") {
 			globalTable.push_back(middleCode(iter->op2, iter->op1, "", iter->op3));
@@ -34,12 +37,23 @@ void dotData_gen() {
 		if (isGlobal && iter->Type == "CONST") {
 			globalTable.push_back(middleCode(iter->op2, iter->op1, iter->op3, "0"));
 		}
-
+		if (isMain && iter->Type == "PRINT" && iter->op2 == "0") {//str
+			stringTable.push_back(iter->op1);
+		}
+	}
+	isMain = false;
+	for (vector<middleCode>::const_iterator iter = middleTable.table.begin(); iter != middleTable.table.end(); ++iter) {
+		if (iter->Type == "MAINHEAD") {
+			isMain = true;
+		}
+		if (!isMain && iter->Type == "PRINT" && iter->op2 == "0") {//str
+			stringTable.push_back(iter->op1);
+		}
 	}
 	mips_code << ".data" << endl;
 	//string
 	for (int i = 0; i < stringTable.size(); i++) {
-		mips_code << stringName + to_string(i) + " : .asciiz \"" + stringTable[i] + "\\n\"" << endl;
+		mips_code << stringName + to_string(i) + " : .asciiz \"" + stringTable[i] + "\"" << endl;
 		stringTable[i] = stringName + to_string(i);
 	}
 	mips_code << stringName + " : .asciiz \"\\n\"" << endl;
@@ -55,9 +69,7 @@ void dotData_gen() {
 				type = "word " + globalTable[i].op2;
 			}
 			else {
-				int val = globalTable[i].op2[0];
-				string value = to_string(val);
-				type = "byte " + value;
+				type = "byte " + globalTable[i].op2;
 			}
 			string name = varName + to_string(j++);
 			globalTable[i].op2 = name;
@@ -102,40 +114,54 @@ int searchData(string name,string& globalName,string& type) {
 	return -2;
 }
 
-void dispatch(string name,string type) {
+void dispatch(string name,string type,string no) {
 	if (dispatchReg(name) == 0) {
-		stackTable.push_back(middleCode(type, name, "0", ""));
-		//mips_code << "define " + name << endl;
-		
+		stackTable.push_back(middleCode(type, name, no, ""));
+		mips_code << "#					define " + name << endl;
 	}
+}
+
+string getTempType(string name) {
+	string head = name.substr(0, 3);
+	if (head == "INT")
+		return head;
+	head = name.substr(0, 4);
+	if (head == "CHAR")
+		return head;
+	return "VOID";
 }
 
 //no can be a num or a var
 string loadVarToReg(string name, string no, string regName) {
 	mips_code << "				# load " + name + "->" + regName << endl;
+	
 	if (isNumStr(name)) {
 		mips_code << "    li " + regName + " " + name <<  endl;
 		return "INT";
-	}
-	if (name[0] == '\'') {
-		mips_code << "    li " + regName + " " + name << endl;
-		return "CHAR";
 	}
 	bool neg = false;
 	if (name[0] == '-') {
 		neg = true;
 		name = name.substr(1);
 	}
-	if (name == "RET") {
+	if (name[0] == '\'') {
+		if (neg)
+			mips_code << "    subi " + regName + " $0 " + name << endl;
+		else
+			mips_code << "    li " + regName + " " + name << endl;
+		
+		return "CHAR";
+	}
+	/*if (name == "RET") {
 		mips_code << "    move " + regName + " $v0" << endl;
 		if (neg)
 			mips_code << "    sub " + regName + " $0 " + regName << endl;
 		return "INT";
-	}
+	}*/
 	string globalName, type;
 	int index = searchData(name, globalName, type);
 	if (index == -2) {
-		dispatch(name, "INT");
+		dispatch(name, getTempType(name), "0");
 		index = searchData(name, globalName, type);
 	}
 	mips_code << "				# offset: " + to_string(index) + " no: " + no << endl;
@@ -146,7 +172,7 @@ string loadVarToReg(string name, string no, string regName) {
 		else {
 			loadVarToReg(no, "0", "$t1");
 			mips_code << "    sll $t1 $t1 2" << endl;
-			mips_code << "    li $t2 " + index << endl;
+			mips_code << "    li $t2 " + to_string(index) << endl;
 			mips_code << "    add $t1 $t1 $t2" << endl;
 			mips_code << "    sub $t1 $sp $t1" << endl;
 			mips_code << "    lw " + regName + " 0($t1)" << endl;
@@ -157,9 +183,9 @@ string loadVarToReg(string name, string no, string regName) {
 		mips_code << "    la " << "$t1 " + globalName << endl;
 		if (isNumStr(no)) {
 			if (type == "INT")
-				mips_code << "    lw " + regName + " -" + to_string(stoi(no) * 4) + "($t1)" << endl;
+				mips_code << "    lw " + regName + " " + to_string(stoi(no) * 4) + "($t1)" << endl;
 			else
-				mips_code << "    lb " + regName + " -" + to_string(stoi(no) * 4) + "($t1)" << endl;
+				mips_code << "    lb " + regName + " " + to_string(stoi(no) * 4) + "($t1)" << endl;
 		}
 		else {
 			loadVarToReg(no, "0", "$t2");
@@ -182,7 +208,7 @@ void storeRegToVar(string name, string no,string regName) {
 	int index = searchData(name, globalName, type);
 	mips_code << "				# store " + regName + "->" + name << endl;
 	if (index == -2) {
-		dispatch(name, "INT");
+		dispatch(name, getTempType(name), "0");
 		index = searchData(name, globalName, type);
 	}
 	if (index >= 0) {
@@ -192,7 +218,7 @@ void storeRegToVar(string name, string no,string regName) {
 		else {
 			loadVarToReg(no, "0", "$t1");
 			mips_code << "    sll $t1 $t1 2" << endl;
-			mips_code << "    li $t2 " + index << endl;
+			mips_code << "    li $t2 " + to_string(index) << endl;
 			mips_code << "    add $t1 $t1 $t2" << endl;
 			mips_code << "    sub $t1 $sp $t1" << endl;
 			mips_code << "    sw " + regName + " 0($t1)" << endl;
@@ -202,9 +228,9 @@ void storeRegToVar(string name, string no,string regName) {
 		mips_code << "    la " << "$t1 " + globalName << endl;
 		if (isNumStr(no)) {
 			if (type == "INT")
-				mips_code << "    sw " + regName + " -" + to_string(stoi(no) * 4) + "($t1)" << endl;
+				mips_code << "    sw " + regName + " " + to_string(stoi(no) * 4) + "($t1)" << endl;
 			else
-				mips_code << "    sb " + regName + " -" + to_string(stoi(no) * 4) + "($t1)" << endl;
+				mips_code << "    sb " + regName + " " + to_string(stoi(no) * 4) + "($t1)" << endl;
 		}
 		else {
 			loadVarToReg(no, "0", "$t2");
@@ -242,12 +268,12 @@ void printSentence(middleCode midCode) {
 			mips_code << "    li $v0 11" << endl;
 		}
 		mips_code << "    syscall" << endl;
-		if (midCode.op3 != "0") {
-			mips_code << "# print \\n" << endl;
-			mips_code << "    li $v0 4" << endl;
-			mips_code << "    la $a0 " + stringName << endl;
-			mips_code << "    syscall" << endl;
-		}
+	}
+	if (midCode.op3 != "0") {
+		mips_code << "# print \\n" << endl;
+		mips_code << "    li $v0 4" << endl;
+		mips_code << "    la $a0 " + stringName << endl;
+		mips_code << "    syscall" << endl;
 	}
 }
 
@@ -324,6 +350,11 @@ void calSentence(middleCode midCode) {
 void loadArrSentence(middleCode midCode) {
 	mips_code << "# load_arr " + midCode.op2 + "[" + midCode.op3 + "]" + " -> " + midCode.op1 << endl;
 	loadVarToReg(midCode.op2, midCode.op3, "$t1");
+	string globalName, type;
+	if (getTempType(midCode.op1) != "VOID") {
+		searchData(midCode.op2, globalName, type);
+		dispatch(midCode.op1, type,"0");
+	}
 	storeRegToVar(midCode.op1, "0", "$t1");
 }
 
@@ -342,13 +373,28 @@ void callFuncSentence(middleCode midCode) {
 	mips_code << "# call function " + midCode.op1 << endl;
 	
 	mips_code << "    addi $s0 $sp " + to_string(-offset) << endl;
-	for (int i = 0; i < paraList.size(); i++) {
-		loadVarToReg(paraList[i], "0", "$t1");
-		mips_code << "# para_name:" + paraList[i] << endl;
-		int index = -((i << 2) + 8);
+	int i;
+	int num;
+	if (funcParaRecord[midCode.op1].size() == 0) {
+		num = 0;
+		i = paraList.size();
+	}
+	else {
+		for (i = paraList.size() - 1; i >= 0; i--)
+			if (paraList[i].op2 == "1")
+				break;
+		num = paraList.size() - i;
+	}
+	//cout << "#### " + to_string(num)+"  "+to_string(i)+ "  "+to_string(paraList.size())<< endl;
+	for (; i < paraList.size(); i++) {
+		loadVarToReg(paraList[i].op1, "0", "$t1");
+		mips_code << "# para_name:" + paraList[i].op1 << endl;
+		int index = -((stoi(paraList[i].op2) - 1) * 4 + 8);
 		mips_code << "    sw $t1 " + to_string(index) + "($s0)" << endl;
 	}
-	paraList.clear();
+	while (num--) {
+		paraList.pop_back();
+	}
 	mips_code << "    move $sp $s0" << endl;
 	mips_code << "    li $t1 " + to_string(offset) << endl;
 	mips_code << "    sw $t1" << " 0($s0)" << endl;
@@ -357,13 +403,13 @@ void callFuncSentence(middleCode midCode) {
 }
 
 void pushParaSentence(middleCode midCode) {
-	/*
 	int remain, all;
 	all = stoi(midCode.op3) >> 16;
 	remain = stoi(midCode.op3) << 16 >> 16;
-	*/
-	paraList.push_back(midCode.op1);
-
+	//cout << "all:" + to_string(all) + " index:" + to_string(all - remain) << endl;
+	midCode.op2 = to_string(all - remain);
+	midCode.op3 = to_string(all);
+	paraList.push_back(midCode);
 }
 
 void conditionSentence(middleCode midCode) {
@@ -398,13 +444,16 @@ void constDefineSentence(middleCode midCode) {
 	//for local const
 	mips_code << "# " +  midCode.op1 + " -> " + midCode.op3 << endl;
 	mips_code << "    li $t0 " + midCode.op3 << endl;
-	mips_code << "    sw $t0 -" + to_string(stackTable.size() - stackIndex) + "($sp)" << endl;
-	stackTable.push_back(middleCode(midCode.op2, midCode.op1, "0", ""));
+	mips_code << "# size:" + to_string(stackTable.size()) + " index:" + to_string(stackIndex) << endl;
+	mips_code << "    sw $t0 -" + to_string((stackTable.size() - stackIndex) * 4) + "($sp)" << endl;
+	dispatch(midCode.op1, midCode.op2, "0");
+	//stackTable.push_back(middleCode(midCode.op2, midCode.op1, "0", ""));
 }
 
 void varDefineSentence(middleCode midCode) {
 	//for local var
-	stackTable.push_back(middleCode(midCode.op2, midCode.op1, midCode.op3, ""));
+	dispatch(midCode.op1, midCode.op2, midCode.op3);
+	//stackTable.push_back(middleCode(midCode.op2, midCode.op1, midCode.op3, ""));
 }
 
 void sentence(middleCode midCode) {
@@ -452,7 +501,7 @@ void sentence(middleCode midCode) {
 		varDefineSentence(midCode);
 	}
 	else if (midCode.Type == "EXIT") {
-		mips_code << "exit:" << endl;
+		mips_code << "# exit:" << endl;
 		mips_code << "# program exit" << endl;
 		mips_code << "    li $v0 10" << endl;
 		mips_code << "    syscall" << endl;
@@ -461,12 +510,11 @@ void sentence(middleCode midCode) {
 		stackIndex = 0;//reset stack point
 		stackTable.clear();
 	/* dispatch space for func var */
-		stackTable.push_back(middleCode("", "", "-1", ""));
-		dispatch("_offset", "INT");
-		dispatch("_ra", "INT");
-		vector<string> nameList = funcRecord[midCode.op1];
+		dispatch("_offset", "INT", "0");
+		dispatch("_ra", "INT", "0");
+		vector<middleCode> nameList = funcParaRecord[midCode.op1];
 		for (int i = 0; i < nameList.size(); i++) {
-			dispatch(nameList[i], "INT");
+			dispatch(nameList[i].op1, nameList[i].Type, "0");
 		}
 		//store ra
 		mips_code << midCode.op1 + ":" << endl;
@@ -513,10 +561,27 @@ void dotText_gen() {
 	}
 }
 
+void diffFuncAndExit() {
+	int isMain = false;
+	vector<middleCode> mid = middleTable.table;
+	ofstream midNowFile;
+	midNowFile.open("middle.txt");
+	for (int i = 0; i < mid.size(); i++) {
+		if (mid[i].Type == "MAINHEAD") {
+			isMain = true;
+		}
+		if (isMain && mid[i].Type == "FUNCRET") {
+			middleTable.table[i].Type = "EXIT";
+		}
+		midNowFile << "    " << middleTable.table[i].Type << "    " << middleTable.table[i].op1 << "    " << middleTable.table[i].op2 << "    " << middleTable.table[i].op3 << endl;
+	}
+	midNowFile.close();
+}
+
 void translate() {
+	diffFuncAndExit();
 	mips_code.open("mips.txt");
 	dotData_gen();//generate .data
-	stackTable.push_back(middleCode("", "", "-1", ""));
 	dotText_gen();//generate .text
 	cout << stackIndex << endl;
 	for (int i = 0; i < stackTable.size(); i++) {

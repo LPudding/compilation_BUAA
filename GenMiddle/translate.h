@@ -2,9 +2,13 @@
 
 #define condi(x,y) (midCode.op2 == x && midCode.Type == y)
 
+string getTempType(string name);
+
 void translate();
 
 void dotData_gen();
+
+void diffFuncAndExit();
 
 void dotText_gen();
 
@@ -14,7 +18,7 @@ int dispatchReg(string name);
 
 int searchData(string name, string& globalName, string& type);
 
-void dispatch(string name,string type);
+void dispatch(string name, string type, string no);
 
 string loadVarToReg(string name, string no, string regName);
 

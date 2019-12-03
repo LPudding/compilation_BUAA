@@ -18,9 +18,11 @@ public:
 class middleCodeTable {
 public:
 	vector<middleCode> table;
-	int tempCount = 0;
+	int tempIntCount = 0;
+	int tempCharCount = 0;
 	int labelCount = 0;
-	const string tempName = "LRY";
+	const string tempIntName = "INT";
+	const string tempCharName = "CHAR";
 	const string labelName = "label";
 	ofstream midFile;
 
@@ -28,7 +30,9 @@ public:
 
 	void addDefine(string aType, string aOp1, string aOp2, string aOp3);
 
-	string addTemp(string aType, string aOp2, string aOp3);
+	string addIntTemp(string aType, string aOp2, string aOp3);
+
+	string addCharTemp(string aType, string aOp2, string aOp3);
 
 	string genLabel(string type);
 };

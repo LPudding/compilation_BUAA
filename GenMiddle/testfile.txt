@@ -1,14 +1,9 @@
-int fun(int a, int b,int c){
- c=a+b;
- printf(a);
- printf(b);
- printf(c);
- return (c);
-}
 
-void main(){
- int i,j,k;
- i=0;j=1;k=2;
- k=fun(i,j,fun(i,j,k));
- printf(k);
+
+void main()
+{
+   int n ;
+
+   n = -'a'+'b';
+   printf("a+b",n);
 }
