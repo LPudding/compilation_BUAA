@@ -6,6 +6,10 @@ string getTempType(string name);
 
 void translate();
 
+void transLi(string value, string& regName);
+
+void printMiddleCode(middleCode mid);
+
 void dotData_gen();
 
 void diffFuncAndExit();
@@ -20,7 +24,7 @@ int searchData(string name, string& globalName, string& type);
 
 void dispatch(string name, string type, string no);
 
-string loadVarToReg(string name, string no, string regName);
+string loadVarToReg(string name, string no, string& regName);
 
 void storeRegToVar(string name, string no, string regName);
 

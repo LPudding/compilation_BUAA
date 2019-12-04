@@ -6,7 +6,7 @@
 #include<iomanip>
 using namespace std;
 
-#define isNumStr(x) ((x[0] >= '0' && x[0] <= '9') || ((x[0] == '+' || x[0] == '-')&&(x[1] >= '0' && x[1] <= '9')))
+bool isNumStr(string str);
 
 void clearToken();
 

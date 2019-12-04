@@ -11,6 +11,7 @@
 #include<cstdlib>
 #include<algorithm>
 #include<string.h>
+#include <regex>
 #include"mid.h"
 #include"error.h"
 #include"GenMiddle.h"

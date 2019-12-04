@@ -333,6 +333,10 @@ int watchThrice() {
 	return id;
 }
 
+bool isNumStr(string str) {
+	return regex_match(str, regex("[+-]?\\d+"));
+}
+
 void printWord(int id) {
 	printf("%s %s\n", keyTable[id], token);
 	fprintf(fl, "%s %s\n", keyTable[id], token);

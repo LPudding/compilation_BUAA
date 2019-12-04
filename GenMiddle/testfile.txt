@@ -1,9 +1,7 @@
+int fun(int a,int b) {
+    return (a+b);
+}
 
-
-void main()
-{
-   int n ;
-
-   n = -'a'+'b';
-   printf("a+b",n);
+void main(){
+    printf(fun(1,fun(1,2)));
 }

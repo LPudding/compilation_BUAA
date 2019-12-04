@@ -1,41 +1,4683 @@
 .data
-_string_0 : .asciiz "a+b"
+_string_0 : .asciiz "************************************************"
+_string_1 : .asciiz "Start testing recursion:"
+_string_2 : .asciiz "************************************************"
+_string_3 : .asciiz "Start testing global:"
+_string_4 : .asciiz "************************************************"
+_string_5 : .asciiz "Start testing return:"
+_string_6 : .asciiz "************************************************"
+_string_7 : .asciiz "Start testing I/O:"
+_string_8 : .asciiz "************************************************"
+_string_9 : .asciiz "Start testing assign & exp:"
+_string_10 : .asciiz "************************************************"
+_string_11 : .asciiz "Start testing if & while:"
+_string_12 : .asciiz "************************************************"
+_string_13 : .asciiz "Start testing switch:"
+_string_14 : .asciiz "************************************************"
+_string_15 : .asciiz "Start testing parameter:"
+_string_16 : .asciiz "************************************************"
+_string_17 : .asciiz "take"
+_string_18 : .asciiz "from"
+_string_19 : .asciiz "to"
+_string_20 : .asciiz "!@\\n#$^&*()Qqaa123[];',./"
+_string_21 : .asciiz "!@\\n#$^&*()Qqaa123[];',./"
+_string_22 : .asciiz "!@\\n#$^&*()Qqaa123[];',./"
+_string_23 : .asciiz "INPUT of func_ret_int_1:"
+_string_24 : .asciiz "OPERATE of func_ret_int_1:"
 _string_ : .asciiz "\n"
+_var_0 : .word 12345679
+_var_1 : .word 0
+_var_2 : .word -0
+_var_3 : .word -12345679
+_var_4 : .byte '9'
+_var_5 : .byte '_'
+_var_6 : .byte '+'
+_var_7 : .byte '*'
+_var_8 : .word 0
+_var_9 : .byte 0
+_var_10 : .word 0
+_var_11 : .byte 0
+_array_0 : .word 0:5
+_array_1 : .word 0:5
+_array_2 : .word 0:5
+_array_3 : .word 0:5
+_array_4 : .word 0:10
 .text
-#					define n
-# ADD -'a' 'b'->INT0
-				# load -'a'->$t0
-    subi $t0 $0 'a'
-				# load 'b'->$t1
-    li $t1 'b'
-    add $t0 $t0 $t1
-				# store $t0->INT0
-#					define INT0
-    sw $t0 -4($sp)
-# ADD INT0 0->n
-				# load INT0->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-				# load 0->$t1
-    li $t1 0
-    add $t0 $t0 $t1
-				# store $t0->n
-    sw $t0 -0($sp)
+#midCode PRINT ************************************************ 0 1
 # print _string_0
     li $v0 4
     la $a0 _string_0
     syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing recursion: 0 1
+# print _string_1
+    li $v0 4
+    la $a0 _string_1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testRecursion  
+# call function testRecursion
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testRecursion
+#midCode PRINT ************************************************ 0 1
+# print _string_2
+    li $v0 4
+    la $a0 _string_2
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing global: 0 1
+# print _string_3
+    li $v0 4
+    la $a0 _string_3
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testGlobal  
+# call function testGlobal
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testGlobal
+#midCode PRINT ************************************************ 0 1
+# print _string_4
+    li $v0 4
+    la $a0 _string_4
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing return: 0 1
+# print _string_5
+    li $v0 4
+    la $a0 _string_5
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testReturn  
+# call function testReturn
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testReturn
+#midCode PRINT ************************************************ 0 1
+# print _string_6
+    li $v0 4
+    la $a0 _string_6
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing I/O: 0 1
+# print _string_7
+    li $v0 4
+    la $a0 _string_7
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testIO  
+# call function testIO
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testIO
+#midCode PRINT ************************************************ 0 1
+# print _string_8
+    li $v0 4
+    la $a0 _string_8
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing assign & exp: 0 1
+# print _string_9
+    li $v0 4
+    la $a0 _string_9
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testAssignAndExp  
+# call function testAssignAndExp
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testAssignAndExp
+#midCode PRINT ************************************************ 0 1
+# print _string_10
+    li $v0 4
+    la $a0 _string_10
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing if & while: 0 1
+# print _string_11
+    li $v0 4
+    la $a0 _string_11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testIfWhile  
+# call function testIfWhile
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testIfWhile
+#midCode PRINT ************************************************ 0 1
+# print _string_12
+    li $v0 4
+    la $a0 _string_12
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing switch: 0 1
+# print _string_13
+    li $v0 4
+    la $a0 _string_13
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testSwitch  
+# call function testSwitch
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testSwitch
+#midCode PRINT ************************************************ 0 1
+# print _string_14
+    li $v0 4
+    la $a0 _string_14
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT Start testing parameter: 0 1
+# print _string_15
+    li $v0 4
+    la $a0 _string_15
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode CALL_FUNC testPara  
+# call function testPara
+    addi $s0 $sp 0
+    move $sp $s0
+    sw $0 0($s0)
+    jal testPara
+#midCode PRINT ************************************************ 0 1
+# print _string_16
+    li $v0 4
+    la $a0 _string_16
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode EXIT   
+########################### exit:
+######## program exit
+    li $v0 10
+    syscall
+#midCode EXIT   
+########################### exit:
+######## program exit
+    li $v0 10
+    syscall
+#midCode FUNCHEAD hanoi  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:n type:INT
+#					define:from type:CHAR
+#					define:tmp type:CHAR
+#					define:to type:CHAR
+hanoi:
+    sw $ra -4($sp)
+# in func______
+#midCode CONDITION > n 0
+# n > 0
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    sub $t0 $t0 $0
+#midCode BZ not_If0 > 
+    blez $t0 not_If0
+#midCode SUB INT0 n 1
+# SUB n 1->INT0
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT0
+#					define:INT0 type:INT
+    sw $t0 -24($sp)
+#midCode PUSH_PARA INT0 hanoi 262147
+#midCode PUSH_PARA from hanoi 262146
+#midCode PUSH_PARA to hanoi 262145
+#midCode PUSH_PARA tmp hanoi 262144
+#midCode CALL_FUNC hanoi  
+# call function hanoi
+    addi $s0 $sp -28
+				# load INT0->$t1
+				# offset: 24 no: 0
+    lw $t1 -24($sp)
+# para_name:INT0
+    sw $t1 -8($s0)
+				# load from->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:from
+    sw $t1 -12($s0)
+				# load to->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:to
+    sw $t1 -16($s0)
+				# load tmp->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:tmp
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 28
+    sw $t1 0($s0)
+    jal hanoi
+#midCode PRINT take 0 1
+# print _string_17
+    li $v0 4
+    la $a0 _string_17
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT n 1 INT
 # print n
 				# load n->$a0
-				# offset: 0 no: 0
-    lw $a0 -0($sp)
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
     li $v0 1
     syscall
 # print \n
     li $v0 4
     la $a0 _string_
     syscall
-# exit:
-# program exit
-    li $v0 10
+#midCode PRINT from 0 1
+# print _string_18
+    li $v0 4
+    la $a0 _string_18
     syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT from 1 INT
+# print from
+				# load from->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT to 0 1
+# print _string_19
+    li $v0 4
+    la $a0 _string_19
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT to 1 INT
+# print to
+				# load to->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode SUB INT1 n 1
+# SUB n 1->INT1
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT1
+#					define:INT1 type:INT
+    sw $t0 -28($sp)
+#midCode PUSH_PARA INT1 hanoi 262147
+#midCode PUSH_PARA tmp hanoi 262146
+#midCode PUSH_PARA from hanoi 262145
+#midCode PUSH_PARA to hanoi 262144
+#midCode CALL_FUNC hanoi  
+# call function hanoi
+    addi $s0 $sp -32
+				# load INT1->$t1
+				# offset: 28 no: 0
+    lw $t1 -28($sp)
+# para_name:INT1
+    sw $t1 -8($s0)
+				# load tmp->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:tmp
+    sw $t1 -12($s0)
+				# load from->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:from
+    sw $t1 -16($s0)
+				# load to->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:to
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 32
+    sw $t1 0($s0)
+    jal hanoi
+#midCode LABEL not_If0  
+not_If0:
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNC Fibonacci INT 
+#midCode PARA n INT 
+#midCode FUNCHEAD Fibonacci  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:n type:INT
+Fibonacci:
+    sw $ra -4($sp)
+# in func______
+#midCode CONDITION == n 0
+# n == 0
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    sub $t0 $t0 $0
+#midCode BZ not_If1 == 
+    bne $t0 $0 not_If1
+#midCode FUNCRET 0  
+				# load 0->$v0
+    add $v0 $0 $0
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode LABEL not_If1  
+not_If1:
+#midCode CONDITION == n 1
+# n == 1
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+#midCode BZ not_If2 == 
+    bne $t0 $0 not_If2
+#midCode FUNCRET 1  
+				# load 1->$v0
+    li $v0 1
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode LABEL not_If2  
+not_If2:
+#midCode SUB INT2 n 1
+# SUB n 1->INT2
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT2
+#					define:INT2 type:INT
+    sw $t0 -12($sp)
+#midCode PUSH_PARA INT2 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -16
+				# load INT2->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:INT2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 16
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT3 RET 0
+# ADD RET 0->INT3
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT3
+#					define:INT3 type:INT
+    sw $t0 -16($sp)
+#midCode SUB INT4 n 2
+# SUB n 2->INT4
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    sub $t0 $t0 $t1
+				# store $t0->INT4
+#					define:INT4 type:INT
+    sw $t0 -20($sp)
+#midCode PUSH_PARA INT4 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -24
+				# load INT4->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:INT4
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT5 RET 0
+# ADD RET 0->INT5
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT5
+#					define:INT5 type:INT
+    sw $t0 -24($sp)
+#midCode ADD INT6 INT3 INT5
+# ADD INT3 INT5->INT6
+				# load INT3->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load INT5->$t1
+				# offset: 24 no: 0
+    lw $t1 -24($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT6
+#					define:INT6 type:INT
+    sw $t0 -28($sp)
+#midCode FUNCRET INT6  
+				# load INT6->$v0
+				# offset: 28 no: 0
+    lw $v0 -28($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNC fac INT 
+#midCode PARA n INT 
+#midCode FUNCHEAD fac  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:n type:INT
+fac:
+    sw $ra -4($sp)
+# in func______
+#midCode CONDITION == n 1
+# n == 1
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+#midCode BZ not_If3 == 
+    bne $t0 $0 not_If3
+#midCode FUNCRET 1  
+				# load 1->$v0
+    li $v0 1
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode LABEL not_If3  
+not_If3:
+#midCode SUB INT7 n 1
+# SUB n 1->INT7
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+				# store $t0->INT7
+#					define:INT7 type:INT
+    sw $t0 -12($sp)
+#midCode PUSH_PARA INT7 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -16
+				# load INT7->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:INT7
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 16
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT8 RET 0
+# ADD RET 0->INT8
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT8
+#					define:INT8 type:INT
+    sw $t0 -16($sp)
+#midCode MUL INT9 n INT8
+# MUL n INT8->INT9
+				# load n->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT8->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT9
+#					define:INT9 type:INT
+    sw $t0 -20($sp)
+#midCode FUNCRET INT9  
+				# load INT9->$v0
+				# offset: 20 no: 0
+    lw $v0 -20($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD initGlobalArray  
+#					define:_offset type:INT
+#					define:_ra type:INT
+initGlobalArray:
+    sw $ra -4($sp)
+# in func______
+#midCode STORE_ARR 0 global_int_array_1 0
+# store_arr 0 -> global_int_array_1[0]
+				# load 0->$t3
+				# store $0->global_int_array_1
+    la $t1 _array_0
+    sw $0 0($t1)
+#midCode STORE_ARR 1 global_int_array_1 1
+# store_arr 1 -> global_int_array_1[1]
+				# load 1->$t3
+    li $t3 1
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 4($t1)
+#midCode LOAD_ARR INT10 global_int_array_1 0
+# load_arr global_int_array_1[0] -> INT10
+				# load global_int_array_1->$t1
+				# offset: -1 no: 0
+    la $t1 _array_0
+    lw $t1 0($t1)
+#					define:INT10 type:INT
+				# store $t1->INT10
+    sw $t1 -8($sp)
+#midCode LOAD_ARR INT11 global_int_array_1 1
+# load_arr global_int_array_1[1] -> INT11
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+#					define:INT11 type:INT
+				# store $t1->INT11
+    sw $t1 -12($sp)
+#midCode ADD INT12 INT10 INT11
+# ADD INT10 INT11->INT12
+				# load INT10->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT11->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT12
+#					define:INT12 type:INT
+    sw $t0 -16($sp)
+#midCode STORE_ARR INT12 global_int_array_1 2
+# store_arr INT12 -> global_int_array_1[2]
+				# load INT12->$t3
+				# offset: 16 no: 0
+    lw $t3 -16($sp)
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 8($t1)
+#midCode LOAD_ARR INT13 global_int_array_1 2
+# load_arr global_int_array_1[2] -> INT13
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+#					define:INT13 type:INT
+				# store $t1->INT13
+    sw $t1 -20($sp)
+#midCode LOAD_ARR INT14 global_int_array_1 1
+# load_arr global_int_array_1[1] -> INT14
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+#					define:INT14 type:INT
+				# store $t1->INT14
+    sw $t1 -24($sp)
+#midCode ADD INT15 INT13 INT14
+# ADD INT13 INT14->INT15
+				# load INT13->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load INT14->$t1
+				# offset: 24 no: 0
+    lw $t1 -24($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT15
+#					define:INT15 type:INT
+    sw $t0 -28($sp)
+#midCode STORE_ARR INT15 global_int_array_1 3
+# store_arr INT15 -> global_int_array_1[3]
+				# load INT15->$t3
+				# offset: 28 no: 0
+    lw $t3 -28($sp)
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 12($t1)
+#midCode LOAD_ARR INT16 global_int_array_1 3
+# load_arr global_int_array_1[3] -> INT16
+				# load global_int_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_0
+    lw $t1 12($t1)
+#					define:INT16 type:INT
+				# store $t1->INT16
+    sw $t1 -32($sp)
+#midCode LOAD_ARR INT17 global_int_array_1 2
+# load_arr global_int_array_1[2] -> INT17
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+#					define:INT17 type:INT
+				# store $t1->INT17
+    sw $t1 -36($sp)
+#midCode ADD INT18 INT16 INT17
+# ADD INT16 INT17->INT18
+				# load INT16->$t0
+				# offset: 32 no: 0
+    lw $t0 -32($sp)
+				# load INT17->$t1
+				# offset: 36 no: 0
+    lw $t1 -36($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT18
+#					define:INT18 type:INT
+    sw $t0 -40($sp)
+#midCode STORE_ARR INT18 global_int_array_1 4
+# store_arr INT18 -> global_int_array_1[4]
+				# load INT18->$t3
+				# offset: 40 no: 0
+    lw $t3 -40($sp)
+				# store $t3->global_int_array_1
+    la $t1 _array_0
+    sw $t3 16($t1)
+#midCode LOAD_ARR INT19 global_int_array_1 1
+# load_arr global_int_array_1[1] -> INT19
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+#					define:INT19 type:INT
+				# store $t1->INT19
+    sw $t1 -44($sp)
+#midCode STORE_ARR INT19 global_int_array_2 0
+# store_arr INT19 -> global_int_array_2[0]
+				# load INT19->$t3
+				# offset: 44 no: 0
+    lw $t3 -44($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 0($t1)
+#midCode LOAD_ARR INT20 global_int_array_2 0
+# load_arr global_int_array_2[0] -> INT20
+				# load global_int_array_2->$t1
+				# offset: -1 no: 0
+    la $t1 _array_2
+    lw $t1 0($t1)
+#					define:INT20 type:INT
+				# store $t1->INT20
+    sw $t1 -48($sp)
+#midCode LOAD_ARR INT21 global_int_array_1 2
+# load_arr global_int_array_1[2] -> INT21
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+#					define:INT21 type:INT
+				# store $t1->INT21
+    sw $t1 -52($sp)
+#midCode MUL INT22 INT20 INT21
+# MUL INT20 INT21->INT22
+				# load INT20->$t0
+				# offset: 48 no: 0
+    lw $t0 -48($sp)
+				# load INT21->$t1
+				# offset: 52 no: 0
+    lw $t1 -52($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT22
+#					define:INT22 type:INT
+    sw $t0 -56($sp)
+#midCode STORE_ARR INT22 global_int_array_2 1
+# store_arr INT22 -> global_int_array_2[1]
+				# load INT22->$t3
+				# offset: 56 no: 0
+    lw $t3 -56($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 4($t1)
+#midCode LOAD_ARR INT23 global_int_array_2 1
+# load_arr global_int_array_2[1] -> INT23
+				# load global_int_array_2->$t1
+				# offset: -1 no: 1
+    la $t1 _array_2
+    lw $t1 4($t1)
+#					define:INT23 type:INT
+				# store $t1->INT23
+    sw $t1 -60($sp)
+#midCode LOAD_ARR INT24 global_int_array_1 3
+# load_arr global_int_array_1[3] -> INT24
+				# load global_int_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_0
+    lw $t1 12($t1)
+#					define:INT24 type:INT
+				# store $t1->INT24
+    sw $t1 -64($sp)
+#midCode MUL INT25 INT23 INT24
+# MUL INT23 INT24->INT25
+				# load INT23->$t0
+				# offset: 60 no: 0
+    lw $t0 -60($sp)
+				# load INT24->$t1
+				# offset: 64 no: 0
+    lw $t1 -64($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT25
+#					define:INT25 type:INT
+    sw $t0 -68($sp)
+#midCode STORE_ARR INT25 global_int_array_2 2
+# store_arr INT25 -> global_int_array_2[2]
+				# load INT25->$t3
+				# offset: 68 no: 0
+    lw $t3 -68($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 8($t1)
+#midCode LOAD_ARR INT26 global_int_array_2 2
+# load_arr global_int_array_2[2] -> INT26
+				# load global_int_array_2->$t1
+				# offset: -1 no: 2
+    la $t1 _array_2
+    lw $t1 8($t1)
+#					define:INT26 type:INT
+				# store $t1->INT26
+    sw $t1 -72($sp)
+#midCode LOAD_ARR INT27 global_int_array_1 4
+# load_arr global_int_array_1[4] -> INT27
+				# load global_int_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_0
+    lw $t1 16($t1)
+#					define:INT27 type:INT
+				# store $t1->INT27
+    sw $t1 -76($sp)
+#midCode MUL INT28 INT26 INT27
+# MUL INT26 INT27->INT28
+				# load INT26->$t0
+				# offset: 72 no: 0
+    lw $t0 -72($sp)
+				# load INT27->$t1
+				# offset: 76 no: 0
+    lw $t1 -76($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT28
+#					define:INT28 type:INT
+    sw $t0 -80($sp)
+#midCode STORE_ARR INT28 global_int_array_2 3
+# store_arr INT28 -> global_int_array_2[3]
+				# load INT28->$t3
+				# offset: 80 no: 0
+    lw $t3 -80($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 12($t1)
+#midCode LOAD_ARR INT29 global_int_array_2 3
+# load_arr global_int_array_2[3] -> INT29
+				# load global_int_array_2->$t1
+				# offset: -1 no: 3
+    la $t1 _array_2
+    lw $t1 12($t1)
+#					define:INT29 type:INT
+				# store $t1->INT29
+    sw $t1 -84($sp)
+#midCode LOAD_ARR INT30 global_int_array_1 4
+# load_arr global_int_array_1[4] -> INT30
+				# load global_int_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_0
+    lw $t1 16($t1)
+#					define:INT30 type:INT
+				# store $t1->INT30
+    sw $t1 -88($sp)
+#midCode DIV INT31 INT29 INT30
+# DIV INT29 INT30->INT31
+				# load INT29->$t0
+				# offset: 84 no: 0
+    lw $t0 -84($sp)
+				# load INT30->$t1
+				# offset: 88 no: 0
+    lw $t1 -88($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT31
+#					define:INT31 type:INT
+    sw $t0 -92($sp)
+#midCode STORE_ARR INT31 global_int_array_2 4
+# store_arr INT31 -> global_int_array_2[4]
+				# load INT31->$t3
+				# offset: 92 no: 0
+    lw $t3 -92($sp)
+				# store $t3->global_int_array_2
+    la $t1 _array_2
+    sw $t3 16($t1)
+#midCode STORE_ARR 'a' global_char_array_1 0
+# store_arr 'a' -> global_char_array_1[0]
+				# load 'a'->$t3
+    li $t3 'a'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 0($t1)
+#midCode STORE_ARR 'A' global_char_array_1 1
+# store_arr 'A' -> global_char_array_1[1]
+				# load 'A'->$t3
+    li $t3 'A'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 4($t1)
+#midCode STORE_ARR 'z' global_char_array_1 2
+# store_arr 'z' -> global_char_array_1[2]
+				# load 'z'->$t3
+    li $t3 'z'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 8($t1)
+#midCode STORE_ARR 'Z' global_char_array_1 3
+# store_arr 'Z' -> global_char_array_1[3]
+				# load 'Z'->$t3
+    li $t3 'Z'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 12($t1)
+#midCode STORE_ARR '_' global_char_array_1 4
+# store_arr '_' -> global_char_array_1[4]
+				# load '_'->$t3
+    li $t3 '_'
+				# store $t3->global_char_array_1
+    la $t1 _array_1
+    sb $t3 16($t1)
+#midCode STORE_ARR '+' global_char_array_2 0
+# store_arr '+' -> global_char_array_2[0]
+				# load '+'->$t3
+    li $t3 '+'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 0($t1)
+#midCode STORE_ARR '-' global_char_array_2 1
+# store_arr '-' -> global_char_array_2[1]
+				# load '-'->$t3
+    li $t3 '-'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 4($t1)
+#midCode STORE_ARR '*' global_char_array_2 2
+# store_arr '*' -> global_char_array_2[2]
+				# load '*'->$t3
+    li $t3 '*'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 8($t1)
+#midCode STORE_ARR '/' global_char_array_2 3
+# store_arr '/' -> global_char_array_2[3]
+				# load '/'->$t3
+    li $t3 '/'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 12($t1)
+#midCode STORE_ARR '6' global_char_array_2 4
+# store_arr '6' -> global_char_array_2[4]
+				# load '6'->$t3
+    li $t3 '6'
+				# store $t3->global_char_array_2
+    la $t1 _array_3
+    sb $t3 16($t1)
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode PARA a INT 
+#midCode PARA b CHAR 
+#midCode PARA c INT 
+#midCode PARA d CHAR 
+#midCode FUNCHEAD assignGlobal  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:a type:INT
+#					define:b type:CHAR
+#					define:c type:INT
+#					define:d type:CHAR
+assignGlobal:
+    sw $ra -4($sp)
+# in func______
+#midCode ADD global_int_1 a 0
+# ADD a 0->global_int_1
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->global_int_1
+    la $t1 _var_8
+    sw $t0 0($t1)
+#midCode ADD global_char_1 b 0
+# ADD b 0->global_char_1
+				# load b->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->global_char_1
+    la $t1 _var_9
+    sb $t0 0($t1)
+#midCode ADD global_int_2 c 0
+# ADD c 0->global_int_2
+				# load c->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->global_int_2
+    la $t1 _var_10
+    sw $t0 0($t1)
+#midCode ADD global_char_2 d 0
+# ADD d 0->global_char_2
+				# load d->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->global_char_2
+    la $t1 _var_11
+    sb $t0 0($t1)
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD printGlobalConst  
+#					define:_offset type:INT
+#					define:_ra type:INT
+printGlobalConst:
+    sw $ra -4($sp)
+# in func______
+#midCode PRINT const_int_1 1 INT
+# print const_int_1
+				# load const_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_int_2 1 INT
+# print const_int_2
+				# load const_int_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_1
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_int_3 1 INT
+# print const_int_3
+				# load const_int_3->$a0
+				# offset: -1 no: 0
+    la $t1 _var_2
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_int_4 1 INT
+# print const_int_4
+				# load const_int_4->$a0
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_char_1 1 INT
+# print const_char_1
+				# load const_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_4
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_char_2 1 INT
+# print const_char_2
+				# load const_char_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_5
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_char_3 1 INT
+# print const_char_3
+				# load const_char_3->$a0
+				# offset: -1 no: 0
+    la $t1 _var_6
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT const_char_4 1 INT
+# print const_char_4
+				# load const_char_4->$a0
+				# offset: -1 no: 0
+    la $t1 _var_7
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD printGlobalVar  
+#					define:_offset type:INT
+#					define:_ra type:INT
+printGlobalVar:
+    sw $ra -4($sp)
+# in func______
+#midCode PRINT global_int_1 1 INT
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_int_2 1 INT
+# print global_int_2
+				# load global_int_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_10
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_char_1 1 INT
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_char_2 1 INT
+# print global_char_2
+				# load global_char_2->$a0
+				# offset: -1 no: 0
+    la $t1 _var_11
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD printGlobalArray  
+#					define:_offset type:INT
+#					define:_ra type:INT
+printGlobalArray:
+    sw $ra -4($sp)
+# in func______
+#midCode LOAD_ARR INT32 global_int_array_1 0
+# load_arr global_int_array_1[0] -> INT32
+				# load global_int_array_1->$t1
+				# offset: -1 no: 0
+    la $t1 _array_0
+    lw $t1 0($t1)
+#					define:INT32 type:INT
+				# store $t1->INT32
+    sw $t1 -8($sp)
+#midCode PRINT INT32 1 INT
+# print INT32
+				# load INT32->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT33 global_int_array_1 1
+# load_arr global_int_array_1[1] -> INT33
+				# load global_int_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_0
+    lw $t1 4($t1)
+#					define:INT33 type:INT
+				# store $t1->INT33
+    sw $t1 -12($sp)
+#midCode PRINT INT33 1 INT
+# print INT33
+				# load INT33->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT34 global_int_array_1 2
+# load_arr global_int_array_1[2] -> INT34
+				# load global_int_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_0
+    lw $t1 8($t1)
+#					define:INT34 type:INT
+				# store $t1->INT34
+    sw $t1 -16($sp)
+#midCode PRINT INT34 1 INT
+# print INT34
+				# load INT34->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT35 global_int_array_1 3
+# load_arr global_int_array_1[3] -> INT35
+				# load global_int_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_0
+    lw $t1 12($t1)
+#					define:INT35 type:INT
+				# store $t1->INT35
+    sw $t1 -20($sp)
+#midCode PRINT INT35 1 INT
+# print INT35
+				# load INT35->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT36 global_int_array_1 4
+# load_arr global_int_array_1[4] -> INT36
+				# load global_int_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_0
+    lw $t1 16($t1)
+#					define:INT36 type:INT
+				# store $t1->INT36
+    sw $t1 -24($sp)
+#midCode PRINT INT36 1 INT
+# print INT36
+				# load INT36->$a0
+				# offset: 24 no: 0
+    lw $a0 -24($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT37 global_int_array_2 0
+# load_arr global_int_array_2[0] -> INT37
+				# load global_int_array_2->$t1
+				# offset: -1 no: 0
+    la $t1 _array_2
+    lw $t1 0($t1)
+#					define:INT37 type:INT
+				# store $t1->INT37
+    sw $t1 -28($sp)
+#midCode PRINT INT37 1 INT
+# print INT37
+				# load INT37->$a0
+				# offset: 28 no: 0
+    lw $a0 -28($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT38 global_int_array_2 1
+# load_arr global_int_array_2[1] -> INT38
+				# load global_int_array_2->$t1
+				# offset: -1 no: 1
+    la $t1 _array_2
+    lw $t1 4($t1)
+#					define:INT38 type:INT
+				# store $t1->INT38
+    sw $t1 -32($sp)
+#midCode PRINT INT38 1 INT
+# print INT38
+				# load INT38->$a0
+				# offset: 32 no: 0
+    lw $a0 -32($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT39 global_int_array_2 2
+# load_arr global_int_array_2[2] -> INT39
+				# load global_int_array_2->$t1
+				# offset: -1 no: 2
+    la $t1 _array_2
+    lw $t1 8($t1)
+#					define:INT39 type:INT
+				# store $t1->INT39
+    sw $t1 -36($sp)
+#midCode PRINT INT39 1 INT
+# print INT39
+				# load INT39->$a0
+				# offset: 36 no: 0
+    lw $a0 -36($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT40 global_int_array_2 3
+# load_arr global_int_array_2[3] -> INT40
+				# load global_int_array_2->$t1
+				# offset: -1 no: 3
+    la $t1 _array_2
+    lw $t1 12($t1)
+#					define:INT40 type:INT
+				# store $t1->INT40
+    sw $t1 -40($sp)
+#midCode PRINT INT40 1 INT
+# print INT40
+				# load INT40->$a0
+				# offset: 40 no: 0
+    lw $a0 -40($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT41 global_int_array_2 4
+# load_arr global_int_array_2[4] -> INT41
+				# load global_int_array_2->$t1
+				# offset: -1 no: 4
+    la $t1 _array_2
+    lw $t1 16($t1)
+#					define:INT41 type:INT
+				# store $t1->INT41
+    sw $t1 -44($sp)
+#midCode PRINT INT41 1 INT
+# print INT41
+				# load INT41->$a0
+				# offset: 44 no: 0
+    lw $a0 -44($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR0 global_char_array_1 0
+# load_arr global_char_array_1[0] -> CHAR0
+				# load global_char_array_1->$t1
+				# offset: -1 no: 0
+    la $t1 _array_1
+    lb $t1 0($t1)
+#					define:CHAR0 type:CHAR
+				# store $t1->CHAR0
+    sw $t1 -48($sp)
+#midCode PRINT CHAR0 1 INT
+# print CHAR0
+				# load CHAR0->$a0
+				# offset: 48 no: 0
+    lw $a0 -48($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR1 global_char_array_1 1
+# load_arr global_char_array_1[1] -> CHAR1
+				# load global_char_array_1->$t1
+				# offset: -1 no: 1
+    la $t1 _array_1
+    lb $t1 4($t1)
+#					define:CHAR1 type:CHAR
+				# store $t1->CHAR1
+    sw $t1 -52($sp)
+#midCode PRINT CHAR1 1 INT
+# print CHAR1
+				# load CHAR1->$a0
+				# offset: 52 no: 0
+    lw $a0 -52($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR2 global_char_array_1 2
+# load_arr global_char_array_1[2] -> CHAR2
+				# load global_char_array_1->$t1
+				# offset: -1 no: 2
+    la $t1 _array_1
+    lb $t1 8($t1)
+#					define:CHAR2 type:CHAR
+				# store $t1->CHAR2
+    sw $t1 -56($sp)
+#midCode PRINT CHAR2 1 INT
+# print CHAR2
+				# load CHAR2->$a0
+				# offset: 56 no: 0
+    lw $a0 -56($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR3 global_char_array_1 3
+# load_arr global_char_array_1[3] -> CHAR3
+				# load global_char_array_1->$t1
+				# offset: -1 no: 3
+    la $t1 _array_1
+    lb $t1 12($t1)
+#					define:CHAR3 type:CHAR
+				# store $t1->CHAR3
+    sw $t1 -60($sp)
+#midCode PRINT CHAR3 1 INT
+# print CHAR3
+				# load CHAR3->$a0
+				# offset: 60 no: 0
+    lw $a0 -60($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR4 global_char_array_1 4
+# load_arr global_char_array_1[4] -> CHAR4
+				# load global_char_array_1->$t1
+				# offset: -1 no: 4
+    la $t1 _array_1
+    lb $t1 16($t1)
+#					define:CHAR4 type:CHAR
+				# store $t1->CHAR4
+    sw $t1 -64($sp)
+#midCode PRINT CHAR4 1 INT
+# print CHAR4
+				# load CHAR4->$a0
+				# offset: 64 no: 0
+    lw $a0 -64($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR5 global_char_array_2 0
+# load_arr global_char_array_2[0] -> CHAR5
+				# load global_char_array_2->$t1
+				# offset: -1 no: 0
+    la $t1 _array_3
+    lb $t1 0($t1)
+#					define:CHAR5 type:CHAR
+				# store $t1->CHAR5
+    sw $t1 -68($sp)
+#midCode PRINT CHAR5 1 INT
+# print CHAR5
+				# load CHAR5->$a0
+				# offset: 68 no: 0
+    lw $a0 -68($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR6 global_char_array_2 1
+# load_arr global_char_array_2[1] -> CHAR6
+				# load global_char_array_2->$t1
+				# offset: -1 no: 1
+    la $t1 _array_3
+    lb $t1 4($t1)
+#					define:CHAR6 type:CHAR
+				# store $t1->CHAR6
+    sw $t1 -72($sp)
+#midCode PRINT CHAR6 1 INT
+# print CHAR6
+				# load CHAR6->$a0
+				# offset: 72 no: 0
+    lw $a0 -72($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR7 global_char_array_2 2
+# load_arr global_char_array_2[2] -> CHAR7
+				# load global_char_array_2->$t1
+				# offset: -1 no: 2
+    la $t1 _array_3
+    lb $t1 8($t1)
+#					define:CHAR7 type:CHAR
+				# store $t1->CHAR7
+    sw $t1 -76($sp)
+#midCode PRINT CHAR7 1 INT
+# print CHAR7
+				# load CHAR7->$a0
+				# offset: 76 no: 0
+    lw $a0 -76($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR8 global_char_array_2 3
+# load_arr global_char_array_2[3] -> CHAR8
+				# load global_char_array_2->$t1
+				# offset: -1 no: 3
+    la $t1 _array_3
+    lb $t1 12($t1)
+#					define:CHAR8 type:CHAR
+				# store $t1->CHAR8
+    sw $t1 -80($sp)
+#midCode PRINT CHAR8 1 INT
+# print CHAR8
+				# load CHAR8->$a0
+				# offset: 80 no: 0
+    lw $a0 -80($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR9 global_char_array_2 4
+# load_arr global_char_array_2[4] -> CHAR9
+				# load global_char_array_2->$t1
+				# offset: -1 no: 4
+    la $t1 _array_3
+    lb $t1 16($t1)
+#					define:CHAR9 type:CHAR
+				# store $t1->CHAR9
+    sw $t1 -84($sp)
+#midCode PRINT CHAR9 1 INT
+# print CHAR9
+				# load CHAR9->$a0
+				# offset: 84 no: 0
+    lw $a0 -84($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testGlobal  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testGlobal:
+    sw $ra -4($sp)
+# in func______
+#midCode CALL_FUNC initGlobalArray  
+# call function initGlobalArray
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal initGlobalArray
+#midCode PUSH_PARA const_int_1 assignGlobal 262147
+#midCode PUSH_PARA const_char_1 assignGlobal 262146
+#midCode PUSH_PARA const_int_4 assignGlobal 262145
+#midCode PUSH_PARA const_char_4 assignGlobal 262144
+#midCode CALL_FUNC assignGlobal  
+# call function assignGlobal
+    addi $s0 $sp -8
+				# load const_int_1->$t1
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $t1 0($t1)
+# para_name:const_int_1
+    sw $t1 -8($s0)
+				# load const_char_1->$t1
+				# offset: -1 no: 0
+    la $t1 _var_4
+    lb $t1 0($t1)
+# para_name:const_char_1
+    sw $t1 -12($s0)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+# para_name:const_int_4
+    sw $t1 -16($s0)
+				# load const_char_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_7
+    lb $t1 0($t1)
+# para_name:const_char_4
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal assignGlobal
+#midCode CALL_FUNC printGlobalConst  
+# call function printGlobalConst
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal printGlobalConst
+#midCode CALL_FUNC printGlobalVar  
+# call function printGlobalVar
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal printGlobalVar
+#midCode CALL_FUNC printGlobalArray  
+# call function printGlobalArray
+    addi $s0 $sp -8
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal printGlobalArray
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNC testReturnInt INT 
+#midCode PARA a INT 
+#midCode FUNCHEAD testReturnInt  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:a type:INT
+testReturnInt:
+    sw $ra -4($sp)
+# in func______
+#midCode ADD INT42 a 1
+# ADD a 1->INT42
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT42
+#					define:INT42 type:INT
+    sw $t0 -12($sp)
+#midCode FUNCRET INT42  
+				# load INT42->$v0
+				# offset: 12 no: 0
+    lw $v0 -12($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNC testReturnChar CHAR 
+#midCode PARA a INT 
+#midCode FUNCHEAD testReturnChar  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:a type:INT
+testReturnChar:
+    sw $ra -4($sp)
+# in func______
+#midCode CONDITION == a 1
+# a == 1
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+#midCode BZ not_If4 == 
+    bne $t0 $0 not_If4
+#midCode FUNCRET 'a'  
+				# load 'a'->$v0
+    li $v0 'a'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode GOTO if_End5  
+    j if_End5
+#midCode LABEL not_If4  
+not_If4:
+#midCode CONDITION == a 2
+# a == 2
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    sub $t0 $t0 $t1
+#midCode BZ not_If6 == 
+    bne $t0 $0 not_If6
+#midCode FUNCRET 'b'  
+				# load 'b'->$v0
+    li $v0 'b'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode GOTO if_End7  
+    j if_End7
+#midCode LABEL not_If6  
+not_If6:
+#midCode CONDITION == a 3
+# a == 3
+				# load a->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 3->$t1
+    li $t1 3
+    sub $t0 $t0 $t1
+#midCode BZ not_If8 == 
+    bne $t0 $0 not_If8
+#midCode FUNCRET 'c'  
+				# load 'c'->$v0
+    li $v0 'c'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode LABEL not_If8  
+not_If8:
+#midCode LABEL if_End7  
+if_End7:
+#midCode LABEL if_End5  
+if_End5:
+#midCode FUNCRET '_'  
+				# load '_'->$v0
+    li $v0 '_'
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testReturn  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testReturn:
+    sw $ra -4($sp)
+# in func______
+#midCode PUSH_PARA 3 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -8
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT43 RET 0
+# ADD RET 0->INT43
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT43
+#					define:INT43 type:INT
+    sw $t0 -8($sp)
+#midCode PUSH_PARA 2 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -12
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 12
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT44 RET 0
+# ADD RET 0->INT44
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT44
+#					define:INT44 type:INT
+    sw $t0 -12($sp)
+#midCode ADD INT45 INT43 INT44
+# ADD INT43 INT44->INT45
+				# load INT43->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT44->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT45
+#					define:INT45 type:INT
+    sw $t0 -16($sp)
+#midCode PUSH_PARA INT45 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -20
+				# load INT45->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:INT45
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 20
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT46 RET 0
+# ADD RET 0->INT46
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT46
+#					define:INT46 type:INT
+    sw $t0 -20($sp)
+#midCode PUSH_PARA INT46 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -24
+				# load INT46->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:INT46
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT47 RET 0
+# ADD RET 0->INT47
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT47
+#					define:INT47 type:INT
+    sw $t0 -24($sp)
+#midCode PRINT INT47 1 INT
+# print INT47
+				# load INT47->$a0
+				# offset: 24 no: 0
+    lw $a0 -24($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PUSH_PARA 1 testReturnChar 65536
+#midCode CALL_FUNC testReturnChar  
+# call function testReturnChar
+    addi $s0 $sp -28
+				# load 1->$t1
+    li $t1 1
+# para_name:1
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 28
+    sw $t1 0($s0)
+    jal testReturnChar
+#midCode ADD CHAR10 RET 0
+# ADD RET 0->CHAR10
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->CHAR10
+#					define:CHAR10 type:CHAR
+    sw $t0 -28($sp)
+#midCode PRINT CHAR10 1 INT
+# print CHAR10
+				# load CHAR10->$a0
+				# offset: 28 no: 0
+    lw $a0 -28($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PUSH_PARA 2 testReturnChar 65536
+#midCode CALL_FUNC testReturnChar  
+# call function testReturnChar
+    addi $s0 $sp -32
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 32
+    sw $t1 0($s0)
+    jal testReturnChar
+#midCode ADD CHAR11 RET 0
+# ADD RET 0->CHAR11
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->CHAR11
+#					define:CHAR11 type:CHAR
+    sw $t0 -32($sp)
+#midCode PRINT CHAR11 1 INT
+# print CHAR11
+				# load CHAR11->$a0
+				# offset: 32 no: 0
+    lw $a0 -32($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PUSH_PARA 3 testReturnChar 65536
+#midCode CALL_FUNC testReturnChar  
+# call function testReturnChar
+    addi $s0 $sp -36
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 36
+    sw $t1 0($s0)
+    jal testReturnChar
+#midCode ADD CHAR12 RET 0
+# ADD RET 0->CHAR12
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->CHAR12
+#					define:CHAR12 type:CHAR
+    sw $t0 -36($sp)
+#midCode PRINT CHAR12 1 INT
+# print CHAR12
+				# load CHAR12->$a0
+				# offset: 36 no: 0
+    lw $a0 -36($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PUSH_PARA 4 testReturnChar 65536
+#midCode CALL_FUNC testReturnChar  
+# call function testReturnChar
+    addi $s0 $sp -40
+				# load 4->$t1
+    li $t1 4
+# para_name:4
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 40
+    sw $t1 0($s0)
+    jal testReturnChar
+#midCode ADD CHAR13 RET 0
+# ADD RET 0->CHAR13
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->CHAR13
+#					define:CHAR13 type:CHAR
+    sw $t0 -40($sp)
+#midCode PRINT CHAR13 1 INT
+# print CHAR13
+				# load CHAR13->$a0
+				# offset: 40 no: 0
+    lw $a0 -40($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testAssignAndExp  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testAssignAndExp:
+    sw $ra -4($sp)
+# in func______
+#midCode CONST const_int_1 INT 1
+# const_int_1 -> 1
+    li $t0 1
+# size:2 index:0
+    sw $t0 -8($sp)
+#					define:const_int_1 type:INT
+#midCode CONST const_int_2 INT -1
+# const_int_2 -> -1
+    li $t0 -1
+# size:3 index:0
+    sw $t0 -12($sp)
+#					define:const_int_2 type:INT
+#midCode CONST const_int_3 INT 0
+# const_int_3 -> 0
+    li $t0 0
+# size:4 index:0
+    sw $t0 -16($sp)
+#					define:const_int_3 type:INT
+#midCode CONST const_char_1 CHAR 'a'
+# const_char_1 -> 'a'
+    li $t0 'a'
+# size:5 index:0
+    sw $t0 -20($sp)
+#					define:const_char_1 type:CHAR
+#midCode CONST const_char_2 CHAR 'A'
+# const_char_2 -> 'A'
+    li $t0 'A'
+# size:6 index:0
+    sw $t0 -24($sp)
+#					define:const_char_2 type:CHAR
+#midCode CONST const_char_3 CHAR 'b'
+# const_char_3 -> 'b'
+    li $t0 'b'
+# size:7 index:0
+    sw $t0 -28($sp)
+#					define:const_char_3 type:CHAR
+#midCode VAR int_temp_1 INT 0
+#					define:int_temp_1 type:INT
+#midCode VAR int_temp_2 INT 0
+#					define:int_temp_2 type:INT
+#midCode VAR int_array INT 2
+#					define:int_array type:INT
+#midCode VAR int_temp_3 INT 0
+#					define:int_temp_3 type:INT
+#midCode VAR char_temp_1 CHAR 0
+#					define:char_temp_1 type:CHAR
+#midCode VAR char_array CHAR 2
+#					define:char_array type:CHAR
+#midCode VAR char_temp_2 CHAR 0
+#					define:char_temp_2 type:CHAR
+#midCode PUSH_PARA 5 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -76
+				# load 5->$t1
+    li $t1 5
+# para_name:5
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 76
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT48 RET 0
+# ADD RET 0->INT48
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT48
+#					define:INT48 type:INT
+    sw $t0 -76($sp)
+#midCode PUSH_PARA INT48 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -80
+				# load INT48->$t1
+				# offset: 76 no: 0
+    lw $t1 -76($sp)
+# para_name:INT48
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 80
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT49 RET 0
+# ADD RET 0->INT49
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT49
+#					define:INT49 type:INT
+    sw $t0 -80($sp)
+#midCode PUSH_PARA INT49 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -84
+				# load INT49->$t1
+				# offset: 80 no: 0
+    lw $t1 -80($sp)
+# para_name:INT49
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 84
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT50 RET 0
+# ADD RET 0->INT50
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT50
+#					define:INT50 type:INT
+    sw $t0 -84($sp)
+#midCode MUL INT51 const_int_2 const_int_4
+# MUL const_int_2 const_int_4->INT51
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT51
+#					define:INT51 type:INT
+    sw $t0 -88($sp)
+#midCode DIV INT52 const_int_1 INT51
+# DIV const_int_1 INT51->INT52
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT51->$t1
+				# offset: 88 no: 0
+    lw $t1 -88($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT52
+#					define:INT52 type:INT
+    sw $t0 -92($sp)
+#midCode ADD INT53 INT50 INT52
+# ADD INT50 INT52->INT53
+				# load INT50->$t0
+				# offset: 84 no: 0
+    lw $t0 -84($sp)
+				# load INT52->$t1
+				# offset: 92 no: 0
+    lw $t1 -92($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT53
+#					define:INT53 type:INT
+    sw $t0 -96($sp)
+#midCode PUSH_PARA 3 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -100
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 100
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT54 RET 0
+# ADD RET 0->INT54
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT54
+#					define:INT54 type:INT
+    sw $t0 -100($sp)
+#midCode DIV INT55 INT53 INT54
+# DIV INT53 INT54->INT55
+				# load INT53->$t0
+				# offset: 96 no: 0
+    lw $t0 -96($sp)
+				# load INT54->$t1
+				# offset: 100 no: 0
+    lw $t1 -100($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT55
+#					define:INT55 type:INT
+    sw $t0 -104($sp)
+#midCode ADD INT56 const_int_1 INT55
+# ADD const_int_1 INT55->INT56
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT55->$t1
+				# offset: 104 no: 0
+    lw $t1 -104($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT56
+#					define:INT56 type:INT
+    sw $t0 -108($sp)
+#midCode ADD int_temp_1 INT56 0
+# ADD INT56 0->int_temp_1
+				# load INT56->$t0
+				# offset: 108 no: 0
+    lw $t0 -108($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->int_temp_1
+    sw $t0 -32($sp)
+#midCode PUSH_PARA 3 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -112
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 112
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT57 RET 0
+# ADD RET 0->INT57
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT57
+#					define:INT57 type:INT
+    sw $t0 -112($sp)
+#midCode PUSH_PARA 2 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -116
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 116
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT58 RET 0
+# ADD RET 0->INT58
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT58
+#					define:INT58 type:INT
+    sw $t0 -116($sp)
+#midCode ADD INT59 INT57 INT58
+# ADD INT57 INT58->INT59
+				# load INT57->$t0
+				# offset: 112 no: 0
+    lw $t0 -112($sp)
+				# load INT58->$t1
+				# offset: 116 no: 0
+    lw $t1 -116($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT59
+#					define:INT59 type:INT
+    sw $t0 -120($sp)
+#midCode PUSH_PARA INT59 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -124
+				# load INT59->$t1
+				# offset: 120 no: 0
+    lw $t1 -120($sp)
+# para_name:INT59
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 124
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT60 RET 0
+# ADD RET 0->INT60
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT60
+#					define:INT60 type:INT
+    sw $t0 -124($sp)
+#midCode ADD int_temp_2 INT60 0
+# ADD INT60 0->int_temp_2
+				# load INT60->$t0
+				# offset: 124 no: 0
+    lw $t0 -124($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->int_temp_2
+    sw $t0 -36($sp)
+#midCode PUSH_PARA 0 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -128
+				# load 0->$t1
+# para_name:0
+    sw $0 -8($s0)
+    move $sp $s0
+    li $t1 128
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT61 RET 0
+# ADD RET 0->INT61
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT61
+#					define:INT61 type:INT
+    sw $t0 -128($sp)
+#midCode STORE_ARR INT61 int_array const_int_3
+# store_arr INT61 -> int_array[const_int_3]
+				# load INT61->$t3
+				# offset: 128 no: 0
+    lw $t3 -128($sp)
+				# store $t3->int_array
+				# load const_int_3->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    sw $t3 0($t1)
+#midCode MUL INT62 const_int_2 const_int_4
+# MUL const_int_2 const_int_4->INT62
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT62
+#					define:INT62 type:INT
+    sw $t0 -132($sp)
+#midCode PUSH_PARA 0 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -136
+				# load 0->$t1
+# para_name:0
+    sw $0 -8($s0)
+    move $sp $s0
+    li $t1 136
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT63 RET 0
+# ADD RET 0->INT63
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT63
+#					define:INT63 type:INT
+    sw $t0 -136($sp)
+#midCode MUL INT64 INT63 const_int_4
+# MUL INT63 const_int_4->INT64
+				# load INT63->$t0
+				# offset: 136 no: 0
+    lw $t0 -136($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT64
+#					define:INT64 type:INT
+    sw $t0 -140($sp)
+#midCode ADD INT65 INT62 INT64
+# ADD INT62 INT64->INT65
+				# load INT62->$t0
+				# offset: 132 no: 0
+    lw $t0 -132($sp)
+				# load INT64->$t1
+				# offset: 140 no: 0
+    lw $t1 -140($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT65
+#					define:INT65 type:INT
+    sw $t0 -144($sp)
+#midCode SUB INT66 const_int_1 INT65
+# SUB const_int_1 INT65->INT66
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT65->$t1
+				# offset: 144 no: 0
+    lw $t1 -144($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT66
+#					define:INT66 type:INT
+    sw $t0 -148($sp)
+#midCode PUSH_PARA const_int_1 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -152
+				# load const_int_1->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+# para_name:const_int_1
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 152
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT67 RET 0
+# ADD RET 0->INT67
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT67
+#					define:INT67 type:INT
+    sw $t0 -152($sp)
+#midCode ADD INT68 const_int_1 INT67
+# ADD const_int_1 INT67->INT68
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT67->$t1
+				# offset: 152 no: 0
+    lw $t1 -152($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT68
+#					define:INT68 type:INT
+    sw $t0 -156($sp)
+#midCode STORE_ARR INT68 int_array INT66
+# store_arr INT68 -> int_array[INT66]
+				# load INT68->$t3
+				# offset: 156 no: 0
+    lw $t3 -156($sp)
+				# store $t3->int_array
+				# load INT66->$t1
+				# offset: 148 no: 0
+    lw $t1 -148($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    sw $t3 0($t1)
+#midCode LOAD_ARR INT69 int_array const_int_3
+# load_arr int_array[const_int_3] -> INT69
+				# load int_array->$t1
+				# offset: 40 no: const_int_3
+				# load const_int_3->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+#					define:INT69 type:INT
+				# store $t1->INT69
+    sw $t1 -160($sp)
+#midCode MUL INT70 const_int_2 const_int_4
+# MUL const_int_2 const_int_4->INT70
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT70
+#					define:INT70 type:INT
+    sw $t0 -164($sp)
+#midCode PUSH_PARA 0 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -168
+				# load 0->$t1
+# para_name:0
+    sw $0 -8($s0)
+    move $sp $s0
+    li $t1 168
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT71 RET 0
+# ADD RET 0->INT71
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT71
+#					define:INT71 type:INT
+    sw $t0 -168($sp)
+#midCode MUL INT72 INT71 const_int_4
+# MUL INT71 const_int_4->INT72
+				# load INT71->$t0
+				# offset: 168 no: 0
+    lw $t0 -168($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT72
+#					define:INT72 type:INT
+    sw $t0 -172($sp)
+#midCode ADD INT73 INT70 INT72
+# ADD INT70 INT72->INT73
+				# load INT70->$t0
+				# offset: 164 no: 0
+    lw $t0 -164($sp)
+				# load INT72->$t1
+				# offset: 172 no: 0
+    lw $t1 -172($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT73
+#					define:INT73 type:INT
+    sw $t0 -176($sp)
+#midCode SUB INT74 const_int_1 INT73
+# SUB const_int_1 INT73->INT74
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT73->$t1
+				# offset: 176 no: 0
+    lw $t1 -176($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT74
+#					define:INT74 type:INT
+    sw $t0 -180($sp)
+#midCode LOAD_ARR INT75 int_array INT74
+# load_arr int_array[INT74] -> INT75
+				# load int_array->$t1
+				# offset: 40 no: INT74
+				# load INT74->$t1
+				# offset: 180 no: 0
+    lw $t1 -180($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+#					define:INT75 type:INT
+				# store $t1->INT75
+    sw $t1 -184($sp)
+#midCode SUB INT76 'b' 'a'
+# SUB 'b' 'a'->INT76
+				# load 'b'->$t0
+    li $t0 'b'
+				# load 'a'->$t1
+    li $t1 'a'
+    sub $t0 $t0 $t1
+				# store $t0->INT76
+#					define:INT76 type:INT
+    sw $t0 -188($sp)
+#midCode MUL INT77 INT75 INT76
+# MUL INT75 INT76->INT77
+				# load INT75->$t0
+				# offset: 184 no: 0
+    lw $t0 -184($sp)
+				# load INT76->$t1
+				# offset: 188 no: 0
+    lw $t1 -188($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT77
+#					define:INT77 type:INT
+    sw $t0 -192($sp)
+#midCode SUB INT78 INT69 INT77
+# SUB INT69 INT77->INT78
+				# load INT69->$t0
+				# offset: 160 no: 0
+    lw $t0 -160($sp)
+				# load INT77->$t1
+				# offset: 192 no: 0
+    lw $t1 -192($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT78
+#					define:INT78 type:INT
+    sw $t0 -196($sp)
+#midCode ADD int_temp_3 INT78 0
+# ADD INT78 0->int_temp_3
+				# load INT78->$t0
+				# offset: 196 no: 0
+    lw $t0 -196($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->int_temp_3
+    sw $t0 -52($sp)
+#midCode LOAD_ARR INT79 int_array 0
+# load_arr int_array[0] -> INT79
+				# load int_array->$t1
+				# offset: 40 no: 0
+    lw $t1 -40($sp)
+#					define:INT79 type:INT
+				# store $t1->INT79
+    sw $t1 -200($sp)
+#midCode PUSH_PARA INT79 testReturnChar 65536
+#midCode CALL_FUNC testReturnChar  
+# call function testReturnChar
+    addi $s0 $sp -204
+				# load INT79->$t1
+				# offset: 200 no: 0
+    lw $t1 -200($sp)
+# para_name:INT79
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 204
+    sw $t1 0($s0)
+    jal testReturnChar
+#midCode ADD CHAR14 RET 0
+# ADD RET 0->CHAR14
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->CHAR14
+#					define:CHAR14 type:CHAR
+    sw $t0 -204($sp)
+#midCode STORE_ARR CHAR14 char_array 0
+# store_arr CHAR14 -> char_array[0]
+				# load CHAR14->$t3
+				# offset: 204 no: 0
+    lw $t3 -204($sp)
+				# store $t3->char_array
+    sw $t3 -60($sp)
+#midCode MUL INT80 const_int_2 const_int_4
+# MUL const_int_2 const_int_4->INT80
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT80
+#					define:INT80 type:INT
+    sw $t0 -208($sp)
+#midCode PUSH_PARA 0 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -212
+				# load 0->$t1
+# para_name:0
+    sw $0 -8($s0)
+    move $sp $s0
+    li $t1 212
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT81 RET 0
+# ADD RET 0->INT81
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT81
+#					define:INT81 type:INT
+    sw $t0 -212($sp)
+#midCode MUL INT82 INT81 const_int_4
+# MUL INT81 const_int_4->INT82
+				# load INT81->$t0
+				# offset: 212 no: 0
+    lw $t0 -212($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT82
+#					define:INT82 type:INT
+    sw $t0 -216($sp)
+#midCode ADD INT83 INT80 INT82
+# ADD INT80 INT82->INT83
+				# load INT80->$t0
+				# offset: 208 no: 0
+    lw $t0 -208($sp)
+				# load INT82->$t1
+				# offset: 216 no: 0
+    lw $t1 -216($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT83
+#					define:INT83 type:INT
+    sw $t0 -220($sp)
+#midCode SUB INT84 const_int_1 INT83
+# SUB const_int_1 INT83->INT84
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT83->$t1
+				# offset: 220 no: 0
+    lw $t1 -220($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT84
+#					define:INT84 type:INT
+    sw $t0 -224($sp)
+#midCode LOAD_ARR INT85 int_array 1
+# load_arr int_array[1] -> INT85
+				# load int_array->$t1
+				# offset: 40 no: 1
+    lw $t1 -44($sp)
+#					define:INT85 type:INT
+				# store $t1->INT85
+    sw $t1 -228($sp)
+#midCode ADD INT86 INT85 const_int_1
+# ADD INT85 const_int_1->INT86
+				# load INT85->$t0
+				# offset: 228 no: 0
+    lw $t0 -228($sp)
+				# load const_int_1->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT86
+#					define:INT86 type:INT
+    sw $t0 -232($sp)
+#midCode PUSH_PARA INT86 testReturnChar 65536
+#midCode CALL_FUNC testReturnChar  
+# call function testReturnChar
+    addi $s0 $sp -236
+				# load INT86->$t1
+				# offset: 232 no: 0
+    lw $t1 -232($sp)
+# para_name:INT86
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 236
+    sw $t1 0($s0)
+    jal testReturnChar
+#midCode ADD CHAR15 RET 0
+# ADD RET 0->CHAR15
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->CHAR15
+#					define:CHAR15 type:CHAR
+    sw $t0 -236($sp)
+#midCode STORE_ARR CHAR15 char_array INT84
+# store_arr CHAR15 -> char_array[INT84]
+				# load CHAR15->$t3
+				# offset: 236 no: 0
+    lw $t3 -236($sp)
+				# store $t3->char_array
+				# load INT84->$t1
+				# offset: 224 no: 0
+    lw $t1 -224($sp)
+    sll $t1 $t1 2
+    li $t2 60
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    sw $t3 0($t1)
+#midCode LOAD_ARR CHAR16 char_array 0
+# load_arr char_array[0] -> CHAR16
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+#					define:CHAR16 type:CHAR
+				# store $t1->CHAR16
+    sw $t1 -240($sp)
+#midCode ADD char_temp_1 CHAR16 0
+# ADD CHAR16 0->char_temp_1
+				# load CHAR16->$t0
+				# offset: 240 no: 0
+    lw $t0 -240($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->char_temp_1
+    sw $t0 -56($sp)
+#midCode MUL INT87 const_int_2 const_int_4
+# MUL const_int_2 const_int_4->INT87
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT87
+#					define:INT87 type:INT
+    sw $t0 -244($sp)
+#midCode PUSH_PARA 0 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -248
+				# load 0->$t1
+# para_name:0
+    sw $0 -8($s0)
+    move $sp $s0
+    li $t1 248
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT88 RET 0
+# ADD RET 0->INT88
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT88
+#					define:INT88 type:INT
+    sw $t0 -248($sp)
+#midCode MUL INT89 INT88 const_int_4
+# MUL INT88 const_int_4->INT89
+				# load INT88->$t0
+				# offset: 248 no: 0
+    lw $t0 -248($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT89
+#					define:INT89 type:INT
+    sw $t0 -252($sp)
+#midCode ADD INT90 INT87 INT89
+# ADD INT87 INT89->INT90
+				# load INT87->$t0
+				# offset: 244 no: 0
+    lw $t0 -244($sp)
+				# load INT89->$t1
+				# offset: 252 no: 0
+    lw $t1 -252($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT90
+#					define:INT90 type:INT
+    sw $t0 -256($sp)
+#midCode SUB INT91 const_int_1 INT90
+# SUB const_int_1 INT90->INT91
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT90->$t1
+				# offset: 256 no: 0
+    lw $t1 -256($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT91
+#					define:INT91 type:INT
+    sw $t0 -260($sp)
+#midCode LOAD_ARR CHAR17 char_array INT91
+# load_arr char_array[INT91] -> CHAR17
+				# load char_array->$t1
+				# offset: 60 no: INT91
+				# load INT91->$t1
+				# offset: 260 no: 0
+    lw $t1 -260($sp)
+    sll $t1 $t1 2
+    li $t2 60
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+#					define:CHAR17 type:CHAR
+				# store $t1->CHAR17
+    sw $t1 -264($sp)
+#midCode ADD char_temp_2 CHAR17 0
+# ADD CHAR17 0->char_temp_2
+				# load CHAR17->$t0
+				# offset: 264 no: 0
+    lw $t0 -264($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->char_temp_2
+    sw $t0 -72($sp)
+#midCode PRINT int_temp_1 1 INT
+# print int_temp_1
+				# load int_temp_1->$a0
+				# offset: 32 no: 0
+    lw $a0 -32($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT int_temp_2 1 INT
+# print int_temp_2
+				# load int_temp_2->$a0
+				# offset: 36 no: 0
+    lw $a0 -36($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT int_temp_3 1 INT
+# print int_temp_3
+				# load int_temp_3->$a0
+				# offset: 52 no: 0
+    lw $a0 -52($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR INT92 int_array const_int_3
+# load_arr int_array[const_int_3] -> INT92
+				# load int_array->$t1
+				# offset: 40 no: const_int_3
+				# load const_int_3->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+#					define:INT92 type:INT
+				# store $t1->INT92
+    sw $t1 -268($sp)
+#midCode PRINT INT92 1 INT
+# print INT92
+				# load INT92->$a0
+				# offset: 268 no: 0
+    lw $a0 -268($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode MUL INT93 const_int_2 const_int_4
+# MUL const_int_2 const_int_4->INT93
+				# load const_int_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT93
+#					define:INT93 type:INT
+    sw $t0 -272($sp)
+#midCode PUSH_PARA 0 testReturnInt 65536
+#midCode CALL_FUNC testReturnInt  
+# call function testReturnInt
+    addi $s0 $sp -276
+				# load 0->$t1
+# para_name:0
+    sw $0 -8($s0)
+    move $sp $s0
+    li $t1 276
+    sw $t1 0($s0)
+    jal testReturnInt
+#midCode ADD INT94 RET 0
+# ADD RET 0->INT94
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT94
+#					define:INT94 type:INT
+    sw $t0 -276($sp)
+#midCode MUL INT95 INT94 const_int_4
+# MUL INT94 const_int_4->INT95
+				# load INT94->$t0
+				# offset: 276 no: 0
+    lw $t0 -276($sp)
+				# load const_int_4->$t1
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t1 0($t1)
+    mul $t0 $t0 $t1
+				# store $t0->INT95
+#					define:INT95 type:INT
+    sw $t0 -280($sp)
+#midCode ADD INT96 INT93 INT95
+# ADD INT93 INT95->INT96
+				# load INT93->$t0
+				# offset: 272 no: 0
+    lw $t0 -272($sp)
+				# load INT95->$t1
+				# offset: 280 no: 0
+    lw $t1 -280($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT96
+#					define:INT96 type:INT
+    sw $t0 -284($sp)
+#midCode SUB INT97 const_int_1 INT96
+# SUB const_int_1 INT96->INT97
+				# load const_int_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT96->$t1
+				# offset: 284 no: 0
+    lw $t1 -284($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT97
+#					define:INT97 type:INT
+    sw $t0 -288($sp)
+#midCode LOAD_ARR INT98 int_array INT97
+# load_arr int_array[INT97] -> INT98
+				# load int_array->$t1
+				# offset: 40 no: INT97
+				# load INT97->$t1
+				# offset: 288 no: 0
+    lw $t1 -288($sp)
+    sll $t1 $t1 2
+    li $t2 40
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+#					define:INT98 type:INT
+				# store $t1->INT98
+    sw $t1 -292($sp)
+#midCode PRINT INT98 1 INT
+# print INT98
+				# load INT98->$a0
+				# offset: 292 no: 0
+    lw $a0 -292($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT char_temp_1 1 INT
+# print char_temp_1
+				# load char_temp_1->$a0
+				# offset: 56 no: 0
+    lw $a0 -56($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT char_temp_2 1 INT
+# print char_temp_2
+				# load char_temp_2->$a0
+				# offset: 72 no: 0
+    lw $a0 -72($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR18 char_array 0
+# load_arr char_array[0] -> CHAR18
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+#					define:CHAR18 type:CHAR
+				# store $t1->CHAR18
+    sw $t1 -296($sp)
+#midCode PRINT CHAR18 1 INT
+# print CHAR18
+				# load CHAR18->$a0
+				# offset: 296 no: 0
+    lw $a0 -296($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR19 char_array const_int_1
+# load_arr char_array[const_int_1] -> CHAR19
+				# load char_array->$t1
+				# offset: 60 no: const_int_1
+				# load const_int_1->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+    sll $t1 $t1 2
+    li $t2 60
+    add $t1 $t1 $t2
+    sub $t1 $sp $t1
+    lw $t1 0($t1)
+#					define:CHAR19 type:CHAR
+				# store $t1->CHAR19
+    sw $t1 -300($sp)
+#midCode PRINT CHAR19 1 INT
+# print CHAR19
+				# load CHAR19->$a0
+				# offset: 300 no: 0
+    lw $a0 -300($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LOAD_ARR CHAR20 char_array 0
+# load_arr char_array[0] -> CHAR20
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+#					define:CHAR20 type:CHAR
+				# store $t1->CHAR20
+    sw $t1 -304($sp)
+#midCode LOAD_ARR CHAR21 char_array 0
+# load_arr char_array[0] -> CHAR21
+				# load char_array->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+#					define:CHAR21 type:CHAR
+				# store $t1->CHAR21
+    sw $t1 -308($sp)
+#midCode MUL INT99 CHAR21 char_temp_2
+# MUL CHAR21 char_temp_2->INT99
+				# load CHAR21->$t0
+				# offset: 308 no: 0
+    lw $t0 -308($sp)
+				# load char_temp_2->$t1
+				# offset: 72 no: 0
+    lw $t1 -72($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT99
+#					define:INT99 type:INT
+    sw $t0 -312($sp)
+#midCode ADD INT100 CHAR20 INT99
+# ADD CHAR20 INT99->INT100
+				# load CHAR20->$t0
+				# offset: 304 no: 0
+    lw $t0 -304($sp)
+				# load INT99->$t1
+				# offset: 312 no: 0
+    lw $t1 -312($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT100
+#					define:INT100 type:INT
+    sw $t0 -316($sp)
+#midCode MUL INT101 char_temp_1 INT100
+# MUL char_temp_1 INT100->INT101
+				# load char_temp_1->$t0
+				# offset: 56 no: 0
+    lw $t0 -56($sp)
+				# load INT100->$t1
+				# offset: 316 no: 0
+    lw $t1 -316($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT101
+#					define:INT101 type:INT
+    sw $t0 -320($sp)
+#midCode PRINT INT101 1 INT
+# print INT101
+				# load INT101->$a0
+				# offset: 320 no: 0
+    lw $a0 -320($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testIO  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testIO:
+    sw $ra -4($sp)
+# in func______
+#midCode SCAN global_int_1  
+# read global_int_1
+    li $v0 5
+    syscall
+    la $t0 _var_8
+    sw $v0 0($t0)#midCode SCAN global_char_1  
+# read global_char_1
+    li $v0 12
+    syscall
+    la $t0 _var_9
+    sw $v0 0($t0)#midCode PRINT !@\\n#$^&*()Qqaa123[];',./ 0 1
+# print _string_20
+    li $v0 4
+    la $a0 _string_20
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_int_1 1 INT
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_char_1 1 INT
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode SCAN global_int_1  
+# read global_int_1
+    li $v0 5
+    syscall
+    la $t0 _var_8
+    sw $v0 0($t0)#midCode SCAN global_char_1  
+# read global_char_1
+    li $v0 12
+    syscall
+    la $t0 _var_9
+    sw $v0 0($t0)#midCode PRINT !@\\n#$^&*()Qqaa123[];',./ 0 0
+# print _string_21
+    li $v0 4
+    la $a0 _string_21
+    syscall
+#midCode PRINT global_int_1 1 1
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_char_1 1 INT
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode SCAN global_char_1  
+# read global_char_1
+    li $v0 12
+    syscall
+    la $t0 _var_9
+    sw $v0 0($t0)#midCode SCAN global_int_1  
+# read global_int_1
+    li $v0 5
+    syscall
+    la $t0 _var_8
+    sw $v0 0($t0)#midCode PRINT !@\\n#$^&*()Qqaa123[];',./ 0 0
+# print _string_22
+    li $v0 4
+    la $a0 _string_22
+    syscall
+#midCode PRINT global_char_1 1 1
+# print global_char_1
+				# load global_char_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_9
+    lb $a0 0($t1)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT global_int_1 1 INT
+# print global_int_1
+				# load global_int_1->$a0
+				# offset: -1 no: 0
+    la $t1 _var_8
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testIfWhile  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testIfWhile:
+    sw $ra -4($sp)
+# in func______
+#midCode VAR i INT 0
+#					define:i type:INT
+#midCode VAR j INT 0
+#					define:j type:INT
+#midCode VAR k INT 0
+#					define:k type:INT
+#midCode VAR a CHAR 0
+#					define:a type:CHAR
+#midCode VAR b CHAR 0
+#					define:b type:CHAR
+#midCode VAR c CHAR 0
+#					define:c type:CHAR
+#midCode VAR d CHAR 0
+#					define:d type:CHAR
+#midCode ADD k 10 0
+# ADD 10 0->k
+				# load 10->$t0
+    li $t0 10
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->k
+    sw $t0 -16($sp)
+#midCode ADD a '+' 0
+# ADD '+' 0->a
+				# load '+'->$t0
+    li $t0 '+'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->a
+    sw $t0 -20($sp)
+#midCode ADD b '-' 0
+# ADD '-' 0->b
+				# load '-'->$t0
+    li $t0 '-'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->b
+    sw $t0 -24($sp)
+#midCode ADD c '*' 0
+# ADD '*' 0->c
+				# load '*'->$t0
+    li $t0 '*'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->c
+    sw $t0 -28($sp)
+#midCode ADD d '/' 0
+# ADD '/' 0->d
+				# load '/'->$t0
+    li $t0 '/'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->d
+    sw $t0 -32($sp)
+#midCode CONDITION > k 0
+# k > 0
+				# load k->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 0->$t1
+    sub $t0 $t0 $0
+#midCode BZ not_If9 > 
+    blez $t0 not_If9
+#midCode CONDITION <= k 10
+# k <= 10
+				# load k->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 10->$t1
+    li $t1 10
+    sub $t0 $t0 $t1
+#midCode BZ not_If10 <= 
+    bgtz $t0 not_If10
+#midCode ADD i 0 0
+# ADD 0 0->i
+				# load 0->$t0
+				# load 0->$t1
+    add $t0 $0 $0
+				# store $t0->i
+    sw $t0 -8($sp)
+#midCode LABEL while_Begin11  
+while_Begin11:
+#midCode DIV INT102 k 2
+# DIV k 2->INT102
+				# load k->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT102
+#					define:INT102 type:INT
+    sw $t0 -36($sp)
+#midCode CONDITION < i INT102
+# i < INT102
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT102->$t1
+				# offset: 36 no: 0
+    lw $t1 -36($sp)
+    sub $t0 $t0 $t1
+#midCode BZ while_End12 < 
+    bgez $t0 while_End12
+#midCode DIV INT103 i 2
+# DIV i 2->INT103
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT103
+#					define:INT103 type:INT
+    sw $t0 -40($sp)
+#midCode MUL INT104 INT103 2
+# MUL INT103 2->INT104
+				# load INT103->$t0
+				# offset: 40 no: 0
+    lw $t0 -40($sp)
+				# load 2->$t1
+    li $t1 2
+    mul $t0 $t0 $t1
+				# store $t0->INT104
+#					define:INT104 type:INT
+    sw $t0 -44($sp)
+#midCode SUB INT105 i INT104
+# SUB i INT104->INT105
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT104->$t1
+				# offset: 44 no: 0
+    lw $t1 -44($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT105
+#					define:INT105 type:INT
+    sw $t0 -48($sp)
+#midCode CONDITION == INT105 0
+# INT105 == 0
+				# load INT105->$t0
+				# offset: 48 no: 0
+    lw $t0 -48($sp)
+				# load 0->$t1
+    sub $t0 $t0 $0
+#midCode BZ not_If13 == 
+    bne $t0 $0 not_If13
+#midCode STORE_ARR a global_char_array_3 i
+# store_arr a -> global_char_array_3[i]
+				# load a->$t3
+				# offset: 20 no: 0
+    lw $t3 -20($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+#midCode GOTO if_End14  
+    j if_End14
+#midCode LABEL not_If13  
+not_If13:
+#midCode DIV INT106 i 2
+# DIV i 2->INT106
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT106
+#					define:INT106 type:INT
+    sw $t0 -52($sp)
+#midCode MUL INT107 INT106 2
+# MUL INT106 2->INT107
+				# load INT106->$t0
+				# offset: 52 no: 0
+    lw $t0 -52($sp)
+				# load 2->$t1
+    li $t1 2
+    mul $t0 $t0 $t1
+				# store $t0->INT107
+#					define:INT107 type:INT
+    sw $t0 -56($sp)
+#midCode SUB INT108 i INT107
+# SUB i INT107->INT108
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT107->$t1
+				# offset: 56 no: 0
+    lw $t1 -56($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT108
+#					define:INT108 type:INT
+    sw $t0 -60($sp)
+#midCode CONDITION == INT108 1
+# INT108 == 1
+				# load INT108->$t0
+				# offset: 60 no: 0
+    lw $t0 -60($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+#midCode BZ not_If15 == 
+    bne $t0 $0 not_If15
+#midCode STORE_ARR b global_char_array_3 i
+# store_arr b -> global_char_array_3[i]
+				# load b->$t3
+				# offset: 24 no: 0
+    lw $t3 -24($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+#midCode LABEL not_If15  
+not_If15:
+#midCode LABEL if_End14  
+if_End14:
+#midCode LOAD_ARR CHAR22 global_char_array_3 i
+# load_arr global_char_array_3[i] -> CHAR22
+				# load global_char_array_3->$t1
+				# offset: -1 no: i
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    lb $t1 0($t1)
+#					define:CHAR22 type:CHAR
+				# store $t1->CHAR22
+    sw $t1 -64($sp)
+#midCode PRINT CHAR22 1 INT
+# print CHAR22
+				# load CHAR22->$a0
+				# offset: 64 no: 0
+    lw $a0 -64($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode ADD INT109 i 1
+# ADD i 1->INT109
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT109
+#					define:INT109 type:INT
+    sw $t0 -68($sp)
+#midCode ADD i INT109 0
+# ADD INT109 0->i
+				# load INT109->$t0
+				# offset: 68 no: 0
+    lw $t0 -68($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i
+    sw $t0 -8($sp)
+#midCode GOTO while_Begin11  
+    j while_Begin11
+#midCode LABEL while_End12  
+while_End12:
+#midCode LABEL while_Begin16  
+while_Begin16:
+#midCode CONDITION < i k
+# i < k
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load k->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+    sub $t0 $t0 $t1
+#midCode BZ while_End17 < 
+    bgez $t0 while_End17
+#midCode DIV INT110 i 2
+# DIV i 2->INT110
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 2->$t1
+    li $t1 2
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT110
+#					define:INT110 type:INT
+    sw $t0 -72($sp)
+#midCode MUL INT111 INT110 2
+# MUL INT110 2->INT111
+				# load INT110->$t0
+				# offset: 72 no: 0
+    lw $t0 -72($sp)
+				# load 2->$t1
+    li $t1 2
+    mul $t0 $t0 $t1
+				# store $t0->INT111
+#					define:INT111 type:INT
+    sw $t0 -76($sp)
+#midCode SUB INT112 i INT111
+# SUB i INT111->INT112
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT111->$t1
+				# offset: 76 no: 0
+    lw $t1 -76($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT112
+#					define:INT112 type:INT
+    sw $t0 -80($sp)
+#midCode CONDITION == INT112 0
+# INT112 == 0
+				# load INT112->$t0
+				# offset: 80 no: 0
+    lw $t0 -80($sp)
+				# load 0->$t1
+    sub $t0 $t0 $0
+#midCode BZ not_If18 == 
+    bne $t0 $0 not_If18
+#midCode STORE_ARR c global_char_array_3 i
+# store_arr c -> global_char_array_3[i]
+				# load c->$t3
+				# offset: 28 no: 0
+    lw $t3 -28($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+#midCode GOTO if_End19  
+    j if_End19
+#midCode LABEL not_If18  
+not_If18:
+#midCode STORE_ARR d global_char_array_3 i
+# store_arr d -> global_char_array_3[i]
+				# load d->$t3
+				# offset: 32 no: 0
+    lw $t3 -32($sp)
+				# store $t3->global_char_array_3
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    sb $t3 0($t1)
+#midCode LABEL if_End19  
+if_End19:
+#midCode LOAD_ARR CHAR23 global_char_array_3 i
+# load_arr global_char_array_3[i] -> CHAR23
+				# load global_char_array_3->$t1
+				# offset: -1 no: i
+    la $t1 _array_4
+				# load i->$t2
+				# offset: 8 no: 0
+    lw $t2 -8($sp)
+    sll $t2 $t2 2
+    add $t1 $t1 $t2
+    lb $t1 0($t1)
+#					define:CHAR23 type:CHAR
+				# store $t1->CHAR23
+    sw $t1 -84($sp)
+#midCode PRINT CHAR23 1 INT
+# print CHAR23
+				# load CHAR23->$a0
+				# offset: 84 no: 0
+    lw $a0 -84($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode ADD INT113 i 1
+# ADD i 1->INT113
+				# load i->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT113
+#					define:INT113 type:INT
+    sw $t0 -88($sp)
+#midCode ADD i INT113 0
+# ADD INT113 0->i
+				# load INT113->$t0
+				# offset: 88 no: 0
+    lw $t0 -88($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i
+    sw $t0 -8($sp)
+#midCode GOTO while_Begin16  
+    j while_Begin16
+#midCode LABEL while_End17  
+while_End17:
+#midCode LABEL not_If10  
+not_If10:
+#midCode LABEL not_If9  
+not_If9:
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testSwitch  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testSwitch:
+    sw $ra -4($sp)
+# in func______
+#midCode CONST sum INT 3
+# sum -> 3
+    li $t0 3
+# size:2 index:0
+    sw $t0 -8($sp)
+#					define:sum type:INT
+#midCode VAR int_1 INT 0
+#					define:int_1 type:INT
+#midCode VAR i INT 0
+#					define:i type:INT
+#midCode VAR char_1 CHAR 0
+#					define:char_1 type:CHAR
+#midCode ADD i 0 0
+# ADD 0 0->i
+				# load 0->$t0
+				# load 0->$t1
+    add $t0 $0 $0
+				# store $t0->i
+    sw $t0 -16($sp)
+#midCode ADD int_1 0 0
+# ADD 0 0->int_1
+				# load 0->$t0
+				# load 0->$t1
+    add $t0 $0 $0
+				# store $t0->int_1
+    sw $t0 -12($sp)
+#midCode LABEL while_Begin20  
+while_Begin20:
+#midCode CONDITION < i sum
+# i < sum
+				# load i->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load sum->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+    sub $t0 $t0 $t1
+#midCode BZ while_End21 < 
+    bgez $t0 while_End21
+#midCode CONDITION == int_1 0
+# int_1 == 0
+				# load int_1->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 0->$t1
+    sub $t0 $t0 $0
+#midCode BZ not_If22 == 
+    bne $t0 $0 not_If22
+#midCode ADD char_1 'a' 0
+# ADD 'a' 0->char_1
+				# load 'a'->$t0
+    li $t0 'a'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->char_1
+    sw $t0 -20($sp)
+#midCode PRINT char_1 1 INT
+# print char_1
+				# load char_1->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode GOTO if_End23  
+    j if_End23
+#midCode LABEL not_If22  
+not_If22:
+#midCode CONDITION == int_1 1
+# int_1 == 1
+				# load int_1->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 1->$t1
+    li $t1 1
+    sub $t0 $t0 $t1
+#midCode BZ not_If24 == 
+    bne $t0 $0 not_If24
+#midCode ADD char_1 'b' 0
+# ADD 'b' 0->char_1
+				# load 'b'->$t0
+    li $t0 'b'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->char_1
+    sw $t0 -20($sp)
+#midCode PRINT char_1 1 INT
+# print char_1
+				# load char_1->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode GOTO if_End25  
+    j if_End25
+#midCode LABEL not_If24  
+not_If24:
+#midCode ADD char_1 const_char_2 0
+# ADD const_char_2 0->char_1
+				# load const_char_2->$t0
+				# offset: -1 no: 0
+    la $t1 _var_5
+    lb $t0 0($t1)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->char_1
+    sw $t0 -20($sp)
+#midCode PRINT char_1 1 INT
+# print char_1
+				# load char_1->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LABEL if_End25  
+if_End25:
+#midCode LABEL if_End23  
+if_End23:
+#midCode CONDITION == char_1 'a'
+# char_1 == 'a'
+				# load char_1->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 'a'->$t1
+    li $t1 'a'
+    sub $t0 $t0 $t1
+#midCode BZ not_If26 == 
+    bne $t0 $0 not_If26
+#midCode ADD INT114 i 1
+# ADD i 1->INT114
+				# load i->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT114
+#					define:INT114 type:INT
+    sw $t0 -24($sp)
+#midCode ADD int_1 INT114 0
+# ADD INT114 0->int_1
+				# load INT114->$t0
+				# offset: 24 no: 0
+    lw $t0 -24($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->int_1
+    sw $t0 -12($sp)
+#midCode PRINT int_1 1 INT
+# print int_1
+				# load int_1->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode GOTO if_End27  
+    j if_End27
+#midCode LABEL not_If26  
+not_If26:
+#midCode CONDITION == char_1 'b'
+# char_1 == 'b'
+				# load char_1->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 'b'->$t1
+    li $t1 'b'
+    sub $t0 $t0 $t1
+#midCode BZ not_If28 == 
+    bne $t0 $0 not_If28
+#midCode ADD int_1 sum 0
+# ADD sum 0->int_1
+				# load sum->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->int_1
+    sw $t0 -12($sp)
+#midCode PRINT int_1 1 INT
+# print int_1
+				# load int_1->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LABEL not_If28  
+not_If28:
+#midCode LABEL if_End27  
+if_End27:
+#midCode ADD INT115 i 1
+# ADD i 1->INT115
+				# load i->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 1->$t1
+    li $t1 1
+    add $t0 $t0 $t1
+				# store $t0->INT115
+#					define:INT115 type:INT
+    sw $t0 -28($sp)
+#midCode ADD i INT115 0
+# ADD INT115 0->i
+				# load INT115->$t0
+				# offset: 28 no: 0
+    lw $t0 -28($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i
+    sw $t0 -16($sp)
+#midCode GOTO while_Begin20  
+    j while_Begin20
+#midCode LABEL while_End21  
+while_End21:
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNC func_ret_int_1 INT 
+#midCode PARA i_1 INT 
+#midCode PARA i_2 INT 
+#midCode PARA c_1 CHAR 
+#midCode PARA c_2 CHAR 
+#midCode FUNCHEAD func_ret_int_1  
+#					define:_offset type:INT
+#					define:_ra type:INT
+#					define:i_1 type:INT
+#					define:i_2 type:INT
+#					define:c_1 type:CHAR
+#					define:c_2 type:CHAR
+func_ret_int_1:
+    sw $ra -4($sp)
+# in func______
+#midCode VAR i_temp INT 0
+#					define:i_temp type:INT
+#midCode VAR c_temp CHAR 0
+#					define:c_temp type:CHAR
+#midCode PRINT INPUT of func_ret_int_1: 0 1
+# print _string_23
+    li $v0 4
+    la $a0 _string_23
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT i_1 1 INT
+# print i_1
+				# load i_1->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT i_2 1 INT
+# print i_2
+				# load i_2->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT c_1 1 INT
+# print c_1
+				# load c_1->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT c_2 1 INT
+# print c_2
+				# load c_2->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode ADD i_temp i_1 0
+# ADD i_1 0->i_temp
+				# load i_1->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i_temp
+    sw $t0 -24($sp)
+#midCode ADD i_1 i_2 0
+# ADD i_2 0->i_1
+				# load i_2->$t0
+				# offset: 12 no: 0
+    lw $t0 -12($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i_1
+    sw $t0 -8($sp)
+#midCode ADD i_2 i_temp 0
+# ADD i_temp 0->i_2
+				# load i_temp->$t0
+				# offset: 24 no: 0
+    lw $t0 -24($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i_2
+    sw $t0 -12($sp)
+#midCode ADD c_temp c_1 0
+# ADD c_1 0->c_temp
+				# load c_1->$t0
+				# offset: 16 no: 0
+    lw $t0 -16($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->c_temp
+    sw $t0 -28($sp)
+#midCode ADD c_1 c_2 0
+# ADD c_2 0->c_1
+				# load c_2->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->c_1
+    sw $t0 -16($sp)
+#midCode ADD c_2 c_temp 0
+# ADD c_temp 0->c_2
+				# load c_temp->$t0
+				# offset: 28 no: 0
+    lw $t0 -28($sp)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->c_2
+    sw $t0 -20($sp)
+#midCode PRINT OPERATE of func_ret_int_1: 0 1
+# print _string_24
+    li $v0 4
+    la $a0 _string_24
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT i_1 1 INT
+# print i_1
+				# load i_1->$a0
+				# offset: 8 no: 0
+    lw $a0 -8($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT i_2 1 INT
+# print i_2
+				# load i_2->$a0
+				# offset: 12 no: 0
+    lw $a0 -12($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT c_1 1 INT
+# print c_1
+				# load c_1->$a0
+				# offset: 16 no: 0
+    lw $a0 -16($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT c_2 1 INT
+# print c_2
+				# load c_2->$a0
+				# offset: 20 no: 0
+    lw $a0 -20($sp)
+    li $v0 11
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET i_1  
+				# load i_1->$v0
+				# offset: 8 no: 0
+    lw $v0 -8($sp)
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testPara  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testPara:
+    sw $ra -4($sp)
+# in func______
+#midCode VAR i INT 0
+#					define:i type:INT
+#midCode VAR j INT 0
+#					define:j type:INT
+#midCode VAR c CHAR 0
+#					define:c type:CHAR
+#midCode VAR d CHAR 0
+#					define:d type:CHAR
+#midCode ADD i const_int_1 0
+# ADD const_int_1 0->i
+				# load const_int_1->$t0
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $t0 0($t1)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->i
+    sw $t0 -8($sp)
+#midCode ADD j const_int_4 0
+# ADD const_int_4 0->j
+				# load const_int_4->$t0
+				# offset: -1 no: 0
+    la $t1 _var_3
+    lw $t0 0($t1)
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->j
+    sw $t0 -12($sp)
+#midCode ADD c 'A' 0
+# ADD 'A' 0->c
+				# load 'A'->$t0
+    li $t0 'A'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->c
+    sw $t0 -16($sp)
+#midCode ADD d 'Z' 0
+# ADD 'Z' 0->d
+				# load 'Z'->$t0
+    li $t0 'Z'
+				# load 0->$t1
+    add $t0 $t0 $0
+				# store $t0->d
+    sw $t0 -20($sp)
+#midCode PUSH_PARA i func_ret_int_1 262147
+#midCode PUSH_PARA j func_ret_int_1 262146
+#midCode PUSH_PARA c func_ret_int_1 262145
+#midCode PUSH_PARA d func_ret_int_1 262144
+#midCode CALL_FUNC func_ret_int_1  
+# call function func_ret_int_1
+    addi $s0 $sp -24
+				# load i->$t1
+				# offset: 8 no: 0
+    lw $t1 -8($sp)
+# para_name:i
+    sw $t1 -8($s0)
+				# load j->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+# para_name:j
+    sw $t1 -12($s0)
+				# load c->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:c
+    sw $t1 -16($s0)
+				# load d->$t1
+				# offset: 20 no: 0
+    lw $t1 -20($sp)
+# para_name:d
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal func_ret_int_1
+#midCode ADD INT116 RET 0
+# ADD RET 0->INT116
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT116
+#					define:INT116 type:INT
+    sw $t0 -24($sp)
+#midCode PRINT INT116 1 INT
+# print INT116
+				# load INT116->$a0
+				# offset: 24 no: 0
+    lw $a0 -24($sp)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#midCode FUNCHEAD testRecursion  
+#					define:_offset type:INT
+#					define:_ra type:INT
+testRecursion:
+    sw $ra -4($sp)
+# in func______
+#midCode PUSH_PARA 2 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -8
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 8
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT117 RET 0
+# ADD RET 0->INT117
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT117
+#					define:INT117 type:INT
+    sw $t0 -8($sp)
+#midCode PUSH_PARA 3 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -12
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 12
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT118 RET 0
+# ADD RET 0->INT118
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT118
+#					define:INT118 type:INT
+    sw $t0 -12($sp)
+#midCode MUL INT119 INT117 INT118
+# MUL INT117 INT118->INT119
+				# load INT117->$t0
+				# offset: 8 no: 0
+    lw $t0 -8($sp)
+				# load INT118->$t1
+				# offset: 12 no: 0
+    lw $t1 -12($sp)
+    mul $t0 $t0 $t1
+				# store $t0->INT119
+#					define:INT119 type:INT
+    sw $t0 -16($sp)
+#midCode PUSH_PARA INT119 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -20
+				# load INT119->$t1
+				# offset: 16 no: 0
+    lw $t1 -16($sp)
+# para_name:INT119
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 20
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT120 RET 0
+# ADD RET 0->INT120
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT120
+#					define:INT120 type:INT
+    sw $t0 -20($sp)
+#midCode PUSH_PARA 3 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -24
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 24
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT121 RET 0
+# ADD RET 0->INT121
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT121
+#					define:INT121 type:INT
+    sw $t0 -24($sp)
+#midCode PUSH_PARA 4 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -28
+				# load 4->$t1
+    li $t1 4
+# para_name:4
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 28
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT122 RET 0
+# ADD RET 0->INT122
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT122
+#					define:INT122 type:INT
+    sw $t0 -28($sp)
+#midCode ADD INT123 INT121 INT122
+# ADD INT121 INT122->INT123
+				# load INT121->$t0
+				# offset: 24 no: 0
+    lw $t0 -24($sp)
+				# load INT122->$t1
+				# offset: 28 no: 0
+    lw $t1 -28($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT123
+#					define:INT123 type:INT
+    sw $t0 -32($sp)
+#midCode PUSH_PARA INT123 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -36
+				# load INT123->$t1
+				# offset: 32 no: 0
+    lw $t1 -32($sp)
+# para_name:INT123
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 36
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT124 RET 0
+# ADD RET 0->INT124
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT124
+#					define:INT124 type:INT
+    sw $t0 -36($sp)
+#midCode SUB INT125 INT120 INT124
+# SUB INT120 INT124->INT125
+				# load INT120->$t0
+				# offset: 20 no: 0
+    lw $t0 -20($sp)
+				# load INT124->$t1
+				# offset: 36 no: 0
+    lw $t1 -36($sp)
+    sub $t0 $t0 $t1
+				# store $t0->INT125
+#					define:INT125 type:INT
+    sw $t0 -40($sp)
+#midCode PUSH_PARA 2 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -44
+				# load 2->$t1
+    li $t1 2
+# para_name:2
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 44
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT126 RET 0
+# ADD RET 0->INT126
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT126
+#					define:INT126 type:INT
+    sw $t0 -44($sp)
+#midCode PUSH_PARA 3 Fibonacci 65536
+#midCode CALL_FUNC Fibonacci  
+# call function Fibonacci
+    addi $s0 $sp -48
+				# load 3->$t1
+    li $t1 3
+# para_name:3
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 48
+    sw $t1 0($s0)
+    jal Fibonacci
+#midCode ADD INT127 RET 0
+# ADD RET 0->INT127
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT127
+#					define:INT127 type:INT
+    sw $t0 -48($sp)
+#midCode ADD INT128 INT126 INT127
+# ADD INT126 INT127->INT128
+				# load INT126->$t0
+				# offset: 44 no: 0
+    lw $t0 -44($sp)
+				# load INT127->$t1
+				# offset: 48 no: 0
+    lw $t1 -48($sp)
+    add $t0 $t0 $t1
+				# store $t0->INT128
+#					define:INT128 type:INT
+    sw $t0 -52($sp)
+#midCode PUSH_PARA INT128 fac 65536
+#midCode CALL_FUNC fac  
+# call function fac
+    addi $s0 $sp -56
+				# load INT128->$t1
+				# offset: 52 no: 0
+    lw $t1 -52($sp)
+# para_name:INT128
+    sw $t1 -8($s0)
+    move $sp $s0
+    li $t1 56
+    sw $t1 0($s0)
+    jal fac
+#midCode ADD INT129 RET 0
+# ADD RET 0->INT129
+				# load 0->$t1
+    add $t0 $v0 $0
+				# store $t0->INT129
+#					define:INT129 type:INT
+    sw $t0 -56($sp)
+#midCode DIV INT130 INT125 INT129
+# DIV INT125 INT129->INT130
+				# load INT125->$t0
+				# offset: 40 no: 0
+    lw $t0 -40($sp)
+				# load INT129->$t1
+				# offset: 56 no: 0
+    lw $t1 -56($sp)
+    div $t0 $t1
+    mflo $t0
+				# store $t0->INT130
+#					define:INT130 type:INT
+    sw $t0 -60($sp)
+#midCode PUSH_PARA INT130 hanoi 262147
+#midCode PUSH_PARA 'a' hanoi 262146
+#midCode PUSH_PARA 'b' hanoi 262145
+#midCode PUSH_PARA 'c' hanoi 262144
+#midCode CALL_FUNC hanoi  
+# call function hanoi
+    addi $s0 $sp -64
+				# load INT130->$t1
+				# offset: 60 no: 0
+    lw $t1 -60($sp)
+# para_name:INT130
+    sw $t1 -8($s0)
+				# load 'a'->$t1
+    li $t1 'a'
+# para_name:'a'
+    sw $t1 -12($s0)
+				# load 'b'->$t1
+    li $t1 'b'
+# para_name:'b'
+    sw $t1 -16($s0)
+				# load 'c'->$t1
+    li $t1 'c'
+# para_name:'c'
+    sw $t1 -20($s0)
+    move $sp $s0
+    li $t1 64
+    sw $t1 0($s0)
+    jal hanoi
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCRET   
+    lw $t1 0($sp)
+    lw $ra -4($sp)
+    add $sp $sp $t1
+    jr $ra
+#midCode FUNCTAIL   
+# out func______
+#######################################################
+#0:_offset
+#1:_ra
+#2:INT117
+#3:INT118
+#4:INT119
+#5:INT120
+#6:INT121
+#7:INT122
+#8:INT123
+#9:INT124
+#10:INT125
+#11:INT126
+#12:INT127
+#13:INT128
+#14:INT129
+#15:INT130

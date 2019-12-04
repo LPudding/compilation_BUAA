@@ -358,7 +358,6 @@ void returnFuncStatement(string& name) {
 			name = middleTable.addIntTemp("ADD", "RET", "0");
 		else if (type == "CHAR") {
 			name = middleTable.addCharTemp("ADD", "RET", "0");
-
 		}
 	}
 	if (debug)
@@ -432,7 +431,10 @@ int factor(string& name) {//may be a question
 				string ind;
 				printWord(getsym());// [
 				arrayType = expression(ind); //expression
-				name = middleTable.addIntTemp("LOAD_ARR", name, ind);
+				if (type == INT)
+					name = middleTable.addIntTemp("LOAD_ARR", name, ind);
+				else if (type == CHAR)
+					name = middleTable.addCharTemp("LOAD_ARR", name, ind);
 				if (arrayType != INT)
 					printError('i');
 				id = watch();
