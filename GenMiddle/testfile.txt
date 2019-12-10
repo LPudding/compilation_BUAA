@@ -1,8 +1,11 @@
-
-const int i=2;
-
 void main() {
-    const int i=1;
-    printf(i); 
-
+    int a,b;
+    a = 5;
+    b = 1;
+    printf(a);
+    printf(b);
+    a = -a+5;
+    printf(a);
+    b = 5-b;
+    printf(b);
 }

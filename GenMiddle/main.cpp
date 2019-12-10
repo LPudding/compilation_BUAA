@@ -17,7 +17,6 @@ int main() {
 
 	// grama.c
 	project();
-
 	diffFuncAndExit();
 	optimize();
 	translate();

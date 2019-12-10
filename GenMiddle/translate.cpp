@@ -302,6 +302,13 @@ string loadVarToReg(string name, string no, string& regName) {
 		neg = true;
 		name = name.substr(1);
 	}
+	if (name == "RET") {
+		regName = "$v0";
+		if (neg) {
+			mips_code << "    sub $v0 $0 $v0" << endl;
+		}
+		return "INT";
+	}
 	if (name[0] == '\'') {
 		if (neg)
 			mips_code << "    subi " + regName + " $0 " + name << endl;
@@ -499,30 +506,57 @@ void scanSentence(middleCode midCode) {
 void calSentence(middleCode midCode) {
 	string reg1 = "$t0", reg2 = "$t1", reg3 = "$t0", globalName, type;
 	mips_code << "# " + midCode.Type + " " + midCode.op2 + " " + midCode.op3 + "->" + midCode.op1 << endl;
-	
-	if (midCode.op2 == "RET") {//add ret 0 -> temp
-		reg1 = "$v0";
-		string warn = loadVarToReg(midCode.op3, "0", reg2);
-	}
-	else {
-		string warn = loadVarToReg(midCode.op2, "0", reg1);
-		warn = loadVarToReg(midCode.op3, "0", reg2);
-	}
+
+	int val1, val2;
+	bool isConst1, isConst2;
+	isConst1 = isNumStr(midCode.op2, val1);
+	isConst2 = isNumStr(midCode.op3, val2);	
+
 	string name1 = LocalManager.isVarDispatch(midCode.op1);
 	mips_code << "#cal:op1=" << name1 << endl;
 	if (name1 != "NOFOUND") {
 		reg3 = name1;
 	}
+
 	if (midCode.Type == "ADD") {
-		mips_code << "    add " + reg3 + " " + reg1 + " " + reg2 << endl;
+		if (isConst1 && isConst2) {
+			mips_code << "    addi " + reg3 + " $0 " + to_string(val1) << endl;
+		}
+		if (isConst1 && !isConst2) {
+			string warn = loadVarToReg(midCode.op3, "0", reg2);
+			mips_code << "addi " + reg3 + " " + reg2 + " " + to_string(val1) << endl;
+		}
+		else if (!isConst1 && isConst2) {
+			string warn = loadVarToReg(midCode.op2, "0", reg1);
+			mips_code << "addi " + reg3 + " " + reg1 + " " + to_string(val2) << endl;
+		}
+		else {
+			if (midCode.op2[0] == '-') {
+				string warn = loadVarToReg(midCode.op3, "0", reg1);
+				warn = loadVarToReg(midCode.op2.substr(1), "0", reg2);
+				mips_code << "    sub " + reg3 + " " + reg1 + " " + reg2 << endl;
+			}
+			else {
+				string warn = loadVarToReg(midCode.op2, "0", reg1);
+				warn = loadVarToReg(midCode.op3, "0", reg2);
+				mips_code << "    add " + reg3 + " " + reg1 + " " + reg2 << endl;
+			}
+
+		}
 	}
 	else if (midCode.Type == "SUB") {
+		string warn = loadVarToReg(midCode.op2, "0", reg1);
+		warn = loadVarToReg(midCode.op3, "0", reg2);
 		mips_code << "    sub " + reg3 + " " + reg1 + " " + reg2 << endl;
 	}
 	else if (midCode.Type == "MUL") {
+		string warn = loadVarToReg(midCode.op2, "0", reg1);
+		warn = loadVarToReg(midCode.op3, "0", reg2);
 		mips_code << "    mul " + reg3 + " " + reg1 + " " + reg2 << endl;
 	}
 	else if (midCode.Type == "DIV") {
+		string warn = loadVarToReg(midCode.op2, "0", reg1);
+		warn = loadVarToReg(midCode.op3, "0", reg2);
 		mips_code << "    div " + reg1 + " " + reg2 << endl;
 		mips_code << "    mflo " + reg3 << endl;
 	}

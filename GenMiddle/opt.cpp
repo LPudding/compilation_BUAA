@@ -532,8 +532,9 @@ void simplifyExp(bool& isOpt) {//combine and simplify
 			}
 			if (it->Type == "SUB") {
 				if (isConst2 && isConst3) {
+					it->Type = "ADD";
 					it->op2 = to_string(val2 - val3);
-					it->op3 = "";
+					it->op3 = "0";
 					isOpt = true;
 				}
 				if (isConst3 && val3 == 0 && it->op1 == it->op2) {

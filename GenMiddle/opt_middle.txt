@@ -1,5 +1,12 @@
-    CONST    i    INT    2
     MAINHEAD            
-    CONST    i    INT    1
-    PRINT    1    1    INT
+    VAR    a    INT    0
+    VAR    b    INT    0
+    ADD    a    5    0
+    ADD    b    1    0
+    PRINT    a    1    INT
+    PRINT    b    1    INT
+    ADD    a    -a    5
+    PRINT    a    1    INT
+    SUB    b    5    b
+    PRINT    b    1    INT
     EXIT            
