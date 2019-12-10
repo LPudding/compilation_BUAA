@@ -6,7 +6,9 @@
 #include<iomanip>
 using namespace std;
 
-bool isNumStr(string str);
+bool isNumStr(string str,int& val);
+
+bool isVarStr(string str);
 
 void clearToken();
 

@@ -1,0 +1,44 @@
+const int const_int_1 = 1,const_int_2 =2;
+const char const_char_1 = '1',const_char_2 = '2';
+int int1,int2,int3;
+char char1,char2,char3;
+int array[100];
+
+void globalTest() {
+    int a,b,c,d,e,f,g;
+    int1 = const_int_1;  
+    printf(int1);
+    if (int1 == 1) {
+        printf("yes");
+    }
+    a=1;b=a;c=b;d=c;e=d;f=e+e+e;g=f+f+f;a=g+g+g;
+    printf(a);
+    int2 = a+a+a;
+    printf(int2);       
+}
+
+void arrayTest() {
+    int int1[100],a,b,c;
+    int1[const_int_1] = const_int_2;
+    printf(int1[1]);
+    a=int1[1];
+    printf(a);
+    int1[0]=100;
+    printf(int1);
+    array[a] = int1[1];
+    printf(array[a]);
+    printf((returnInt(array[a])));
+}
+
+int returnInt(int a) {
+    return(a+1);
+}
+
+void main() {
+    printf("*******************************************");
+    printf("globalTest:");
+    globalTest();
+    printf("*******************************************");
+    printf("arrayTest:");
+    arrayTest();
+}

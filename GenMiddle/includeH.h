@@ -6,11 +6,14 @@
 #include<vector>
 #include<fstream>
 #include<map>
+#include<set>
+#include<list>
 #include<cstdio>
 #include<ctype.h>
 #include<cstdlib>
 #include<algorithm>
 #include<string.h>
+#include<assert.h>
 #include <regex>
 #include"mid.h"
 #include"error.h"

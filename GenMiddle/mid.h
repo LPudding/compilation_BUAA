@@ -12,6 +12,7 @@ using namespace std;
 class middleCode {
 public:
 	string Type,op1,op2,op3;
+	int no;
 	middleCode(string aType,string aOp1,string aOp2,string aOp3);
 };
 
@@ -38,3 +39,5 @@ public:
 };
 
 bool isConst(string ret);
+
+bool isTemp(string str);

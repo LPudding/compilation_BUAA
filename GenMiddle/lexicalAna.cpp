@@ -333,8 +333,16 @@ int watchThrice() {
 	return id;
 }
 
-bool isNumStr(string str) {
-	return regex_match(str, regex("[+-]?\\d+"));
+bool isNumStr(string str, int& val) {
+	if (regex_match(str, regex("[+-]?\\d+"))) {
+		val = stoi(str);
+		return true;
+	}
+	return false;
+}
+
+bool isVarStr(string str) {
+	return regex_match(str, regex("[_a-zA-Z][_a-zA-Z0-9]*"));
 }
 
 void printWord(int id) {

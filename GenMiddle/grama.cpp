@@ -5,7 +5,6 @@ using namespace std;
 
 
 /* lexical analysis */
-extern middleCodeTable middleTable;
 extern char str[];
 extern char token[];
 extern symTable sym_table;

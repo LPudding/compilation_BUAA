@@ -9,7 +9,7 @@
 #define ASSIGN 7
 #define FUNCRETURN 8
 #define EMPTY 9
-
+extern middleCodeTable middleTable;
 extern map<string, vector<middleCode>> funcParaRecord;
 
 void constDefine();

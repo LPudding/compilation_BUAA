@@ -3,7 +3,6 @@ FILE* fp, *fl, *fc, * fe;
 char str[100000];
 
 int main() {
-
 	char c;
 	int len = 0;
 
@@ -19,10 +18,13 @@ int main() {
 	// grama.c
 	project();
 
+	diffFuncAndExit();
+	optimize();
 	translate();
-
 	//fseek(fc, -1, SEEK_END);
 	//fputc('\0', fc);
+
+	
 	fclose(fp);
 	fclose(fc);
 	fclose(fe);

@@ -49,5 +49,9 @@ bool isConst(string ret) {
 	return false;
 }
 
+bool isTemp(string str) {
+	return regex_match(str, regex("INT[0-9]*")) || regex_match(str, regex("CHAR[0-9]*"));
+}
+
 middleCodeTable middleTable;
 

@@ -1,0 +1,1619 @@
+.data
+endprint: .asciiz "\n"
+wyzstring0: .asciiz "2 <= 1"
+wyzstring1: .asciiz "1 == 2"
+wyzstring2: .asciiz "1 - 1 = true"
+wyzstring3: .asciiz " !#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+wyzstring4: .asciiz "int_test_input = "
+wyzstring5: .asciiz "char_test_input = "
+.text
+add $s7,$0,2147479548
+add $t0,$0,97
+sw $t0,-4($s7)
+add $t0,$0,98
+sw $t0,-8($s7)
+add $t0,$0,99
+sw $t0,-12($s7)
+add $t0,$0,65
+sw $t0,-16($s7)
+add $t0,$0,1
+sw $t0,-20($s7)
+add $t0,$0,+0
+sw $t0,-24($s7)
+add $t0,$0,-1
+sw $t0,-28($s7)
+add $t0,$0,57
+sw $t0,-32($s7)
+add $t0,$0,95
+sw $t0,-36($s7)
+add $t0,$0,43
+sw $t0,-40($s7)
+add $t0,$0,42
+sw $t0,-44($s7)
+j main
+testIfWhile:
+sw $ra,-8($sp)
+add $t0,$0,1
+sw $t0,-16($sp)
+add $t0,$0,2
+sw $t0,-20($sp)
+add $t0,$0,98
+sw $t0,-24($sp)
+add $t0,$0,97
+sw $t0,-28($sp)
+add $t0,$0,0
+sw $t0,-32($sp)
+add $t0,$0,0
+sw $t0,-36($sp)
+if0:
+lw $t1,-24($sp)
+add $t0,$t1,1
+sw $t0,-40($sp)
+lw $t1,-28($sp)
+add $t0,$t1,1
+sw $t0,-44($sp)
+lw $t1,-40($sp)
+lw $t2,-44($sp)
+sgt $t0,$t1,$t2
+blez $t0,endif0
+while0:
+lw $t1,-32($sp)
+add $t2,$0,100
+slt $t0,$t1,$t2
+blez $t0,endwhile0
+lw $t1,-32($sp)
+lw $t2,-36($sp)
+add $t0,$t1,$t2
+sw $t0,-48($sp)
+lw $t0,-48($sp)
+sw $t0,-32($sp)
+lw $t1,-36($sp)
+add $t0,$t1,1
+sw $t0,-52($sp)
+lw $t0,-52($sp)
+sw $t0,-36($sp)
+j while0
+endwhile0:
+if1:
+lw $t1,-32($sp)
+add $t0,$t1,-100
+sw $t0,-56($sp)
+lw $t1,-56($sp)
+add $t2,$0,3
+mul $t0,$t1,$t2
+sw $t0,-60($sp)
+lw $t1,-60($sp)
+add $t2,$0,15
+seq $t0,$t1,$t2
+blez $t0,endif1
+lw $t1,-32($sp)
+add $t2,$0,10
+mul $t0,$t1,$t2
+sw $t0,-64($sp)
+add $t1,$0,0
+lw $t2,-64($sp)
+sub $t0,$t1,$t2
+sw $t0,-68($sp)
+add $t1,$0,2
+lw $t2,-36($sp)
+mul $t0,$t1,$t2
+sw $t0,-72($sp)
+lw $t1,-68($sp)
+lw $t2,-72($sp)
+add $t0,$t1,$t2
+sw $t0,-76($sp)
+lw $t1,-76($sp)
+add $t0,$t1,117
+sw $t0,-80($sp)
+lw $t1,-80($sp)
+lw $t2,-24($sp)
+sub $t0,$t1,$t2
+sw $t0,-84($sp)
+lw $t0,-84($sp)
+sw $t0,-32($sp)
+lw $t1,-36($sp)
+add $t0,$t1,0
+sw $t0,-88($sp)
+lw $t1,-88($sp)
+lw $t2,-32($sp)
+sub $t0,$t1,$t2
+sw $t0,-92($sp)
+add $t1,$0,10
+lw $t2,-28($sp)
+mul $t0,$t1,$t2
+sw $t0,-96($sp)
+lw $t1,-92($sp)
+lw $t2,-96($sp)
+add $t0,$t1,$t2
+sw $t0,-100($sp)
+lw $t1,-100($sp)
+add $t0,$t1,-100
+sw $t0,-104($sp)
+lw $t1,-104($sp)
+add $t0,$t1,42
+sw $t0,-108($sp)
+lw $t1,-108($sp)
+add $t0,$t1,34
+sw $t0,-112($sp)
+add $t1,$0,2
+lw $t2,-32($sp)
+mul $t0,$t1,$t2
+sw $t0,-116($sp)
+lw $t1,-112($sp)
+lw $t2,-116($sp)
+add $t0,$t1,$t2
+sw $t0,-120($sp)
+lw $t0,-120($sp)
+sw $t0,-36($sp)
+j endelse1
+endif1:
+lw $t1,-32($sp)
+add $t2,$0,4
+mul $t0,$t1,$t2
+sw $t0,-124($sp)
+lw $t1,-124($sp)
+add $t0,$t1,0
+sw $t0,-128($sp)
+add $t1,$0,5
+lw $t2,-36($sp)
+mul $t0,$t1,$t2
+sw $t0,-132($sp)
+lw $t1,-128($sp)
+lw $t2,-132($sp)
+add $t0,$t1,$t2
+sw $t0,-136($sp)
+lw $t1,-136($sp)
+add $t0,$t1,24
+sw $t0,-140($sp)
+lw $t1,-140($sp)
+lw $t2,-28($sp)
+sub $t0,$t1,$t2
+sw $t0,-144($sp)
+add $t0,$0,99
+sw $t0,-148($sp)
+lw $t1,-144($sp)
+lw $t2,-148($sp)
+add $t0,$t1,$t2
+sw $t0,-152($sp)
+lw $t0,-152($sp)
+sw $t0,-32($sp)
+add $t1,$0,0
+lw $t2,-36($sp)
+sub $t0,$t1,$t2
+sw $t0,-156($sp)
+lw $t1,-156($sp)
+lw $t2,-32($sp)
+add $t0,$t1,$t2
+sw $t0,-160($sp)
+add $t1,$0,4
+lw $t2,-28($sp)
+mul $t0,$t1,$t2
+sw $t0,-164($sp)
+lw $t1,-160($sp)
+lw $t2,-164($sp)
+add $t0,$t1,$t2
+sw $t0,-168($sp)
+lw $t1,-168($sp)
+add $t0,$t1,-1653
+sw $t0,-172($sp)
+lw $t1,-172($sp)
+add $t0,$t1,453
+sw $t0,-176($sp)
+lw $t1,-176($sp)
+add $t0,$t1,555
+sw $t0,-180($sp)
+add $t1,$0,4
+lw $t2,-32($sp)
+mul $t0,$t1,$t2
+sw $t0,-184($sp)
+lw $t1,-180($sp)
+lw $t2,-184($sp)
+sub $t0,$t1,$t2
+sw $t0,-188($sp)
+lw $t0,-188($sp)
+sw $t0,-36($sp)
+endelse1:
+j endelse0
+endif0:
+endelse0:
+lw $a0,-32($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,-36($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+add $t0,$0,0
+sw $t0,-32($sp)
+add $t0,$0,0
+sw $t0,-36($sp)
+if2:
+lw $t1,-24($sp)
+add $t0,$t1,1
+sw $t0,-192($sp)
+lw $t1,-28($sp)
+add $t0,$t1,1
+sw $t0,-196($sp)
+lw $t1,-192($sp)
+lw $t2,-196($sp)
+sge $t0,$t1,$t2
+blez $t0,endif2
+while1:
+lw $t1,-32($sp)
+add $t2,$0,10
+slt $t0,$t1,$t2
+blez $t0,endwhile1
+if3:
+lw $t1,-36($sp)
+add $t2,$0,2
+sgt $t0,$t1,$t2
+blez $t0,endif3
+lw $t1,-32($sp)
+lw $t2,-36($sp)
+add $t0,$t1,$t2
+sw $t0,-200($sp)
+lw $t0,-200($sp)
+sw $t0,-32($sp)
+j endelse3
+endif3:
+endelse3:
+lw $t1,-36($sp)
+add $t0,$t1,1
+sw $t0,-204($sp)
+lw $t0,-204($sp)
+sw $t0,-36($sp)
+if4:
+lw $t1,-32($sp)
+add $t2,$0,2
+div $t1,$t2
+mflo $t0
+sw $t0,-208($sp)
+lw $t1,-208($sp)
+add $t2,$0,2
+mul $t0,$t1,$t2
+sw $t0,-212($sp)
+lw $t1,-212($sp)
+lw $t2,-32($sp)
+seq $t0,$t1,$t2
+blez $t0,endif4
+lw $t1,-36($sp)
+add $t0,$t1,1
+sw $t0,-216($sp)
+lw $t0,-216($sp)
+sw $t0,-36($sp)
+j endelse4
+endif4:
+endelse4:
+j while1
+endwhile1:
+j endelse2
+endif2:
+endelse2:
+lw $a0,-32($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,-36($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+add $t0,$0,0
+sw $t0,-32($sp)
+add $t0,$0,0
+sw $t0,-36($sp)
+if5:
+lw $t1,-16($sp)
+lw $t2,-20($sp)
+slt $t0,$t1,$t2
+blez $t0,endif5
+while2:
+lw $t1,-32($sp)
+add $t2,$0,20
+slt $t0,$t1,$t2
+blez $t0,endwhile2
+if6:
+lw $t1,-32($sp)
+add $t2,$0,2
+div $t1,$t2
+mflo $t0
+sw $t0,-220($sp)
+lw $t1,-220($sp)
+add $t2,$0,2
+mul $t0,$t1,$t2
+sw $t0,-224($sp)
+lw $t1,-32($sp)
+lw $t2,-224($sp)
+sub $t0,$t1,$t2
+sw $t0,-228($sp)
+lw $t1,-228($sp)
+add $t2,$0,0
+seq $t0,$t1,$t2
+blez $t0,endif6
+lw $t1,-32($sp)
+add $t0,$t1,1
+sw $t0,-232($sp)
+lw $t0,-232($sp)
+sw $t0,-32($sp)
+j endelse6
+endif6:
+lw $t1,-32($sp)
+lw $t2,-36($sp)
+add $t0,$t1,$t2
+sw $t0,-236($sp)
+lw $t0,-236($sp)
+sw $t0,-32($sp)
+endelse6:
+lw $t1,-36($sp)
+add $t0,$t1,1
+sw $t0,-240($sp)
+lw $t0,-240($sp)
+sw $t0,-36($sp)
+j while2
+endwhile2:
+if7:
+lw $t1,-32($sp)
+add $t2,$0,2
+div $t1,$t2
+mflo $t0
+sw $t0,-244($sp)
+lw $t1,-244($sp)
+add $t2,$0,2
+mul $t0,$t1,$t2
+sw $t0,-248($sp)
+lw $t1,-32($sp)
+lw $t2,-248($sp)
+seq $t0,$t1,$t2
+blez $t0,endif7
+lw $t1,-32($sp)
+add $t2,$0,7
+mul $t0,$t1,$t2
+sw $t0,-252($sp)
+lw $t1,-252($sp)
+add $t0,$t1,0
+sw $t0,-256($sp)
+add $t1,$0,2
+lw $t2,-36($sp)
+mul $t0,$t1,$t2
+sw $t0,-260($sp)
+lw $t1,-256($sp)
+lw $t2,-260($sp)
+add $t0,$t1,$t2
+sw $t0,-264($sp)
+lw $t1,-264($sp)
+add $t0,$t1,99
+sw $t0,-268($sp)
+lw $t1,-268($sp)
+lw $t2,-28($sp)
+sub $t0,$t1,$t2
+sw $t0,-272($sp)
+add $t0,$0,103
+sw $t0,-276($sp)
+lw $t1,-272($sp)
+lw $t2,-276($sp)
+add $t0,$t1,$t2
+sw $t0,-280($sp)
+lw $t0,-280($sp)
+sw $t0,-32($sp)
+add $t1,$0,0
+lw $t2,-36($sp)
+sub $t0,$t1,$t2
+sw $t0,-284($sp)
+lw $t1,-284($sp)
+lw $t2,-32($sp)
+add $t0,$t1,$t2
+sw $t0,-288($sp)
+add $t1,$0,2
+lw $t2,-28($sp)
+mul $t0,$t1,$t2
+sw $t0,-292($sp)
+lw $t1,-288($sp)
+lw $t2,-292($sp)
+add $t0,$t1,$t2
+sw $t0,-296($sp)
+lw $t1,-296($sp)
+add $t0,$t1,-523
+sw $t0,-300($sp)
+lw $t1,-300($sp)
+add $t0,$t1,53
+sw $t0,-304($sp)
+lw $t1,-304($sp)
+add $t0,$t1,355
+sw $t0,-308($sp)
+add $t1,$0,2
+lw $t2,-32($sp)
+mul $t0,$t1,$t2
+sw $t0,-312($sp)
+lw $t1,-308($sp)
+lw $t2,-312($sp)
+sub $t0,$t1,$t2
+sw $t0,-316($sp)
+lw $t0,-316($sp)
+sw $t0,-36($sp)
+j endelse7
+endif7:
+endelse7:
+j endelse5
+endif5:
+endelse5:
+lw $a0,-32($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,-36($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+if8:
+lw $t1,-20($sp)
+lw $t2,-16($sp)
+sle $t0,$t1,$t2
+blez $t0,endif8
+la $a0,wyzstring0
+add $v0,$0,4
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+j endelse8
+endif8:
+endelse8:
+if9:
+lw $t1,-16($sp)
+lw $t2,-20($sp)
+seq $t0,$t1,$t2
+blez $t0,endif9
+la $a0,wyzstring1
+add $v0,$0,4
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+j endelse9
+endif9:
+endelse9:
+add $t0,$0,0
+sw $t0,-32($sp)
+add $t0,$0,0
+sw $t0,-36($sp)
+if10:
+lw $t1,-16($sp)
+lw $t2,-20($sp)
+sne $t0,$t1,$t2
+blez $t0,endif10
+if11:
+lw $t1,-36($sp)
+add $t2,$0,2
+mul $t0,$t1,$t2
+sw $t0,-320($sp)
+lw $t1,-32($sp)
+lw $t2,-320($sp)
+sub $t0,$t1,$t2
+sw $t0,-324($sp)
+lw $t1,-324($sp)
+add $t2,$0,0
+seq $t0,$t1,$t2
+blez $t0,endif11
+while3:
+lw $t1,-32($sp)
+add $t2,$0,30
+slt $t0,$t1,$t2
+blez $t0,endwhile3
+if12:
+lw $t1,-32($sp)
+add $t2,$0,2
+div $t1,$t2
+mflo $t0
+sw $t0,-328($sp)
+lw $t1,-328($sp)
+add $t2,$0,2
+mul $t0,$t1,$t2
+sw $t0,-332($sp)
+lw $t1,-332($sp)
+lw $t2,-32($sp)
+sub $t0,$t1,$t2
+sw $t0,-336($sp)
+add $t1,$0,0
+add $t0,$t1,-1
+sw $t0,-340($sp)
+lw $t1,-336($sp)
+lw $t2,-340($sp)
+seq $t0,$t1,$t2
+blez $t0,endif12
+lw $t1,-32($sp)
+add $t0,$t1,1
+sw $t0,-344($sp)
+lw $t0,-344($sp)
+sw $t0,-32($sp)
+j endelse12
+endif12:
+lw $t1,-32($sp)
+lw $t2,-36($sp)
+add $t0,$t1,$t2
+sw $t0,-348($sp)
+lw $t0,-348($sp)
+sw $t0,-32($sp)
+endelse12:
+lw $t1,-36($sp)
+add $t0,$t1,1
+sw $t0,-352($sp)
+lw $t0,-352($sp)
+sw $t0,-36($sp)
+j while3
+endwhile3:
+j endelse11
+endif11:
+add $t1,$0,0
+add $t0,$t1,-1
+sw $t0,-356($sp)
+lw $t0,-356($sp)
+sw $t0,-32($sp)
+add $t1,$0,0
+add $t0,$t1,-1
+sw $t0,-360($sp)
+lw $t0,-360($sp)
+sw $t0,-36($sp)
+endelse11:
+j endelse10
+endif10:
+endelse10:
+lw $a0,-32($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,-36($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+if13:
+lw $t1,-16($sp)
+lw $t2,-16($sp)
+sub $t0,$t1,$t2
+sw $t0,-364($sp)
+lw $t1,-364($sp)
+add $t2,$0,0
+sne $t0,$t1,$t2
+blez $t0,endif13
+la $a0,wyzstring2
+add $v0,$0,4
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+j endelse13
+endif13:
+endelse13:
+add $t1,$0,0
+add $t0,$t1,-1
+sw $t0,-368($sp)
+lw $t0,-368($sp)
+sw $t0,-48($s7)
+add $t0,$0,97
+sw $t0,-372($sp)
+lw $t0,-372($sp)
+sw $t0,-52($s7)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+testSwitchCase:
+sw $ra,-8($sp)
+lw $a0,-16($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,-20($sp)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+add $t1,$0,0
+add $t0,$t1,-2
+sw $t0,-24($sp)
+lw $t0,-24($sp)
+sw $t0,-48($s7)
+add $t0,$0,98
+sw $t0,-28($sp)
+lw $t0,-28($sp)
+sw $t0,-52($s7)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+returnInt:
+sw $ra,-8($sp)
+add $v1,$0,10
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+returnChar:
+sw $ra,-8($sp)
+add $t0,$0,114
+sw $t0,-16($sp)
+lw $v1,-16($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+returnIntParameter:
+sw $ra,-8($sp)
+if14:
+lw $t1,-16($sp)
+add $t2,$0,1
+seq $t0,$t1,$t2
+blez $t0,endif14
+lw $v1,-20($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse14
+endif14:
+endelse14:
+if15:
+lw $t1,-16($sp)
+add $t2,$0,2
+seq $t0,$t1,$t2
+blez $t0,endif15
+lw $v1,-24($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse15
+endif15:
+endelse15:
+if16:
+lw $t1,-16($sp)
+add $t2,$0,3
+seq $t0,$t1,$t2
+blez $t0,endif16
+lw $v1,-28($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse16
+endif16:
+endelse16:
+if17:
+lw $t1,-16($sp)
+add $t2,$0,4
+seq $t0,$t1,$t2
+blez $t0,endif17
+lw $v1,-32($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse17
+endif17:
+endelse17:
+add $v1,$0,0
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+returnCharParameter:
+sw $ra,-8($sp)
+if18:
+lw $t1,-16($sp)
+add $t2,$0,1
+seq $t0,$t1,$t2
+blez $t0,endif18
+lw $v1,-20($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse18
+endif18:
+endelse18:
+if19:
+lw $t1,-16($sp)
+add $t2,$0,2
+seq $t0,$t1,$t2
+blez $t0,endif19
+lw $v1,-24($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse19
+endif19:
+endelse19:
+if20:
+lw $t1,-16($sp)
+add $t2,$0,3
+seq $t0,$t1,$t2
+blez $t0,endif20
+lw $v1,-28($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse20
+endif20:
+endelse20:
+if21:
+lw $t1,-16($sp)
+add $t2,$0,4
+seq $t0,$t1,$t2
+blez $t0,endif21
+lw $v1,-32($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse21
+endif21:
+endelse21:
+add $t0,$0,48
+sw $t0,-36($sp)
+lw $v1,-36($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+testAssign:
+sw $ra,-8($sp)
+add $t0,$0,+10
+sw $t0,-16($sp)
+add $t1,$0,10
+add $t0,$t1,0
+sw $t0,-52($sp)
+add $t1,$0,0
+add $t0,$t1,-1
+sw $t0,-56($sp)
+add $t1,$0,0
+lw $t2,-56($sp)
+sub $t0,$t1,$t2
+sw $t0,-60($sp)
+add $t1,$0,0
+add $t0,$t1,-2
+sw $t0,-64($sp)
+lw $t1,-16($sp)
+add $t0,$t1,0
+sw $t0,-68($sp)
+add $t9,$sp,$0
+add $sp,$sp,-92
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnChar
+sw $v1,-72($sp)
+lw $t1,-72($sp)
+lw $t2,-4($s7)
+sub $t0,$t1,$t2
+sw $t0,-76($sp)
+add $t0,$0,2
+sw $t0,-92($sp)
+lw $t0,-60($sp)
+sw $t0,-96($sp)
+lw $t0,-64($sp)
+sw $t0,-100($sp)
+lw $t0,-68($sp)
+sw $t0,-104($sp)
+lw $t0,-76($sp)
+sw $t0,-108($sp)
+add $t9,$sp,$0
+add $sp,$sp,-76
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnIntParameter
+sw $v1,-80($sp)
+add $t0,$0,99
+sw $t0,-84($sp)
+lw $t1,-84($sp)
+lw $t2,-4($s7)
+sub $t0,$t1,$t2
+sw $t0,-88($sp)
+lw $t1,-80($sp)
+lw $t2,-88($sp)
+mul $t0,$t1,$t2
+sw $t0,-92($sp)
+lw $t1,-92($sp)
+add $t2,$0,2
+div $t1,$t2
+mflo $t0
+sw $t0,-96($sp)
+lw $t1,-52($sp)
+lw $t2,-96($sp)
+add $t0,$t1,$t2
+sw $t0,-100($sp)
+lw $t0,-100($sp)
+sw $t0,-20($sp)
+lw $t1,-20($sp)
+add $t2,$0,4
+div $t1,$t2
+mflo $t0
+sw $t0,-104($sp)
+lw $t1,-104($sp)
+lw $t2,-4($s7)
+add $t0,$t1,$t2
+sw $t0,-108($sp)
+add $t0,$0,97
+sw $t0,-112($sp)
+lw $t1,-108($sp)
+lw $t2,-112($sp)
+sub $t0,$t1,$t2
+sw $t0,-116($sp)
+lw $t1,-116($sp)
+add $t0,$t1,-2
+sw $t0,-120($sp)
+add $t1,$0,0
+add $t0,$t1,-2
+sw $t0,-124($sp)
+add $t1,$0,0
+lw $t2,-124($sp)
+sub $t0,$t1,$t2
+sw $t0,-128($sp)
+lw $t0,-128($sp)
+lw $t1,-120($sp)
+mul $t1,$t1,4
+add $t1,$t1,-32
+add $t1,$t1,$sp
+sw $t0,0($t1)
+add $t1,$0,0
+add $t0,$t1,-2
+sw $t0,-132($sp)
+lw $t1,-132($sp)
+add $t0,$t1,0
+sw $t0,-136($sp)
+lw $t0,-32($sp)
+sw $t0,-140($sp)
+lw $t1,-20($sp)
+lw $t2,-140($sp)
+div $t1,$t2
+mflo $t0
+sw $t0,-144($sp)
+lw $t1,-136($sp)
+lw $t2,-144($sp)
+add $t0,$t1,$t2
+sw $t0,-148($sp)
+add $t9,$sp,$0
+add $sp,$sp,-148
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnInt
+sw $v1,-152($sp)
+lw $t1,-148($sp)
+lw $t2,-152($sp)
+add $t0,$t1,$t2
+sw $t0,-156($sp)
+lw $t1,-156($sp)
+add $t0,$t1,-11
+sw $t0,-160($sp)
+add $t9,$sp,$0
+add $sp,$sp,-160
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnInt
+sw $v1,-164($sp)
+add $t1,$0,0
+lw $t2,-164($sp)
+sub $t0,$t1,$t2
+sw $t0,-168($sp)
+add $t9,$sp,$0
+add $sp,$sp,-168
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnChar
+sw $v1,-172($sp)
+lw $t1,-172($sp)
+lw $t2,-4($s7)
+sub $t0,$t1,$t2
+sw $t0,-176($sp)
+lw $t1,-16($sp)
+lw $t2,-176($sp)
+mul $t0,$t1,$t2
+sw $t0,-180($sp)
+add $t0,$0,98
+sw $t0,-184($sp)
+add $t1,$0,0
+lw $t2,-184($sp)
+sub $t0,$t1,$t2
+sw $t0,-188($sp)
+add $t0,$0,99
+sw $t0,-192($sp)
+lw $t1,-188($sp)
+lw $t2,-192($sp)
+add $t0,$t1,$t2
+sw $t0,-196($sp)
+add $t9,$sp,$0
+add $sp,$sp,-220
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnInt
+sw $v1,-200($sp)
+add $t0,$0,97
+sw $t0,-204($sp)
+add $t0,$0,4
+sw $t0,-220($sp)
+lw $t0,-196($sp)
+sw $t0,-224($sp)
+lw $t0,-200($sp)
+sw $t0,-228($sp)
+lw $t0,-16($sp)
+sw $t0,-232($sp)
+lw $t0,-204($sp)
+sw $t0,-236($sp)
+add $t9,$sp,$0
+add $sp,$sp,-204
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnIntParameter
+sw $v1,-208($sp)
+lw $t1,-180($sp)
+lw $t2,-208($sp)
+add $t0,$t1,$t2
+sw $t0,-212($sp)
+lw $t1,-168($sp)
+lw $t2,-212($sp)
+add $t0,$t1,$t2
+sw $t0,-216($sp)
+lw $t0,-216($sp)
+lw $t1,-160($sp)
+mul $t1,$t1,4
+add $t1,$t1,-32
+add $t1,$t1,$sp
+sw $t0,0($t1)
+add $t1,$0,0
+add $t0,$t1,-255
+sw $t0,-220($sp)
+lw $t0,-28($sp)
+sw $t0,-224($sp)
+lw $t1,-220($sp)
+lw $t2,-224($sp)
+add $t0,$t1,$t2
+sw $t0,-228($sp)
+add $t0,$0,98
+sw $t0,-232($sp)
+lw $t1,-232($sp)
+add $t2,$0,2
+mul $t0,$t1,$t2
+sw $t0,-236($sp)
+lw $t1,-228($sp)
+lw $t2,-236($sp)
+add $t0,$t1,$t2
+sw $t0,-240($sp)
+lw $t1,-240($sp)
+add $t0,$t1,-196
+sw $t0,-244($sp)
+add $t0,$0,98
+sw $t0,-248($sp)
+add $t1,$0,0
+lw $t2,-248($sp)
+sub $t0,$t1,$t2
+sw $t0,-252($sp)
+add $t0,$0,99
+sw $t0,-256($sp)
+lw $t1,-252($sp)
+lw $t2,-256($sp)
+add $t0,$t1,$t2
+sw $t0,-260($sp)
+lw $t0,-260($sp)
+lw $t1,-244($sp)
+mul $t1,$t1,4
+add $t1,$t1,-32
+add $t1,$t1,$sp
+sw $t0,0($t1)
+add $t9,$sp,$0
+add $sp,$sp,-260
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnChar
+sw $v1,-264($sp)
+lw $t0,-264($sp)
+sw $t0,-36($sp)
+add $t0,$0,97
+sw $t0,-268($sp)
+add $t9,$sp,$0
+add $sp,$sp,-292
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnChar
+sw $v1,-272($sp)
+add $t9,$sp,$0
+add $sp,$sp,-296
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnChar
+sw $v1,-276($sp)
+add $t0,$0,4
+sw $t0,-292($sp)
+lw $t0,-268($sp)
+sw $t0,-296($sp)
+lw $t0,-272($sp)
+sw $t0,-300($sp)
+lw $t0,-276($sp)
+sw $t0,-304($sp)
+lw $t0,-4($s7)
+sw $t0,-308($sp)
+add $t9,$sp,$0
+add $sp,$sp,-276
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal returnCharParameter
+sw $v1,-280($sp)
+lw $t0,-280($sp)
+sw $t0,-48($sp)
+lw $t0,-48($sp)
+sw $t0,-284($sp)
+lw $t0,-284($sp)
+sw $t0,-44($sp)
+add $t0,$0,120
+sw $t0,-288($sp)
+lw $t0,-288($sp)
+sw $t0,-40($sp)
+lw $a0,-20($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t0,-32($sp)
+sw $t0,-292($sp)
+lw $a0,-292($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t0,-28($sp)
+sw $t0,-296($sp)
+lw $a0,-296($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t0,-24($sp)
+sw $t0,-300($sp)
+lw $a0,-300($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,-36($sp)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t0,-48($sp)
+sw $t0,-304($sp)
+lw $a0,-304($sp)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t0,-44($sp)
+sw $t0,-308($sp)
+lw $a0,-308($sp)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t0,-40($sp)
+sw $t0,-312($sp)
+lw $a0,-312($sp)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+add $t1,$0,0
+add $t0,$t1,-3
+sw $t0,-316($sp)
+lw $t0,-316($sp)
+sw $t0,-48($s7)
+add $t0,$0,99
+sw $t0,-320($sp)
+lw $t0,-320($sp)
+sw $t0,-52($s7)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+testInputOutput:
+sw $ra,-8($sp)
+add $v0,$0,5
+syscall
+sw $v0,-16($sp)
+add $v0,$0,12
+syscall
+sw $v0,-20($sp)
+la $a0,wyzstring3
+add $v0,$0,4
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+la $a0,wyzstring4
+add $v0,$0,4
+syscall
+lw $a0,-16($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+la $a0,wyzstring5
+add $v0,$0,4
+syscall
+lw $a0,-20($sp)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+add $t1,$0,0
+add $t0,$t1,-4
+sw $t0,-32($sp)
+lw $t0,-32($sp)
+sw $t0,-24($sp)
+add $t0,$0,100
+sw $t0,-36($sp)
+lw $t0,-36($sp)
+sw $t0,-28($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+testTrick:
+sw $ra,-8($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+judge1:
+sw $ra,-8($sp)
+add $t0,$0,0
+sw $t0,-32($sp)
+if22:
+lw $t1,-16($sp)
+lw $t2,-20($sp)
+slt $t0,$t1,$t2
+blez $t0,endif22
+if23:
+lw $t1,-24($sp)
+lw $t2,-28($sp)
+sge $t0,$t1,$t2
+blez $t0,endif23
+add $t0,$0,1
+sw $t0,-32($sp)
+j endelse23
+endif23:
+endelse23:
+j endelse22
+endif22:
+endelse22:
+lw $v1,-32($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+judge2:
+sw $ra,-8($sp)
+add $t0,$0,0
+sw $t0,-32($sp)
+if24:
+lw $t1,-16($sp)
+lw $t2,-20($sp)
+slt $t0,$t1,$t2
+blez $t0,endif24
+if25:
+lw $t1,-24($sp)
+lw $t2,-28($sp)
+sle $t0,$t1,$t2
+blez $t0,endif25
+add $t0,$0,1
+sw $t0,-32($sp)
+j endelse25
+endif25:
+endelse25:
+j endelse24
+endif24:
+endelse24:
+lw $v1,-32($sp)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+Qsort:
+sw $ra,-8($sp)
+lw $t0,-16($sp)
+sw $t0,-24($sp)
+lw $t0,-20($sp)
+sw $t0,-28($sp)
+lw $t1,-24($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+lw $t0,0($t1)
+sw $t0,-36($sp)
+lw $t0,-36($sp)
+sw $t0,-32($sp)
+if26:
+lw $t1,-16($sp)
+lw $t2,-20($sp)
+sge $t0,$t1,$t2
+blez $t0,endif26
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+j endelse26
+endif26:
+endelse26:
+while4:
+lw $t1,-24($sp)
+lw $t2,-28($sp)
+slt $t0,$t1,$t2
+blez $t0,endwhile4
+while5:
+lw $t1,-28($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+lw $t0,0($t1)
+sw $t0,-40($sp)
+lw $t0,-24($sp)
+sw $t0,-56($sp)
+lw $t0,-28($sp)
+sw $t0,-60($sp)
+lw $t0,-40($sp)
+sw $t0,-64($sp)
+lw $t0,-32($sp)
+sw $t0,-68($sp)
+add $t9,$sp,$0
+add $sp,$sp,-40
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal judge1
+sw $v1,-44($sp)
+lw $t1,-44($sp)
+add $t2,$0,1
+seq $t0,$t1,$t2
+blez $t0,endwhile5
+lw $t1,-28($sp)
+add $t0,$t1,-1
+sw $t0,-48($sp)
+lw $t0,-48($sp)
+sw $t0,-28($sp)
+j while5
+endwhile5:
+lw $t1,-28($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+lw $t0,0($t1)
+sw $t0,-52($sp)
+lw $t0,-52($sp)
+lw $t1,-24($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+sw $t0,0($t1)
+while6:
+lw $t1,-24($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+lw $t0,0($t1)
+sw $t0,-56($sp)
+lw $t0,-24($sp)
+sw $t0,-72($sp)
+lw $t0,-28($sp)
+sw $t0,-76($sp)
+lw $t0,-56($sp)
+sw $t0,-80($sp)
+lw $t0,-32($sp)
+sw $t0,-84($sp)
+add $t9,$sp,$0
+add $sp,$sp,-56
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal judge2
+sw $v1,-60($sp)
+lw $t1,-60($sp)
+add $t2,$0,1
+seq $t0,$t1,$t2
+blez $t0,endwhile6
+lw $t1,-24($sp)
+add $t0,$t1,1
+sw $t0,-64($sp)
+lw $t0,-64($sp)
+sw $t0,-24($sp)
+j while6
+endwhile6:
+lw $t1,-24($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+lw $t0,0($t1)
+sw $t0,-68($sp)
+lw $t0,-68($sp)
+lw $t1,-28($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+sw $t0,0($t1)
+j while4
+endwhile4:
+lw $t0,-32($sp)
+lw $t1,-24($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+sw $t0,0($t1)
+lw $t1,-24($sp)
+add $t0,$t1,-1
+sw $t0,-72($sp)
+lw $t0,-16($sp)
+sw $t0,-88($sp)
+lw $t0,-72($sp)
+sw $t0,-92($sp)
+add $t9,$sp,$0
+add $sp,$sp,-72
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal Qsort
+lw $t1,-24($sp)
+add $t0,$t1,1
+sw $t0,-76($sp)
+lw $t0,-76($sp)
+sw $t0,-92($sp)
+lw $t0,-20($sp)
+sw $t0,-96($sp)
+add $t9,$sp,$0
+add $sp,$sp,-76
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal Qsort
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+testRecursion:
+sw $ra,-8($sp)
+add $t0,$0,5
+sw $t0,-92($s7)
+add $t0,$0,8
+sw $t0,-88($s7)
+add $t0,$0,3
+sw $t0,-84($s7)
+add $t0,$0,6
+sw $t0,-80($s7)
+add $t0,$0,4
+sw $t0,-76($s7)
+add $t0,$0,1
+sw $t0,-72($s7)
+add $t0,$0,2
+sw $t0,-68($s7)
+add $t0,$0,7
+sw $t0,-64($s7)
+add $t0,$0,0
+sw $t0,-32($sp)
+add $t0,$0,7
+sw $t0,-36($sp)
+add $t9,$sp,$0
+add $sp,$sp,-16
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal Qsort
+add $t0,$0,0
+sw $t0,-16($sp)
+while7:
+lw $t1,-16($sp)
+add $t2,$0,8
+slt $t0,$t1,$t2
+blez $t0,endwhile7
+lw $t1,-16($sp)
+mul $t1,$t1,4
+add $t1,$t1,2147479456
+lw $t0,0($t1)
+sw $t0,-20($sp)
+lw $a0,-20($sp)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $t1,-16($sp)
+add $t0,$t1,1
+sw $t0,-24($sp)
+lw $t0,-24($sp)
+sw $t0,-16($sp)
+j while7
+endwhile7:
+add $t1,$0,0
+add $t0,$t1,-5
+sw $t0,-28($sp)
+lw $t0,-28($sp)
+sw $t0,-48($s7)
+add $t0,$0,101
+sw $t0,-32($sp)
+lw $t0,-32($sp)
+sw $t0,-52($s7)
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+testCallFunction:
+sw $ra,-8($sp)
+add $v0,$0,5
+syscall
+sw $v0,-16($sp)
+if27:
+lw $t1,-16($sp)
+add $t2,$0,0
+seq $t0,$t1,$t2
+blez $t0,endif27
+add $t9,$sp,$0
+add $sp,$sp,-16
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testIfWhile
+j endelse27
+endif27:
+endelse27:
+if28:
+lw $t1,-16($sp)
+add $t2,$0,1
+seq $t0,$t1,$t2
+blez $t0,endif28
+lw $t0,-20($s7)
+sw $t0,-32($sp)
+lw $t0,-4($s7)
+sw $t0,-36($sp)
+add $t9,$sp,$0
+add $sp,$sp,-16
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testSwitchCase
+add $t0,$0,43
+sw $t0,-20($sp)
+lw $t0,-28($s7)
+sw $t0,-36($sp)
+lw $t0,-20($sp)
+sw $t0,-40($sp)
+add $t9,$sp,$0
+add $sp,$sp,-20
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testSwitchCase
+add $t0,$0,95
+sw $t0,-24($sp)
+add $t0,$0,0
+sw $t0,-40($sp)
+lw $t0,-24($sp)
+sw $t0,-44($sp)
+add $t9,$sp,$0
+add $sp,$sp,-24
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testSwitchCase
+add $t0,$0,57
+sw $t0,-28($sp)
+add $t0,$0,2
+sw $t0,-44($sp)
+lw $t0,-28($sp)
+sw $t0,-48($sp)
+add $t9,$sp,$0
+add $sp,$sp,-28
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testSwitchCase
+j endelse28
+endif28:
+endelse28:
+if29:
+lw $t1,-16($sp)
+add $t2,$0,2
+seq $t0,$t1,$t2
+blez $t0,endif29
+add $t9,$sp,$0
+add $sp,$sp,-28
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testAssign
+j endelse29
+endif29:
+endelse29:
+if30:
+lw $t1,-16($sp)
+add $t2,$0,3
+seq $t0,$t1,$t2
+blez $t0,endif30
+add $t9,$sp,$0
+add $sp,$sp,-28
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testInputOutput
+j endelse30
+endif30:
+endelse30:
+if31:
+lw $t1,-16($sp)
+add $t2,$0,4
+seq $t0,$t1,$t2
+blez $t0,endif31
+add $t9,$sp,$0
+add $sp,$sp,-28
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testRecursion
+j endelse31
+endif31:
+endelse31:
+lw $a0,2147479500($0)
+add $v0,$0,1
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $a0,2147479496($0)
+add $v0,$0,11
+syscall
+la $a0,endprint
+add $v0,$0,4
+syscall
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+lw $ra,-8($sp)
+lw $sp,-12($sp)
+jr $ra
+main:
+add $sp,$0,2147479440
+sw $sp,2147479436($0)
+add $t0,$0,0
+sw $t0,-48($s7)
+add $t0,$0,95
+sw $t0,-16($sp)
+lw $t0,-16($sp)
+sw $t0,-52($s7)
+add $t9,$sp,$0
+add $sp,$sp,-16
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testCallFunction
+add $t9,$sp,$0
+add $sp,$sp,-16
+sw $sp,-4($sp)
+sw $t9,-12($sp)
+jal testTrick
+end:

@@ -2,6 +2,29 @@
 
 #define condi(x,y) (midCode.op2 == x && midCode.Type == y)
 
+#define regt(x) -x
+#define lowRegt 3
+#define highRegt 9
+
+class localRegManager {
+public:
+	int currentBNo = -1;
+	map<string, string> reg2Name;
+	map<string, string> name2Reg;
+	//count the reg remaining life
+	map<string, int> regtLife;
+	set<string> freeReg;
+	set<string> poorSet;
+	list<string> LRU;
+	localRegManager();
+	void newText();
+	void free();
+	void reset();
+	void updateBlock(int no);
+	int useVarMark(string name);
+	string isVarDispatch(string name);
+};
+
 string getTempType(string name);
 
 void translate();
@@ -26,9 +49,9 @@ void dispatch(string name, string type, string no);
 
 string loadVarToReg(string name, string no, string& regName);
 
-void storeRegToVar(string name, string no, string regName);
+void storeRegToVar(string name, string no, string& regName);
 
-void sentence(middleCode midCode);
+void sentence(middleCode midCode, int index);
 
 void printSentence(middleCode midCode);
 

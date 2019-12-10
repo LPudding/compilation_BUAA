@@ -1,0 +1,5 @@
+    CONST    i    INT    2
+    MAINHEAD            
+    CONST    i    INT    1
+    PRINT    1    1    INT
+    EXIT            

@@ -24,7 +24,7 @@ extern char token[];
 
 	bool symTable::checkRepeat(int id) {//func 屏蔽参数   //VAR、CONST、ARRAY、PARAMETER 同层所有数，不屏蔽参数
 		bool isIgnorePara = false;
-		int begin = 0;
+		size_t begin = 0;
 		if (id == FUNCTION) {
 			isIgnorePara = true;
 			begin = 0;
@@ -128,14 +128,14 @@ extern char token[];
 	}
 
 	int symTable::getFunctionIndex() {
-		for (int i = 0; i < table.size(); i++)
+		for (size_t i = 0; i < table.size(); i++)
 			if (table[i].identify == FUNCTION && table[i].name == token)
 				return i;
 		return -1;
 	}
 
 	void symTable::printTable() {
-		for (int i = 0; i < table.size(); i++) {
+		for (size_t i = 0; i < table.size(); i++) {
 			cout << "id:" << table[i].identify << "     value:" << table[i].valueType << "     name:" << table[i].name << endl;
 		}
 	}

@@ -1,2 +1,3 @@
-﻿  translate.cpp
+﻿  opt.cpp
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\opt.cpp(607,26): warning C4018: “<”: 有符号/无符号不匹配
   GenMiddle.vcxproj -> D:\senior3-1\compile\code\MiddleGen\GenMiddle\Debug\GenMiddle.exe
