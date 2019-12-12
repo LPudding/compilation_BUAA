@@ -1,11 +1,5 @@
 void main() {
-    int a,b;
-    a = 5;
-    b = 1;
-    printf(a);
-    printf(b);
-    a = -a+5;
-    printf(a);
-    b = 5-b;
-    printf(b);
+    if (1) {
+        printf("1");
+    }
 }

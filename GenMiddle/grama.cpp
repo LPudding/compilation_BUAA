@@ -1150,6 +1150,7 @@ void noReturnFunc() {
 		if (id == 0) {
 			printWord(getsym());// identify
 			iden = token;
+			middleTable.addDefine("FUNC", iden, "VOID", "");
 			sym_table.inFunction(VOID);
 			sym_table.add(FUNCTION, VOID);
 			//recordNoFunc();

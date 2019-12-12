@@ -22,8 +22,19 @@ public:
 
 extern vector<BB> block;
 
-extern set<string> globalBlockSet;
+extern map<string,set<string>> crossBlockTable;
+extern set<string> globalSet;
 extern set<string> arraySet;
+extern map<string, map<string, int>> impVarCountMap;
+extern set<string> recursiveFuncSet;
+
+void change_intensity(middleCode mid, int& intensity);
+
+void definedConstSpread();
+
+void ImpVarCount();
+
+void printImpVarCount();
 
 void liveVarLoop();
 

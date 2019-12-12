@@ -1,90 +1,27 @@
 .data
+_string_0 : .asciiz "1"
 _string_ : .asciiz "\n"
 .text
-#midCode VAR a INT 0
-#					define:a type:INT
-#midCode VAR b INT 0
-#					define:b type:INT
-#midCode ADD a 5 0
-# ADD 5 0->a
-#cal:op1=$t3
-    addi $t3 $0 5
-				# load 5->$t0
-    li $t0 5
-				# load 0->$t1
-    add $t3 $t0 $0
-#midCode ADD b 1 0
-# ADD 1 0->b
-#cal:op1=$t4
-    addi $t4 $0 1
+#midCode CONDITION != 1 0
+# 1 != 0
 				# load 1->$t0
     li $t0 1
-				# load 0->$t1
-    add $t4 $t0 $0
-#midCode PRINT a 1 INT
-# print a
-				# load a->$a0
-				# offset: -3 no: 0
-    move $a0 $t3
-    li $v0 1
+#midCode BZ not_If0 != 
+    beq $t0 $0 not_If0
+#midCode PRINT 1 0 1
+# print _string_0
+    li $v0 4
+    la $a0 _string_0
     syscall
 # print \n
     li $v0 4
     la $a0 _string_
     syscall
-#midCode PRINT b 1 INT
-# print b
-				# load b->$a0
-				# offset: -4 no: 0
-    move $a0 $t4
-    li $v0 1
-    syscall
-# print \n
-    li $v0 4
-    la $a0 _string_
-    syscall
-#midCode ADD a -a 5
-# ADD -a 5->a
-#cal:op1=$t3
-				# load -a->$t0
-				# offset: -3 no: 0
-    sub $t0 $0 $t3
-addi $t3 $t0 5
-#midCode PRINT a 1 INT
-# print a
-				# load a->$a0
-				# offset: -3 no: 0
-    move $a0 $t3
-    li $v0 1
-    syscall
-# print \n
-    li $v0 4
-    la $a0 _string_
-    syscall
-#midCode SUB b 5 b
-# SUB 5 b->b
-#cal:op1=$t4
-				# load 5->$t0
-    li $t0 5
-				# load b->$t1
-				# offset: -4 no: 0
-    sub $t4 $t0 $t4
-#midCode PRINT b 1 INT
-# print b
-				# load b->$a0
-				# offset: -4 no: 0
-    move $a0 $t4
-    li $v0 1
-    syscall
-# print \n
-    li $v0 4
-    la $a0 _string_
-    syscall
+#midCode LABEL not_If0  
+not_If0:
 #midCode EXIT   
 ########################### exit:
 ######## program exit
     li $v0 10
     syscall
 #######################################################
-#0:a
-#1:b

@@ -22,8 +22,12 @@ int lastIndex;
 vector<middleCode> paraList;
 
 localRegManager LocalManager;
+globalRegManager globalManager;
 
-string loadStoreType = "";//""->default "memory"->memory
+string funcNow;
+
+string loadStoreType = "";//""->default "memory"->memory "NOTGLOBAL"
+//string calIntensity = "";//""->cal "ls"->load and store
 
 void dotData_gen() {
 	bool isGlobal = true;
@@ -211,12 +215,14 @@ int localRegManager::useVarMark(string name) {
 
 string localRegManager::isVarDispatch(string name) {
 	string globalName, type;
+	loadStoreType = "NOTGLOBAL";
 	int index = searchData(name,globalName,type);
+	loadStoreType = "";
 	if (index == -2) {
 		dispatch(name, getTempType(name), "0");
 		index = searchData(name, globalName, type);
 	}
-	cout << "index:" + to_string(index) << endl;
+	//cout << "index:" + to_string(index) << endl;
 	if (index >= 0) {
 		//cout << loadStoreType << endl;
 		//cout << to_string(arraySet.find(name) == arraySet.end()) << endl;
@@ -235,10 +241,12 @@ int dispatchReg(string name) {
 
 
 /*************************************************************************************
-	if data in local stack return the relative position and type    return value >= 0;
-	if data in global table return the global name and type         return value = -1;
-	$t3-t7                                                          return value -2--7
-	if can't find data                                              return value = -2;
+	if data in local stack return the relative position and type    return value    >=  0;
+	if data in global table return the global name and type         return value     = -1;
+	$t3-t9                                                          return value -2 -> -9;
+	$s1-s7															return value -10->-16;
+	$a1-a3															return value -17->-19;0
+	if can't find data                                              return value     = -2;
 	************************************************************************************/
 
 int searchData(string name,string& globalName,string& type) {
@@ -247,14 +255,22 @@ int searchData(string name,string& globalName,string& type) {
 		//mips_code << "name:" + stackTable[i].op1 << endl;
 		if (stackTable[i].op1 == name) {
 			type = stackTable[i].Type;
-			if ((globalBlockSet.empty() || (globalBlockSet.find(name) == globalBlockSet.end()))&&(arraySet.empty() || (arraySet.find(name) == arraySet.end()))) {
+			set<string> crossSet = crossBlockTable[funcNow];
+			if ((crossSet.empty() || (crossSet.find(name) == crossSet.end()))&&(arraySet.empty() || (arraySet.find(name) == arraySet.end()))) {
 				// temp var lived in block 
 				if (loadStoreType != "memory") {
-					cout << "#cache t " + name << endl;
+					cout << "#######cache t " + name << endl;
+					mips_code << "#######cache t " + name << endl;
 					return LocalManager.useVarMark(name);
-					cout << "##############" << endl;
+				}	
+			}
+			//cout << "find:" << name << " inFunc:" << funcNow << endl;
+			if (globalManager.isGlobalVar(name, funcNow)) {
+				if (loadStoreType != "memory" && loadStoreType != "NOTGLOBAL") {
+					cout << "#######cache s/a " + name << endl;
+					mips_code << "#######cache s/a " + name << endl;
+					return globalManager.useGlobalVarMark(name, funcNow);
 				}
-				
 			}
 			return (count + i - stackIndex) << 2;
 		}
@@ -375,6 +391,12 @@ string loadVarToReg(string name, string no, string& regName) {
 	else if (regt(index) >= lowRegt && regt(index) <= highRegt) {
 		regName = "$t" + to_string(regt(index));
 	}
+	else if (regs(index) >= lowRegs && regs(index) <= highRegs) {
+		regName = "$s" + to_string(regs(index));
+	}
+	else if (rega(index) >= lowRega && rega(index) <= highRega) {
+		regName = "$a" + to_string(rega(index));
+	}
 	//question
 	if (neg) {
 		mips_code << "    sub " << "$t0" << " $0 " + regName << endl;
@@ -436,6 +458,12 @@ void storeRegToVar(string name, string no,string& regName) {
 	}
 	else if ((regt(index) >= lowRegt) && (regt(index) <= highRegt)) {
 		regName = "$t" + to_string(regt(index));
+	}
+	else if (regs(index) >= lowRegs && regs(index) <= highRegs) {
+		regName = "$s" + to_string(regs(index));
+	}
+	else if (rega(index) >= lowRega && rega(index) <= highRega) {
+		regName = "$a" + to_string(rega(index));
 	}
 }
 
@@ -501,34 +529,51 @@ void scanSentence(middleCode midCode) {
 		string reg = "$t" + to_string(regt(index));
 		mips_code << "    move " + reg + " $v0";
 	}
+	else if (regs(index) >= lowRegs && regs(index) <= highRegs) {
+		string reg = "$s" + to_string(regs(index));
+		mips_code << "    move " + reg + " $v0";
+	}
+	else if (rega(index) >= lowRega && rega(index) <= highRega) {
+		string reg = "$a" + to_string(rega(index));
+		mips_code << "    move " + reg + " $v0";
+	}
+	
 }
 
 void calSentence(middleCode midCode) {
 	string reg1 = "$t0", reg2 = "$t1", reg3 = "$t0", globalName, type;
 	mips_code << "# " + midCode.Type + " " + midCode.op2 + " " + midCode.op3 + "->" + midCode.op1 << endl;
+	cout << "# " + midCode.Type + " " + midCode.op2 + " " + midCode.op3 + "->" + midCode.op1 << endl;
 
 	int val1, val2;
 	bool isConst1, isConst2;
 	isConst1 = isNumStr(midCode.op2, val1);
 	isConst2 = isNumStr(midCode.op3, val2);	
 
+	//local
 	string name1 = LocalManager.isVarDispatch(midCode.op1);
 	mips_code << "#cal:op1=" << name1 << endl;
 	if (name1 != "NOFOUND") {
 		reg3 = name1;
 	}
-
+	//global
+	cout << reg3 << endl;
+	name1 = globalManager.getVarReg(midCode.op1,funcNow);
+	if (name1 != "NOFOUND") {
+		reg3 = name1;
+	}
+	cout << reg3 << endl;
 	if (midCode.Type == "ADD") {
 		if (isConst1 && isConst2) {
 			mips_code << "    addi " + reg3 + " $0 " + to_string(val1) << endl;
 		}
-		if (isConst1 && !isConst2) {
+		else if (isConst1 && !isConst2) {
 			string warn = loadVarToReg(midCode.op3, "0", reg2);
-			mips_code << "addi " + reg3 + " " + reg2 + " " + to_string(val1) << endl;
+			mips_code << "    addi " + reg3 + " " + reg2 + " " + to_string(val1) << endl;
 		}
 		else if (!isConst1 && isConst2) {
 			string warn = loadVarToReg(midCode.op2, "0", reg1);
-			mips_code << "addi " + reg3 + " " + reg1 + " " + to_string(val2) << endl;
+			mips_code << "    addi " + reg3 + " " + reg1 + " " + to_string(val2) << endl;
 		}
 		else {
 			if (midCode.op2[0] == '-') {
@@ -545,9 +590,25 @@ void calSentence(middleCode midCode) {
 		}
 	}
 	else if (midCode.Type == "SUB") {
-		string warn = loadVarToReg(midCode.op2, "0", reg1);
-		warn = loadVarToReg(midCode.op3, "0", reg2);
-		mips_code << "    sub " + reg3 + " " + reg1 + " " + reg2 << endl;
+		//SUB v v c
+		string warn;
+		int val1, val2;
+		bool isConst1, isConst2;
+		isConst1 = isNumStr(midCode.op2, val1);
+		isConst2 = isNumStr(midCode.op3, val2);
+		if (isConst1 && isConst2) {//SUB v c c
+			mips_code << "    addi " + reg3 + " $0 " + to_string(val1 - val2) << endl;
+		}
+		else if (!isConst1 && isConst2) {//SUB v v c
+			warn = loadVarToReg(midCode.op2, "0", reg1);
+			mips_code << "    addi " + reg3 + " " + reg1 + " " + to_string(-val2) << endl;
+		}
+		else {
+			warn = loadVarToReg(midCode.op2, "0", reg1);
+			warn = loadVarToReg(midCode.op3, "0", reg2);
+			mips_code << "    sub " + reg3 + " " + reg1 + " " + reg2 << endl;
+		}
+
 	}
 	else if (midCode.Type == "MUL") {
 		string warn = loadVarToReg(midCode.op2, "0", reg1);
@@ -561,7 +622,7 @@ void calSentence(middleCode midCode) {
 		mips_code << "    mflo " + reg3 << endl;
 	}
 	if (reg3 == "$t0")
-		storeRegToVar(midCode.op1, "0",reg3);
+		storeRegToVar(midCode.op1, "0", reg3);
 }
 
 void loadArrSentence(middleCode midCode) {
@@ -589,8 +650,10 @@ void storeArrSentence(middleCode midCode) {
 	assert(valueReg == regS);
 }
 
+//func's clash happened
 void callFuncSentence(middleCode midCode) {
 	mips_code << "# call function " + midCode.op1 << endl;
+
 	//cal stack offset
 	int offset = 0;
 	for (unsigned int i = stackIndex; i < stackTable.size(); i++) {
@@ -625,6 +688,7 @@ void callFuncSentence(middleCode midCode) {
 	while (num--) {
 		paraList.pop_back();
 	}
+	globalManager.jalFunc(funcNow, midCode.op1);
 	string reg = "$t1";
 	mips_code << "    move $sp $s0" << endl;
 	transLi(to_string(offset), reg);
@@ -632,6 +696,7 @@ void callFuncSentence(middleCode midCode) {
 	mips_code << "    sw " + reg << " 0($s0)" << endl;
 	mips_code << "    jal " + midCode.op1 << endl;
 	//mips_code << "    sw  $ra -4($sp)" << endl;
+	globalManager.raFunc(funcNow, midCode.op1);
 }
 
 void pushParaSentence(middleCode midCode) {
@@ -644,32 +709,52 @@ void pushParaSentence(middleCode midCode) {
 	paraList.push_back(midCode);
 }
 
+string conditionReg;
+
 void conditionSentence(middleCode midCode) {
 	mips_code << "# " + midCode.op2 + " " + midCode.op1 + " " + midCode.op3 << endl;
-	string reg1 = "$t0", reg2 = "$t1", reg3 = "$t0";
-	string warn = loadVarToReg(midCode.op2, "0", reg1);
-	warn = loadVarToReg(midCode.op3, "0", reg2);
-	mips_code << "    sub " + reg3 + " " + reg1 + " " + reg2 << endl;
+	conditionReg = "$t0";
+	string reg1 = "$t0", reg2 = "$t1"; 
+	string warn;
+	bool isConst2, isConst3;
+	int val2, val3;
+	isConst2 = isNumStr(midCode.op2, val2);
+	isConst3 = isNumStr(midCode.op3, val3);
+	if (isConst2 && isConst3) {
+		warn = loadVarToReg(to_string(val2 - val3), "0", conditionReg);
+	}
+	else if (!isConst2 && isConst3) {
+		warn = loadVarToReg(midCode.op2, "0", reg1);
+		mips_code << "    addi " + conditionReg + " " + reg1 + " " + to_string(-val3) << endl;
+	}
+	else if (isConst2 && !isConst3) {
+		//exit(-1);
+	}
+	else {
+		warn = loadVarToReg(midCode.op2, "0", reg1);
+		warn = loadVarToReg(midCode.op3, "0", reg2);
+		mips_code << "    sub " + conditionReg + " " + reg1 + " " + reg2 << endl;
+	}
 }
 
 void conditionJumpSentence(middleCode midCode) {
 	if (condi(">=", "BNZ") || condi("<", "BZ")) {
-		mips_code << "    bgez $t0 " + midCode.op1 << endl;
+		mips_code << "    bgez " + conditionReg + " "  + midCode.op1 << endl;
 	}
 	else if (condi(">", "BNZ") || condi("<=", "BZ")) {
-		mips_code << "    bgtz $t0 " + midCode.op1 << endl;
+		mips_code << "    bgtz " + conditionReg + " " + midCode.op1 << endl;
 	}
 	else if (condi("<=", "BNZ") || condi(">", "BZ")) {
-		mips_code << "    blez $t0 " + midCode.op1 << endl;
+		mips_code << "    blez " + conditionReg + " " + midCode.op1 << endl;
 	}
 	else if (condi("<", "BNZ") || condi(">=", "BZ")) {
-		mips_code << "    bltz $t0 " + midCode.op1 << endl;
+		mips_code << "    bltz " + conditionReg + " " + midCode.op1 << endl;
 	}
 	else if (condi("==", "BNZ") || condi("!=", "BZ")) {
-		mips_code << "    beq $t0 $0 " + midCode.op1 << endl;
+		mips_code << "    beq " + conditionReg + " $0 " + midCode.op1 << endl;
 	}
 	else if (condi("!=", "BNZ") || condi("==", "BZ")) {
-		mips_code << "    bne $t0 $0 " + midCode.op1 << endl;
+		mips_code << "    bne " + conditionReg + " $0 " + midCode.op1 << endl;
 	}
 }
 
@@ -694,7 +779,11 @@ void sentence(middleCode midCode,int index) {
 	printMiddleCode(midCode);
 	int no = getIrBlockNo(index);
 	LocalManager.updateBlock(no);
-	if (midCode.Type == "SCAN") {
+	globalManager.setIntensity(midCode.intensity);
+	if (midCode.Type == "MAINHEAD") {
+		funcNow = "MAIN";
+	}
+	else if (midCode.Type == "SCAN") {
 		scanSentence(midCode);
 	}
 	else if (midCode.Type == "PRINT") {
@@ -744,10 +833,12 @@ void sentence(middleCode midCode,int index) {
 		mips_code << "    li $v0 10" << endl;
 		mips_code << "    syscall" << endl;
 	}
-	else if (midCode.Type == "FUNCHEAD") {
+	else if (midCode.Type == "FUNC") {
+
+
 		stackIndex = 0;//reset stack point
 		stackTable.clear();
-	/* dispatch space for func var */
+		/* dispatch space for func var */
 		dispatch("_offset", "INT", "0");
 		dispatch("_ra", "INT", "0");
 		vector<middleCode> nameList = funcParaRecord[midCode.op1];
@@ -758,40 +849,66 @@ void sentence(middleCode midCode,int index) {
 		mips_code << midCode.op1 + ":" << endl;
 		mips_code << "    sw $ra -4($sp)" << endl;
 		mips_code << "# in func______" << endl;
-
+		funcNow = midCode.op1;
+	}
+	else if (midCode.Type == "FUNCHEAD") {
+		//
 	}
 	else if (midCode.Type == "FUNCRET") {
-		if (midCode.op1 != "") {
-			string reg = "$v0";
-			string warn = loadVarToReg(midCode.op1, "0", reg);
-			if (reg == "$0") {
-				mips_code << "    add $v0 $0 $0" << endl;
-			}
-			else if (reg != "$v0") {
-				mips_code << "    move $v0 " + reg << endl;
-			}
+	if (midCode.op1 != "") {
+		string reg = "$v0";
+		string warn = loadVarToReg(midCode.op1, "0", reg);
+		if (reg == "$0") {
+			mips_code << "    add $v0 $0 $0" << endl;
 		}
+		else if (reg != "$v0") {
+			mips_code << "    move $v0 " + reg << endl;
+		}
+	}
 		mips_code << "    lw $t1 0($sp)" << endl;
 		mips_code << "    lw $ra -4($sp)" << endl;
 		mips_code << "    add $sp $sp $t1" << endl;
 		mips_code << "    jr $ra" << endl;
 	}
 	else if (midCode.Type == "FUNCTAIL") {
-		//recover ra and sp 
+	//recover ra and sp 
 		mips_code << "# out func______" << endl;
+	}
+	else if (midCode.Type == "PARA") {
+		set<string> crossSet = crossBlockTable[funcNow];
+		loadStoreType = "memory";
+		string regs = globalManager.getVarReg(midCode.op1, funcNow);
+		loadStoreType = "";
+
+		if (regs != "NOFOUND") {
+			loadStoreType = "memory";
+			string reg = globalManager.getVarReg(midCode.op1, funcNow);
+			string warn = loadVarToReg(midCode.op1, "0", reg);
+			loadStoreType = "";
+		}
+
+		else if (crossSet.find(midCode.op1) == crossSet.end()) {
+			string reg = "$t0";
+			string warn = loadVarToReg(midCode.op1, "0", reg);
+			assert(reg != "$t0");
+			loadStoreType = "memory";
+			warn = loadVarToReg(midCode.op1, "0", reg);
+			loadStoreType = "";
+		}
 	}
 }
 
 void dotText_gen() {
 	mips_code << ".text" << endl;
 	bool isGlobal = true;
-	int funcbeginIndex = -1,mainbeginIndex = -1;
+	int funcbeginIndex = -1, mainbeginIndex = -1;
 	// handle main 
 	LocalManager.reset();
+	funcNow = "MAIN";
 	for (size_t i = 0; i < middleTable.table.size(); i++) {
 		if (!isGlobal)
-			sentence(middleTable.table[i],i);
-		else if (middleTable.table[i].Type == "FUNCHEAD" && funcbeginIndex == -1) {
+			sentence(middleTable.table[i], i);
+		else if (middleTable.table[i].Type == "FUNC" && funcbeginIndex == -1) {
 			funcbeginIndex = i;
 		}
 		else if (middleTable.table[i].Type == "MAINHEAD") {
@@ -803,7 +920,7 @@ void dotText_gen() {
 	LocalManager.reset();
 	if (funcbeginIndex != -1) {
 		for (int i = funcbeginIndex; i < mainbeginIndex; i++) {
-			sentence(middleTable.table[i],i);
+			sentence(middleTable.table[i], i);
 		}
 	}
 }
@@ -834,6 +951,7 @@ void printStackTable() {
 
 void printMiddleCode(middleCode mid) {
 	mips_code << "#midCode " + mid.Type + " " + mid.op1 + " " + mid.op2 + " " + mid.op3 << endl;
+	cout << "#midCode " + mid.Type + " " + mid.op1 + " " + mid.op2 + " " + mid.op3 << endl;
 }
 
 void transLi(string value, string& regName) {
@@ -844,10 +962,151 @@ void transLi(string value, string& regName) {
 	mips_code << "    li " + regName + " " + value << endl;
 }
 
+bool cmp(const pair<string, int>& a, const pair<string, int>& b) {
+	return a.second > b.second;
+}
+
+void globalRegManager::init(map<string, map<string, int>> countMap) {
+	cout << "construct globalManager begin" << endl;
+	
+
+	for (map<string, map<string, int>>::iterator it = countMap.begin(); it != countMap.end(); it++) {
+		regPool.clear();
+		for (int i = lowRegs; i <= highRegs; i++) {
+			regPool.push_back("$s" + to_string(i));
+		}
+		for (int i = lowRega; i <= highRega; i++) {
+			regPool.push_back("$a" + to_string(i));
+		}
+		string funcName = it->first;
+		
+		cout << "##################################\n";
+	    cout << funcName << endl;
+		vector<pair<string, int>> useCount;
+		for (map<string, int>::iterator it1 = it->second.begin(); it1 != it->second.end(); it1++) {
+			useCount.push_back(*it1);
+			cout << it1->first << endl;
+		}
+		sort(useCount.begin(), useCount.end(), cmp);
+		map<string, string> name2Reg;
+		map<string, string> reg2Name;
+		map<string, int> name2Remain;
+		set<string> crossSet = crossBlockTable[funcName];
+		printSet(crossSet);
+		for (vector<pair<string, int>>::iterator it1 = useCount.begin(); it1 != useCount.end(); it1++) {
+			if (it1->second >= intensityBound && !regPool.empty() && crossSet.find(it1->first) != crossSet.end()) {//·ÀÖ¹ÎÊÌâ
+				name2Reg.insert(make_pair(it1->first, regPool[0]));
+				reg2Name.insert(make_pair(regPool[0], it1->first));
+				name2Remain.insert(*it1);
+				cout << regPool[0] << "->" << it1->first << endl;
+				usingRegPool.insert(regPool[0]);
+				regPool.erase(regPool.begin());
+				//cout << "remainReg:" + to_string(regPool.size()) << endl;
+			}
+		}
+		fun2Name2Reg.insert(make_pair(funcName, name2Reg));
+		fun2Reg2Name.insert(make_pair(funcName, reg2Name));
+		fun2Name2Remain.insert(make_pair(funcName, name2Remain));
+	}
+	cout << "construct globalManager end" << endl;
+}
+
+bool globalRegManager::isGlobalVar(string name, string funcNow) {
+	set<string> crossSet = crossBlockTable[funcNow];
+	//cout << to_string(crossSet.find(name) != crossSet.end()) << endl;
+	//cout << to_string(fun2Name2Reg[funcNow].find(name) != fun2Name2Reg[funcNow].end()) << endl;
+	if (crossSet.find(name) != crossSet.end()) {
+		if (fun2Name2Reg[funcNow].find(name) != fun2Name2Reg[funcNow].end()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void globalRegManager::setIntensity(int intensity) {
+	intensityNow = intensity;
+}
+
+int globalRegManager::useGlobalVarMark(string name, string funcNow) {
+	string reg = fun2Name2Reg[funcNow][name];
+	fun2Name2Remain[funcNow][name] -= intensityNow;
+	cout << name + ":" + to_string(fun2Name2Remain[funcNow][name])<<endl;
+	if (fun2Name2Remain[funcNow][name] == 0) {
+		fun2Name2Reg[funcNow].erase(fun2Name2Reg[funcNow].find(name));
+		fun2Reg2Name[funcNow].erase(fun2Reg2Name[funcNow].find(reg));
+		cout << "disconnect " + name + " with " + reg << endl;
+	}
+	if (regex_match(reg, regex("\\$s[0-9]"))) {
+		//cout << "index:"+ to_string(regs(stoi(reg.substr(2)))) << endl;
+		//cout << "regNo:" + to_string(regs(regs(stoi(reg.substr(2))))) << endl;
+		return regs(stoi(reg.substr(2)));
+
+	}
+	if (regex_match(reg, regex("\\$a[0-9]")))
+		return rega(stoi(reg.substr(2)));
+	exit(-1);
+}
+
+
+void globalRegManager::jalFunc(string funcNow, string jalFunc) {
+	vector<string> clashNameList;
+	if (recursiveFuncSet.find(jalFunc) == recursiveFuncSet.end()) {
+		cout << "push stack local" << endl;
+		for (map<string, string>::iterator it = fun2Reg2Name[jalFunc].begin(); it != fun2Reg2Name[jalFunc].end(); it++) {
+			string regName = it->first;
+			if (fun2Reg2Name[funcNow].find(regName) != fun2Reg2Name[funcNow].end()) {
+				string name = fun2Reg2Name[funcNow].find(regName)->second;
+				clashNameList.push_back(name);
+				loadStoreType = "memory";
+				cout << "push " + name << endl;
+				storeRegToVar(name, "0", regName);
+				loadStoreType = "";
+			}
+		}
+	}
+	else {
+		cout << "push stack global" << endl;
+		for (map<string, string>::iterator it = fun2Reg2Name[funcNow].begin(); it != fun2Reg2Name[funcNow].end(); it++) {
+			string regName = it->first;
+			string name = fun2Reg2Name[funcNow].find(regName)->second;
+			clashNameList.push_back(name);
+			loadStoreType = "memory";
+			cout << "push " + name << endl;
+			storeRegToVar(name, "0", regName);
+			loadStoreType = "";
+		}
+	}
+	clashNameNow = clashNameList;
+}
+
+void globalRegManager::raFunc(string funcNow, string jalFunc) {
+	for (size_t i = 0; i < clashNameNow.size(); i++) {
+		string name = clashNameNow[i];
+		string reg = fun2Name2Reg[funcNow][name];
+		loadStoreType = "memory";
+		string warn = loadVarToReg(name, "0", reg);
+		loadStoreType = "";
+	}
+	clashNameNow.clear();
+}
+
+string globalRegManager::getVarReg(string name, string funcNow) {
+	string type, globalName;
+	if (loadStoreType != "")
+		searchData(name, globalName, type);
+	if (fun2Name2Reg[funcNow].find(name) != fun2Name2Reg[funcNow].end()) {
+		return fun2Name2Reg[funcNow][name];
+	}
+	return "NOFOUND";
+}
+
 void translate() {
 	//handle the situation of return of main
+	globalManager.init(impVarCountMap);
 	mips_code.open("mips.txt");
 	dotData_gen();//generate .data
 	dotText_gen();//generate .text
 	printStackTable();
 }
+
+

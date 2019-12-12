@@ -22,6 +22,7 @@
 #include"lexicalAna.h"
 #include"opt.h"
 #include"translate.h"
+#include"tool.h"
 
 using namespace std;
 extern FILE* fp, * fl, * fc, * fe;

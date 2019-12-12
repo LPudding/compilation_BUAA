@@ -1,14 +1,6 @@
     MAINHEAD            
-    VAR    a    INT    0
-    VAR    b    INT    0
-    ADD    a    5    0
-    ADD    b    1    0
-    PRINT    a    1    INT
-    PRINT    b    1    INT
-    ADD    INT0    -a    5
-    ADD    a    INT0    0
-    PRINT    a    1    INT
-    SUB    INT1    5    b
-    ADD    b    INT1    0
-    PRINT    b    1    INT
+    CONDITION    !=    1    0
+    BZ    not_If0    !=    
+    PRINT    1    0    1
+    LABEL    not_If0        
     EXIT            

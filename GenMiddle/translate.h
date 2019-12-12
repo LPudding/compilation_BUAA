@@ -6,6 +6,16 @@
 #define lowRegt 3
 #define highRegt 9
 
+#define regs(s) (-s-highRegt)
+#define lowRegs 1
+#define highRegs 7
+
+#define rega(a) (-a-highRegt-highRegs)
+#define lowRega 1
+#define highRega 3
+
+#define intensityBound 10
+
 class localRegManager {
 public:
 	int currentBNo = -1;
@@ -25,7 +35,29 @@ public:
 	string isVarDispatch(string name);
 };
 
+
+class globalRegManager {
+public:
+	map<string, map<string, string>> fun2Reg2Name;
+	map<string, map<string, string>> fun2Name2Reg;
+	map<string, map<string, int>> fun2Name2Remain;
+	vector<string> regPool;
+	vector<string> clashNameNow;
+	set<string> usingRegPool;
+	int intensityNow;
+
+	void init(map<string, map<string, int>> countMap);
+	bool isGlobalVar(string name, string funcNow);
+	int useGlobalVarMark(string name, string funcNow);
+	string getVarReg(string name, string funcNow);
+	void setIntensity(int intensity);
+	void jalFunc(string funcNow, string jalFunc);
+	void raFunc(string funcNow, string jalFunc);
+};
+
 string getTempType(string name);
+
+bool cmp(const pair<string, int>& a, const pair<string, int>& b);
 
 void translate();
 

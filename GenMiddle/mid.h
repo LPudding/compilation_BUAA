@@ -12,7 +12,7 @@ using namespace std;
 class middleCode {
 public:
 	string Type,op1,op2,op3;
-	int no;
+	int no, intensity;
 	middleCode(string aType,string aOp1,string aOp2,string aOp3);
 };
 
