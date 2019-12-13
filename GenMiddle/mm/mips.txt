@@ -1,0 +1,534 @@
+.data
+enter:.asciiz "\n"
+str_0 : .asciiz "x = "
+str_1 : .asciiz "y = "
+str_2 : .asciiz "SWAP x = "
+str_3 : .asciiz "SWAP y = "
+str_4 : .asciiz "OVERFLOW!"
+str_5 : .asciiz "complete number: "
+str_6 : .asciiz "  "
+str_7 : .asciiz " "
+str_8 : .asciiz "---------------------------------------------------------------"
+str_9 : .asciiz "'water flower'number is:"
+str_10 : .asciiz "  "
+str_11 : .asciiz " "
+str_12 : .asciiz "---------------------------------------------------------------"
+str_13 : .asciiz " "
+str_14 : .asciiz " "
+str_15 : .asciiz "The total is "
+str_16 : .asciiz "5 != "
+MAX_NUM : .word 128
+.text
+j main
+factorial:
+li $t1,1#33333
+bgt $a1,$t1,else_0
+li $v1,1
+jr $ra
+j end_if_1
+else_0:
+end_if_1:
+subi $t3,$a1,1
+sw $a1,-8($sp)
+move $a1,$t3
+sw $sp,-32($sp)
+sw $ra,-36($sp)
+subiu $sp,$sp,32
+jal factorial
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+lw $a1,-8($sp)
+move $t3,$v1
+mul $t3,$a1,$t3
+move $v1,$t3
+jr $ra
+jr $ra
+mod:
+div $a1,$a2
+mflo $t3
+mul $t3,$t3,$a2
+sub $a1,$a1,$t3
+move $v1,$a1
+jr $ra
+jr $ra
+swap:
+#printf
+la $a0,str_0
+li $v0,4
+syscall
+move $a0,$a1
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#printf
+la $a0,str_1
+li $v0,4
+syscall
+move $a0,$a2
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#temp [null] = x
+sw $a1,-16($sp)
+#x [null] = y
+move $a1,$a2
+#y [null] = temp
+lw $t1,-16($sp)
+move $a2,$t1
+#printf
+la $a0,str_2
+li $v0,4
+syscall
+move $a0,$a1
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#printf
+la $a0,str_3
+li $v0,4
+syscall
+move $a0,$a2
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+jr $ra
+jr $ra
+full_num:
+li $t1,100
+mul $t3,$a1,$t1
+li $t1,10
+mul $t4,$a2,$t1
+add $t3,$t3,$t4
+add $t3,$t3,$a3
+move $v1,$t3
+jr $ra
+jr $ra
+flower_num:
+mul $t3,$a1,$a1
+mul $t3,$t3,$a1
+mul $t4,$a2,$a2
+mul $t4,$t4,$a2
+add $t3,$t3,$t4
+mul $t4,$a3,$a3
+mul $t4,$t4,$a3
+add $t3,$t3,$t4
+move $v1,$t3
+jr $ra
+jr $ra
+complete_flower_num:
+#j [null] = 2
+li $t1,2#2222
+sw $t1,-524($sp)
+lw $s0,-520($sp)#i
+lw $s1,-528($sp)#n
+lw $s2,-524($sp)#j
+lw $s3,-532($sp)#s
+lw $s4,-536($sp)#x1
+for_label_0:
+lw $t1,MAX_NUM
+bge $s2,$t1,end_for_0
+li $t0,0
+subi $s1,$t0,1
+#s [null] = j
+move $s3,$s2
+#i [null] = 1
+li $t1,1#2222
+move $s0,$t1
+for_label_1:
+bge $s0,$s2,end_for_1
+div $s2,$s0
+mflo $t3
+mul $s4,$t3,$s0
+move $a1,$s2
+move $a2,$s0
+sw $sp,-596($sp)
+sw $ra,-600($sp)
+subiu $sp,$sp,596
+jal mod
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+move $t3,$v1
+li $t1,0#33333
+bne $t3,$t1,else_2
+addi $s1,$s1,1
+sub $s3,$s3,$s0
+li $t1,128#33333
+blt $s1,$t1,else_4
+#printf
+la $a0,str_4
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+j end_if_5
+else_4:
+#k [n] = i
+move $t0,$s1
+sll $t0,$t0,2
+addiu $t0,$t0,8
+subu $t0,$sp,$t0
+sw $s0,0($t0)
+end_if_5:
+j end_if_3
+else_2:
+end_if_3:
+move $t0,$s0
+addiu $t0,$t0,1
+move $s0,$t0
+j for_label_1
+end_for_1:
+li $t1,0#33333
+bne $s3,$t1,else_6
+#printf
+la $a0,str_5
+li $v0,4
+syscall
+move $a0,$s2
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#i [null] = 0
+li $t1,0#2222
+move $s0,$t1
+for_label_2:
+bgt $s0,$s1,end_for_2
+#  wm124= k [i]~~~~~~~~~~~~~~~~~~~~~~~
+sll $t1,$s0,2
+addiu $t1,$t1,8
+subu $t1,$sp,$t1
+lw $t0,0($t1)
+move $t3,$t0
+#printf
+la $a0,str_6
+li $v0,4
+syscall
+move $a0,$t3
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+move $t0,$s0
+addiu $t0,$t0,1
+move $s0,$t0
+j for_label_2
+end_for_2:
+#printf
+la $a0,str_7
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+j end_if_7
+else_6:
+end_if_7:
+move $t0,$s2
+addiu $t0,$t0,1
+move $s2,$t0
+j for_label_0
+end_for_0:
+sw $s0,-520($sp)
+sw $s1,-528($sp)
+sw $s2,-524($sp)
+sw $s3,-532($sp)
+sw $s4,-536($sp)
+#printf
+la $a0,str_8
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#printf
+la $a0,str_9
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#y [null] = 0
+li $t1,0#2222
+sw $t1,-540($sp)
+#i [null] = 100
+li $t1,100#2222
+sw $t1,-520($sp)
+lw $s0,-520($sp)#i
+lw $s1,-528($sp)#n
+lw $s2,-540($sp)#y
+lw $s3,-524($sp)#j
+lw $s4,-564($sp)#a
+for_label_3:
+lw $t1,MAX_NUM
+addi $t3,$t1,100
+bge $s0,$t3,end_for_3
+li $t1,100
+div $s0,$t1
+mflo $s1
+li $t1,10
+div $s0,$t1
+mflo $t3
+move $a1,$t3
+li $a2,10
+sw $sp,-616($sp)
+sw $ra,-620($sp)
+subiu $sp,$sp,616
+jal mod
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+move $t3,$v1
+#j [null] = wm151
+move $s3,$t3
+move $a1,$s0
+li $a2,10
+sw $sp,-636($sp)
+sw $ra,-640($sp)
+subiu $sp,$sp,636
+jal mod
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+move $t3,$v1
+#a [null] = wm156
+move $s4,$t3
+move $a1,$s1
+move $a2,$s3
+move $a3,$s4
+sw $sp,-656($sp)
+sw $ra,-660($sp)
+subiu $sp,$sp,656
+jal full_num
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+move $t3,$v1
+move $a1,$s1
+move $a2,$s3
+move $a3,$s4
+sw $t3,-656($sp)
+sw $sp,-676($sp)
+sw $ra,-680($sp)
+subiu $sp,$sp,676
+jal flower_num
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+lw $t3,-656($sp)
+move $t4,$v1
+bne $t3,$t4,else_8
+#k [y] = i
+move $t0,$s2
+sll $t0,$t0,2
+addiu $t0,$t0,8
+subu $t0,$sp,$t0
+sw $s0,0($t0)
+addi $s2,$s2,1
+j end_if_9
+else_8:
+end_if_9:
+move $t0,$s0
+addiu $t0,$t0,1
+move $s0,$t0
+j for_label_3
+end_for_3:
+sw $s0,-520($sp)
+sw $s1,-528($sp)
+sw $s2,-540($sp)
+sw $s3,-524($sp)
+sw $s4,-564($sp)
+#i [null] = 0
+li $t1,0#2222
+sw $t1,-520($sp)
+lw $s0,-520($sp)#i
+lw $s1,-540($sp)#y
+for_label_4:
+bge $s0,$s1,end_for_4
+#  wm185= k [i]~~~~~~~~~~~~~~~~~~~~~~~
+sll $t1,$s0,2
+addiu $t1,$t1,8
+subu $t1,$sp,$t1
+lw $t0,0($t1)
+move $t3,$t0
+#printf
+la $a0,str_10
+li $v0,4
+syscall
+move $a0,$t3
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+move $t0,$s0
+addiu $t0,$t0,1
+move $s0,$t0
+j for_label_4
+end_for_4:
+sw $s0,-520($sp)
+sw $s1,-540($sp)
+#printf
+la $a0,str_11
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#printf
+la $a0,str_12
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+#h [null] = 0
+li $t1,0#2222
+sw $t1,-552($sp)
+#leap [null] = 1
+li $t1,1#2222
+sw $t1,-556($sp)
+#m [null] = 2
+li $t1,2#2222
+sw $t1,-544($sp)
+lw $s0,-520($sp)#i
+lw $s1,-544($sp)#m
+lw $s2,-560($sp)#x2
+lw $s3,-548($sp)#k2
+lw $s4,-552($sp)#h
+lw $s5,-556($sp)#leap
+for_label_5:
+lw $t1,MAX_NUM
+bgt $s1,$t1,end_for_5
+li $t1,2
+div $s1,$t1
+mflo $s3
+#i [null] = 2
+li $t1,2#2222
+move $s0,$t1
+for_label_6:
+bgt $s0,$s3,end_for_6
+div $s1,$s0
+mflo $t3
+mul $s2,$t3,$s0
+move $a1,$s1
+move $a2,$s0
+sw $sp,-696($sp)
+sw $ra,-700($sp)
+subiu $sp,$sp,696
+jal mod
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+move $t3,$v1
+li $t1,0#33333
+bne $t3,$t1,else_10
+#leap [null] = 0
+li $t1,0#2222
+move $s5,$t1
+j end_if_11
+else_10:
+end_if_11:
+move $t0,$s0
+addiu $t0,$t0,1
+move $s0,$t0
+j for_label_6
+end_for_6:
+li $t1,1#33333
+bne $s5,$t1,else_12
+#printf
+la $a0,str_13
+li $v0,4
+syscall
+move $a0,$s1
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+addi $s4,$s4,1
+li $t1,10
+div $s4,$t1
+mflo $t3
+li $t1,10
+mul $s2,$t3,$t1
+bne $s2,$s4,else_14
+#printf
+la $a0,str_14
+li $v0,4
+syscall
+la $a0,enter
+li $v0,4
+syscall
+j end_if_15
+else_14:
+end_if_15:
+j end_if_13
+else_12:
+end_if_13:
+#leap [null] = 1
+li $t1,1#2222
+move $s5,$t1
+move $t0,$s1
+addiu $t0,$t0,1
+move $s1,$t0
+j for_label_5
+end_for_5:
+sw $s0,-520($sp)
+sw $s1,-544($sp)
+sw $s2,-560($sp)
+sw $s3,-548($sp)
+sw $s4,-552($sp)
+sw $s5,-556($sp)
+#printf
+la $a0,str_15
+li $v0,4
+syscall
+lw $a0,-552($sp)
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+jr $ra
+jr $ra
+main:
+li $a1,5
+sw $sp,-32($sp)
+sw $ra,-36($sp)
+subiu $sp,$sp,32
+jal factorial
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+move $t3,$v1
+#n [null] = wm252
+sw $t3,-8($sp)
+#printf
+la $a0,str_16
+li $v0,4
+syscall
+lw $a0,-8($sp)
+li $v0,1
+syscall
+la $a0,enter
+li $v0,4
+syscall
+li $a1,5
+li $a2,10
+sw $sp,-52($sp)
+sw $ra,-56($sp)
+subiu $sp,$sp,52
+jal swap
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+sw $sp,-72($sp)
+sw $ra,-76($sp)
+subiu $sp,$sp,72
+jal complete_flower_num
+lw $ra,-4($sp)
+lw $sp,-0($sp)

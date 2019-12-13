@@ -22,6 +22,8 @@ public:
 	map<string, string> reg2Name;
 	map<string, string> name2Reg;
 	//count the reg remaining life
+	map<string, string> rega2Name;
+	map<string, string> name2Rega;
 	map<string, int> regtLife;
 	set<string> freeReg;
 	set<string> poorSet;
@@ -33,6 +35,7 @@ public:
 	void updateBlock(int no);
 	int useVarMark(string name);
 	string isVarDispatch(string name);
+	void dispatchReg(string regName, string name);
 };
 
 
@@ -45,6 +48,7 @@ public:
 	vector<string> clashNameNow;
 	set<string> usingRegPool;
 	int intensityNow;
+	int aIndex = 0;
 
 	void init(map<string, map<string, int>> countMap);
 	bool isGlobalVar(string name, string funcNow);
@@ -53,6 +57,7 @@ public:
 	void setIntensity(int intensity);
 	void jalFunc(string funcNow, string jalFunc);
 	void raFunc(string funcNow, string jalFunc);
+	string dispatchaReg(string name);
 };
 
 string getTempType(string name);

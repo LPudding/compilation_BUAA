@@ -1,0 +1,292 @@
+.data
+_string_0 : .asciiz "Hello \\n World"
+_string_1 : .asciiz "hello"
+_string_ : .asciiz "\n"
+_var_0 : .word -5
+_var_1 : .word 0
+_array_0 : .word 0:10
+.text
+#midCode VAR a INT 0
+#					define:a type:INT
+#midCode VAR c INT 0
+#					define:c type:INT
+#midCode VAR arr INT 11
+#					define:arr type:INT
+#midCode VAR expr INT 0
+#					define:expr type:INT
+#midCode VAR cc CHAR 0
+#					define:cc type:CHAR
+#midCode ADD a 1 0
+# ADD 1 0->a
+			#######cache t a
+#cal:op1=$t3
+    addi $t3 $0 1
+#midCode ADD c 2 0
+# ADD 2 0->c
+			#######cache t c
+#cal:op1=$t4
+    addi $t4 $0 2
+#midCode ADD INT0 a c
+# ADD a c->INT0
+#					define:INT0 type:INT
+			#######cache t INT0
+#cal:op1=$t5
+				# load a->$t0
+			#######cache t a
+				# offset: -3 no: 0
+				# load c->$t1
+			#######cache t c
+				# offset: -4 no: 0
+    add $t5 $t3 $t4
+#midCode PRINT INT0 1 INT
+# print INT0
+				# load INT0->$a0
+			#######cache t INT0
+				# offset: -5 no: 0
+    move $a0 $t5
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode STORE_ARR 10 arr 3
+# store_arr 10 -> arr[3]
+				# load 10->$t0
+    li $t0 10
+				# store $t0->arr
+    sw $t0 -20($sp)
+#midCode PRINT Hello \\n World 0 1
+# print _string_0
+    li $v0 4
+    la $a0 _string_0
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode ADD test 123 0
+# ADD 123 0->test
+#cal:op1=NOFOUND
+    addi $t0 $0 123
+				# store $t0->test
+    la $t1 _var_1
+    sw $t0 0($t1)
+#midCode ADD expr 444 0
+# ADD 444 0->expr
+			#######cache t expr
+#cal:op1=$t4
+    addi $t4 $0 444
+#midCode LOAD_ARR INT1 arr 3
+# load_arr arr[3] -> INT1
+				# load arr->$t1
+				# offset: 8 no: 3
+    lw $t1 -20($sp)
+#					define:INT1 type:INT
+			#######cache t INT1
+				# store $t1->INT1
+    move $t5 $t1
+#midCode MUL INT2 test INT1
+# MUL test INT1->INT2
+#					define:INT2 type:INT
+			#######cache t INT2
+#cal:op1=$t6
+				# load test->$t0
+				# offset: -1 no: 0
+    la $t1 _var_1
+    lw $t0 0($t1)
+				# load INT1->$t1
+			#######cache t INT1
+				# offset: -5 no: 0
+    mul $t6 $t0 $t5
+#midCode ADD test INT2 a0
+# ADD INT2 a0->test
+#cal:op1=NOFOUND
+				# load INT2->$t0
+			#######cache t INT2
+				# offset: -6 no: 0
+				# load a0->$t1
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $t1 0($t1)
+    add $t0 $t6 $t1
+				# store $t0->test
+    la $t1 _var_1
+    sw $t0 0($t1)
+#midCode STORE_ARR test arr 4
+# store_arr test -> arr[4]
+				# load test->$t0
+				# offset: -1 no: 0
+    la $t1 _var_1
+    lw $t0 0($t1)
+				# store $t0->arr
+    sw $t0 -24($sp)
+#midCode PRINT hello 0 0
+# print _string_1
+    li $v0 4
+    la $a0 _string_1
+    syscall
+#midCode LOAD_ARR INT4 arr 4
+# load_arr arr[4] -> INT4
+				# load arr->$t1
+				# offset: 8 no: 4
+    lw $t1 -24($sp)
+#					define:INT4 type:INT
+			#######cache t INT4
+				# store $t1->INT4
+    move $t5 $t1
+#midCode PRINT INT4 1 1
+# print INT4
+				# load INT4->$a0
+			#######cache t INT4
+				# offset: -5 no: 0
+    move $a0 $t5
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT a0 1 INT
+# print a0
+				# load a0->$a0
+				# offset: -1 no: 0
+    la $t1 _var_0
+    lw $a0 0($t1)
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT 1 1 INT
+# print 1
+				# load 1->$a0
+    li $a0 1
+    li $v0 1
+    syscall
+# print \n
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode ADD INT5 a 'd'
+# ADD a 'd'->INT5
+#					define:INT5 type:INT
+			#######cache t INT5
+#cal:op1=$t5
+				# load a->$t0
+			#######cache t a
+				# offset: -3 no: 0
+				# load 'd'->$t1
+    li $t1 'd'
+    add $t5 $t3 $t1
+#midCode SUB INT6 INT5 'c'
+# SUB INT5 'c'->INT6
+#					define:INT6 type:INT
+			#######cache t INT6
+#cal:op1=$t3
+				# load INT5->$t0
+			#######cache t INT5
+				# offset: -5 no: 0
+				# load 'c'->$t1
+    li $t1 'c'
+    sub $t3 $t5 $t1
+#midCode ADD INT7 INT6 20
+# ADD INT6 20->INT7
+#					define:INT7 type:INT
+			#######cache t INT7
+#cal:op1=$t5
+				# load INT6->$t0
+			#######cache t INT6
+				# offset: -3 no: 0
+    addi $t5 $t3 20
+#midCode MUL INT8 2 expr
+# MUL 2 expr->INT8
+#					define:INT8 type:INT
+			#######cache t INT8
+#cal:op1=$t3
+				# load 2->$t0
+    li $t0 2
+				# load expr->$t1
+			#######cache t expr
+				# offset: -4 no: 0
+    mul $t3 $t0 $t4
+#midCode ADD INT9 INT7 INT8
+# ADD INT7 INT8->INT9
+#					define:INT9 type:INT
+			#######cache t INT9
+#cal:op1=$t6
+				# load INT7->$t0
+			#######cache t INT7
+				# offset: -5 no: 0
+				# load INT8->$t1
+			#######cache t INT8
+				# offset: -3 no: 0
+    add $t6 $t5 $t3
+#midCode DIV INT10 expr 4
+# DIV expr 4->INT10
+#					define:INT10 type:INT
+			#######cache t INT10
+#cal:op1=$t3
+				# load expr->$t0
+			#######cache t expr
+				# offset: -4 no: 0
+				# load 4->$t1
+    li $t1 4
+    div $t4 $t1
+    mflo $t3
+#midCode SUB INT11 INT9 INT10
+# SUB INT9 INT10->INT11
+#					define:INT11 type:INT
+			#######cache t INT11
+#cal:op1=$t5
+				# load INT9->$t0
+			#######cache t INT9
+				# offset: -6 no: 0
+				# load INT10->$t1
+			#######cache t INT10
+				# offset: -3 no: 0
+    sub $t5 $t6 $t3
+#midCode LOAD_ARR INT12 arr 4
+# load_arr arr[4] -> INT12
+				# load arr->$t1
+				# offset: 8 no: 4
+    lw $t1 -24($sp)
+#					define:INT12 type:INT
+			#######cache t INT12
+				# store $t1->INT12
+    move $t3 $t1
+#midCode ADD expr INT11 INT12
+# ADD INT11 INT12->expr
+			#######cache t expr
+#cal:op1=$t4
+				# load INT11->$t0
+			#######cache t INT11
+				# offset: -5 no: 0
+				# load INT12->$t1
+			#######cache t INT12
+				# offset: -3 no: 0
+    add $t4 $t5 $t3
+#midCode EXIT   
+########################### exit:
+######## program exit
+    li $v0 10
+    syscall
+#######################################################
+#0:a
+#1:c
+#2:arr
+#3:expr
+#4:cc
+#5:INT0
+#6:INT1
+#7:INT2
+#8:INT4
+#9:INT5
+#10:INT6
+#11:INT7
+#12:INT8
+#13:INT9
+#14:INT10
+#15:INT11
+#16:INT12

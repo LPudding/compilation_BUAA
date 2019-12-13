@@ -18,7 +18,7 @@ public:
 	BB(int num, int first, int last, string funcName);
 };
 
-#define constSpread 1
+#define constSpread 0
 
 extern vector<BB> block;
 

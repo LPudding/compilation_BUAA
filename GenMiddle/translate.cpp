@@ -20,6 +20,7 @@ int lastIndex;
 
 //type name index num
 vector<middleCode> paraList;
+vector<string> paraReg;
 
 localRegManager LocalManager;
 globalRegManager globalManager;
@@ -28,6 +29,8 @@ string funcNow;
 
 string loadStoreType = "";//""->default "memory"->memory "NOTGLOBAL"
 //string calIntensity = "";//""->cal "ls"->load and store
+
+int atindex = 0;
 
 void dotData_gen() {
 	bool isGlobal = true;
@@ -144,12 +147,15 @@ int localRegManager::useVarMark(string name) {
 	/*if (poorSet.find(name) == poorSet.end() && name2Reg.find(name) == name2Reg.end()) {
 		dispatch(name, getTempType(name), "0");
 	}*/
+	if (!name2Rega.empty() && name2Rega.find(name) != name2Rega.end()) {
+		return rega(stoi(name2Rega[name].substr(2)));
+	}
 	if (!name2Reg.empty() && name2Reg.find(name) != name2Reg.end()) {
 		//has been dispatched
 		string reg = name2Reg[name];
 		regtLife[name]--;
-
-		if (regtLife[name]) {
+		cout << "				" + name +"'s remain:" +  to_string(regtLife[name]) << endl;
+		if (regtLife[name] > 0) {
 			LRU.remove(reg);
 			LRU.push_front(reg);
 		}
@@ -158,7 +164,7 @@ int localRegManager::useVarMark(string name) {
 			freeReg.insert(reg);
 			name2Reg.erase(name2Reg.find(name));
 			reg2Name.erase(reg2Name.find(reg));
-			cout << "free " + reg << endl;
+			cout << "				free " + reg << endl;
 
 		}
 		return -stoi(reg.substr(2));
@@ -179,6 +185,8 @@ int localRegManager::useVarMark(string name) {
 			LRU.push_front(reg);
 			//regt life
 			regtLife.insert(make_pair(name, block[currentBNo].varCount[name] - 1));
+			cout << "				"+name + ":" + to_string(regtLife[name]) << endl;
+
 		}
 		else {
 			//LRU
@@ -213,6 +221,27 @@ int localRegManager::useVarMark(string name) {
 	}
 }
 
+
+void localRegManager::dispatchReg(string regName, string name) {
+	string reg;
+	if (!freeReg.empty()) {
+		//have free reg now
+		assert(freeReg.find(regName) != freeReg.end());
+		reg = regName;
+		cout << "dispatch new " << reg << " to " << name << endl;
+		//freeReg
+		freeReg.erase(freeReg.begin());
+		//map
+		name2Reg.insert(make_pair(name, reg));
+		reg2Name.insert(make_pair(reg, name));
+		//LRU
+		LRU.push_front(reg);
+		//regt life
+		regtLife.insert(make_pair(name, block[currentBNo].varCount[name]-1));
+		cout << "				" + name + ":" + to_string(regtLife[name]) << endl;
+	}
+}
+
 string localRegManager::isVarDispatch(string name) {
 	string globalName, type;
 	loadStoreType = "NOTGLOBAL";
@@ -230,6 +259,9 @@ string localRegManager::isVarDispatch(string name) {
 	}
 	if (regt(index) >= lowRegt && regt(index) <= highRegt) {
 		return "$t" + to_string(regt(index));
+	}
+	if (rega(index) >= lowRega && rega(index) <= highRega) {
+		return "$a" + to_string(rega(index));
 	}
 	return "NOFOUND";
 }
@@ -259,16 +291,16 @@ int searchData(string name,string& globalName,string& type) {
 			if ((crossSet.empty() || (crossSet.find(name) == crossSet.end()))&&(arraySet.empty() || (arraySet.find(name) == arraySet.end()))) {
 				// temp var lived in block 
 				if (loadStoreType != "memory") {
-					cout << "#######cache t " + name << endl;
-					mips_code << "#######cache t " + name << endl;
+					cout << "			#######cache t " + name << endl;
+					mips_code << "			#######cache t " + name << endl;
 					return LocalManager.useVarMark(name);
 				}	
 			}
 			//cout << "find:" << name << " inFunc:" << funcNow << endl;
 			if (globalManager.isGlobalVar(name, funcNow)) {
 				if (loadStoreType != "memory" && loadStoreType != "NOTGLOBAL") {
-					cout << "#######cache s/a " + name << endl;
-					mips_code << "#######cache s/a " + name << endl;
+					cout << "			#######cache s/a " + name << endl;
+					mips_code << "			#######cache s/a " + name << endl;
 					return globalManager.useGlobalVarMark(name, funcNow);
 				}
 			}
@@ -557,12 +589,12 @@ void calSentence(middleCode midCode) {
 		reg3 = name1;
 	}
 	//global
-	cout << reg3 << endl;
+	cout << "				local:"+reg3 << endl;
 	name1 = globalManager.getVarReg(midCode.op1,funcNow);
 	if (name1 != "NOFOUND") {
 		reg3 = name1;
 	}
-	cout << reg3 << endl;
+	cout << "				global:" + reg3 << endl;
 	if (midCode.Type == "ADD") {
 		if (isConst1 && isConst2) {
 			mips_code << "    addi " + reg3 + " $0 " + to_string(val1) << endl;
@@ -653,7 +685,7 @@ void storeArrSentence(middleCode midCode) {
 //func's clash happened
 void callFuncSentence(middleCode midCode) {
 	mips_code << "# call function " + midCode.op1 << endl;
-
+	paraReg.clear();
 	//cal stack offset
 	int offset = 0;
 	for (unsigned int i = stackIndex; i < stackTable.size(); i++) {
@@ -676,27 +708,54 @@ void callFuncSentence(middleCode midCode) {
 				break;
 		num = paraList.size() - i;
 	}
+
+	globalManager.jalFunc(funcNow, midCode.op1);
+
 	//cout << "#### " + to_string(num)+"  "+to_string(i)+ "  "+to_string(paraList.size())<< endl;
+	int disRegIndex = 0;
+	paraReg.clear();
 	for (; i < (int)paraList.size(); i++) {
 		string reg = "$t1";
 		string warn = loadVarToReg(paraList[i].op1, "0", reg);
 		mips_code << "# para_name:" + paraList[i].op1 << endl;
-		int index = -((stoi(paraList[i].op2) - 1) * 4 + 8);
-		mips_code << "    sw " + reg + " " + to_string(index) + "($s0)" << endl;
+		string realParaName = funcParaRecord[midCode.op1][i].op1;
+		string isGlobal = globalManager.getVarReg(realParaName, midCode.op1);
+		set<string> crossSet = crossBlockTable[midCode.op1];
+		if (isGlobal != "NOFOUND") {
+			mips_code << "    move " + isGlobal + " " + reg << endl;
+		}
+		else if (crossSet.find(realParaName) == crossSet.end()) {
+			string reg = "$t1";
+			warn = loadVarToReg(paraList[i].op1, "0", reg);
+			string reg1 = globalManager.dispatchaReg(realParaName);
+			if (reg1 != "NOFREE") {
+
+				mips_code << "    move " + reg1 + " " + reg << endl;
+			}
+			else {
+				int index = -((stoi(paraList[i].op2) - 1) * 4 + 8);
+				mips_code << "    sw " + reg + " " + to_string(index) + "($s0)" << endl;
+			}
+
+		}
+		else {
+			int index = -((stoi(paraList[i].op2) - 1) * 4 + 4);
+			mips_code << "    sw " + reg + " " + to_string(index) + "($s0)" << endl;
+		}
 	}
 	//paraStack pop_back
 	while (num--) {
 		paraList.pop_back();
 	}
-	globalManager.jalFunc(funcNow, midCode.op1);
 	string reg = "$t1";
 	mips_code << "    move $sp $s0" << endl;
-	transLi(to_string(offset), reg);
+	//transLi(to_string(offset), reg);
 	//mips_code << "    li $t1 " + to_string(offset) << endl;
-	mips_code << "    sw " + reg << " 0($s0)" << endl;
+	//mips_code << "    sw " + reg << " 0($s0)" << endl;
 	mips_code << "    jal " + midCode.op1 << endl;
 	//mips_code << "    sw  $ra -4($sp)" << endl;
 	globalManager.raFunc(funcNow, midCode.op1);
+	mips_code << "    addi $sp $sp " + to_string(offset) << endl;
 }
 
 void pushParaSentence(middleCode midCode) {
@@ -763,7 +822,13 @@ void constDefineSentence(middleCode midCode) {
 	mips_code << "# " +  midCode.op1 + " -> " + midCode.op3 << endl;
 	mips_code << "    li $t0 " + midCode.op3 << endl;
 	mips_code << "# size:" + to_string(stackTable.size()) + " index:" + to_string(stackIndex) << endl;
-	mips_code << "    sw $t0 -" + to_string((stackTable.size() - stackIndex) * 4) + "($sp)" << endl;
+	string isGlobal = globalManager.getVarReg(midCode.op1, funcNow);
+	if (isGlobal != "NOFOUND") {
+		mips_code << "    li " + isGlobal + " " + midCode.op3 << endl;
+	}
+	else {
+		mips_code << "    sw $t0 -" + to_string((stackTable.size() - stackIndex) * 4) + "($sp)" << endl;
+	}
 	dispatch(midCode.op1, midCode.op2, "0");
 	//stackTable.push_back(middleCode(midCode.op2, midCode.op1, "0", ""));
 }
@@ -835,11 +900,11 @@ void sentence(middleCode midCode,int index) {
 	}
 	else if (midCode.Type == "FUNC") {
 
-
+		LocalManager.reset();
 		stackIndex = 0;//reset stack point
 		stackTable.clear();
 		/* dispatch space for func var */
-		dispatch("_offset", "INT", "0");
+		//dispatch("_offset", "INT", "0");
 		dispatch("_ra", "INT", "0");
 		vector<middleCode> nameList = funcParaRecord[midCode.op1];
 		for (unsigned int i = 0; i < nameList.size(); i++) {
@@ -847,11 +912,28 @@ void sentence(middleCode midCode,int index) {
 		}
 		//store ra
 		mips_code << midCode.op1 + ":" << endl;
-		mips_code << "    sw $ra -4($sp)" << endl;
+		mips_code << "    sw $ra 0($sp)" << endl;
 		mips_code << "# in func______" << endl;
 		funcNow = midCode.op1;
 	}
 	else if (midCode.Type == "FUNCHEAD") {
+		vector<middleCode> nameList = funcParaRecord[midCode.op1];
+		set<string> crossSet = crossBlockTable[midCode.op1];
+		LocalManager.name2Rega.clear();
+		LocalManager.rega2Name.clear();
+		int index = 1;
+		atindex = 0;
+		for (unsigned int i = 0; i < nameList.size(); i++) {
+			if (crossSet.find(nameList[i].op1) == crossSet.end()) {
+				string name = nameList[i].op1;
+				string reg = "$a" + to_string(index);
+				if (index <= highRega) {
+					index++;
+					LocalManager.name2Rega.insert(make_pair(name, reg));
+					LocalManager.rega2Name.insert(make_pair(reg, name));
+				}
+			}
+		}
 		//
 	}
 	else if (midCode.Type == "FUNCRET") {
@@ -865,9 +947,9 @@ void sentence(middleCode midCode,int index) {
 			mips_code << "    move $v0 " + reg << endl;
 		}
 	}
-		mips_code << "    lw $t1 0($sp)" << endl;
-		mips_code << "    lw $ra -4($sp)" << endl;
-		mips_code << "    add $sp $sp $t1" << endl;
+		//mips_code << "    lw $t1 0($sp)" << endl;
+		mips_code << "    lw $ra 0($sp)" << endl;
+		//mips_code << "    add $sp $sp $t1" << endl;
 		mips_code << "    jr $ra" << endl;
 	}
 	else if (midCode.Type == "FUNCTAIL") {
@@ -876,24 +958,28 @@ void sentence(middleCode midCode,int index) {
 	}
 	else if (midCode.Type == "PARA") {
 		set<string> crossSet = crossBlockTable[funcNow];
-		loadStoreType = "memory";
+		/*loadStoreType = "memory"; 
 		string regs = globalManager.getVarReg(midCode.op1, funcNow);
-		loadStoreType = "";
-
-		if (regs != "NOFOUND") {
+		loadStoreType = "";*/
+		/*if (regs != "NOFOUND") {
 			loadStoreType = "memory";
 			string reg = globalManager.getVarReg(midCode.op1, funcNow);
 			string warn = loadVarToReg(midCode.op1, "0", reg);
 			loadStoreType = "";
 		}
-
-		else if (crossSet.find(midCode.op1) == crossSet.end()) {
-			string reg = "$t0";
-			string warn = loadVarToReg(midCode.op1, "0", reg);
-			assert(reg != "$t0");
-			loadStoreType = "memory";
-			warn = loadVarToReg(midCode.op1, "0", reg);
-			loadStoreType = "";
+		else*/ 
+		if (crossSet.find(midCode.op1) == crossSet.end()) {
+			if (atindex + lowRega <= highRega) {
+				atindex++;
+			}
+			else {
+				string reg = "$t0";
+				string warn = loadVarToReg(midCode.op1, "0", reg);
+				assert(reg != "$t0");
+				loadStoreType = "memory";
+				warn = loadVarToReg(midCode.op1, "0", reg);
+				loadStoreType = "";
+			}
 		}
 	}
 }
@@ -969,15 +1055,29 @@ bool cmp(const pair<string, int>& a, const pair<string, int>& b) {
 void globalRegManager::init(map<string, map<string, int>> countMap) {
 	cout << "construct globalManager begin" << endl;
 	
-
+	
 	for (map<string, map<string, int>>::iterator it = countMap.begin(); it != countMap.end(); it++) {
 		regPool.clear();
+		vector<string> randomPool;
 		for (int i = lowRegs; i <= highRegs; i++) {
-			regPool.push_back("$s" + to_string(i));
+			randomPool.push_back("$s" + to_string(i));
 		}
-		for (int i = lowRega; i <= highRega; i++) {
-			regPool.push_back("$a" + to_string(i));
+		/*for (int i = lowRega; i <= highRega; i++) {
+			randomPool.push_back("$a" + to_string(i));
+		}*/
+		while (randomPool.size()) {
+			int ran = rand() % randomPool.size();
+			string reg = randomPool[ran];
+			for (vector<string>::iterator it = randomPool.begin(); it != randomPool.end(); it++) {
+				if (*it == reg) {
+					it = randomPool.erase(it);
+					break;
+				}
+			}
+			regPool.push_back(reg);
 		}
+
+		
 		string funcName = it->first;
 		
 		cout << "##################################\n";
@@ -1023,13 +1123,25 @@ bool globalRegManager::isGlobalVar(string name, string funcNow) {
 	return false;
 }
 
+string globalRegManager::dispatchaReg(string name) {
+	string reg;
+	if (aIndex + lowRega <= highRega) {
+		reg = "$a" + to_string(aIndex + lowRega);
+		aIndex++;
+	}
+	else {
+		reg = "NOFREE";
+	}
+
+	return reg;
+}
 void globalRegManager::setIntensity(int intensity) {
 	intensityNow = intensity;
 }
 
 int globalRegManager::useGlobalVarMark(string name, string funcNow) {
 	string reg = fun2Name2Reg[funcNow][name];
-	fun2Name2Remain[funcNow][name] -= intensityNow;
+	//fun2Name2Remain[funcNow][name] -= intensityNow;
 	cout << name + ":" + to_string(fun2Name2Remain[funcNow][name])<<endl;
 	if (fun2Name2Remain[funcNow][name] == 0) {
 		fun2Name2Reg[funcNow].erase(fun2Name2Reg[funcNow].find(name));
@@ -1049,6 +1161,7 @@ int globalRegManager::useGlobalVarMark(string name, string funcNow) {
 
 
 void globalRegManager::jalFunc(string funcNow, string jalFunc) {
+	aIndex = 0;
 	vector<string> clashNameList;
 	if (recursiveFuncSet.find(jalFunc) == recursiveFuncSet.end()) {
 		cout << "push stack local" << endl;

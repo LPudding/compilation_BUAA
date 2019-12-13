@@ -1,0 +1,36 @@
+    CONST    a0    INT    -5
+    VAR    test    INT    0
+    VAR    arr    INT    10
+    MAINHEAD            
+    VAR    a    INT    0
+    VAR    c    INT    0
+    VAR    arr    INT    11
+    VAR    expr    INT    0
+    VAR    cc    CHAR    0
+    ADD    a    1    0
+    ADD    c    2    0
+    ADD    INT0    a    c
+    PRINT    INT0    1    INT
+    STORE_ARR    10    arr    3
+    PRINT    Hello \\n World    0    1
+    ADD    test    123    0
+    ADD    expr    444    0
+    LOAD_ARR    INT1    arr    3
+    MUL    INT2    test    INT1
+    ADD    test    INT2    a0
+    STORE_ARR    test    arr    4
+    PRINT    hello    0    0
+    LOAD_ARR    INT4    arr    4
+    PRINT    INT4    1    1
+    PRINT    a0    1    INT
+    PRINT    1    1    INT
+    ADD    INT5    a    'd'
+    SUB    INT6    INT5    'c'
+    ADD    INT7    INT6    20
+    MUL    INT8    2    expr
+    ADD    INT9    INT7    INT8
+    DIV    INT10    expr    4
+    SUB    INT11    INT9    INT10
+    LOAD_ARR    INT12    arr    4
+    ADD    expr    INT11    INT12
+    EXIT            

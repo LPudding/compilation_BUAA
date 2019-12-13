@@ -1,3 +1,3 @@
 ﻿  translate.cpp
-D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(666,16): warning C4018: “<”: 有符号/无符号不匹配
+D:\senior3-1\compile\code\MiddleGen\GenMiddle\translate.cpp(698,16): warning C4018: “<”: 有符号/无符号不匹配
   GenMiddle.vcxproj -> D:\senior3-1\compile\code\MiddleGen\GenMiddle\Debug\GenMiddle.exe

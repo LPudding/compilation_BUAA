@@ -1,6 +1,22 @@
-    MAINHEAD            
-    CONDITION    !=    1    0
-    BZ    not_If0    !=    
-    PRINT    1    0    1
+    FUNC    factorial    INT    
+    PARA    n    INT    
+    FUNCHEAD    factorial        
+    CONDITION    <=    n    1
+    BZ    not_If0    <=    
+    FUNCRET    1        
     LABEL    not_If0        
+    SUB    INT0    n    1
+    PUSH_PARA    INT0    factorial    65536
+    CALL_FUNC    factorial        
+    ADD    INT1    RET    0
+    MUL    INT2    n    INT1
+    FUNCRET    INT2        
+    FUNCTAIL            
+    MAINHEAD            
+    VAR    n    INT    0
+    PUSH_PARA    3    factorial    65536
+    CALL_FUNC    factorial        
+    ADD    n    RET    0
+    PRINT    3 !=     0    0
+    PRINT    n    1    1
     EXIT            

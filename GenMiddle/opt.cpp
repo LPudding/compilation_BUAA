@@ -271,42 +271,31 @@ void varTypeAnalyse() {
 			constTable.push_back(table[i]);
 		}
 		bool arrOp = false;
-		bool op1 = false, op2 = false, op3 = false, ops1 = false, ops2 = false, ops3 = false;
+		bool op1 = false, op2 = false, op3 = false;
 		if (table[i].Type == "ADD" || table[i].Type == "SUB" || table[i].Type == "MUL" || table[i].Type == "DIV") {
 			op1 = true;
 			op2 = true;
 			op3 = true;
-			ops2 = true;
-			ops3 = true;
 		}
 		if (table[i].Type == "LOAD_ARR" || table[i].Type == "STORE_ARR") {
 			arrOp = true;
 			op1 = true;
 			op3 = true;
-			ops3 = true;
-			if (table[i].Type == "STORE_ARR") {
-				ops1 = true;
-			}
 		}
 		if (table[i].Type == "PUSH_PARA" || table[i].Type == "SCAN") {//avoid using printf prevent str's influence 
 			op1 = true;
-			ops1 = true;
 		}
 		if (table[i].Type == "PRINT" && table[i].op2 == "1") {
 			if (isVarStr(table[i].op1)) {
 				op1 = true;
-				ops1 = true;
 			}
 		}
 		if (table[i].Type == "CONDITION") {
 			op2 = true;
 			op3 = true;
-			ops2 = true;
-			ops3 = true;
 		}
 		if (table[i].Type == "FUNCRET") {
 			op1 = true;
-			ops1 = true;
 		}
 		if (op1 && isVarStr(table[i].op1)) {
 			varSet.insert(table[i].op1);
@@ -319,42 +308,7 @@ void varTypeAnalyse() {
 		}
 		//cout << to_string(i) +":"+ to_string(op1) + to_string(op2) + to_string(op3) << endl;
 		string nowFuncName = block[getIrBlockNo(table[i].no)].funcName;
-		if (ops1 && constSpread) {
-			for (int j = constTable.size() - 1; j >= 0; j--) {
-				string definedName = block[getIrBlockNo(constTable[j].no)].funcName;
-				if (constTable[j].op1 == table[i].op1) {
-					if (definedName == nowFuncName || definedName == "GLOBAL") {
-						//cout << definedName + " " + nowFuncName << endl;
-						middleTable.table[i].op1 = constTable[j].op3;
-						break;
-					}
-				}
-			}
-		}
-		if (ops2 && constSpread) {
-			for (int j = constTable.size() - 1; j >= 0; j--) {
-				string definedName = block[getIrBlockNo(constTable[j].no)].funcName;
-				//cout << definedName + " " + nowFuncName << endl;
-				if (constTable[j].op1 == table[i].op2) {
-					if (definedName == nowFuncName || definedName == "GLOBAL") {
-						middleTable.table[i].op2 = constTable[j].op3;
-						break;
-					}
-				}
-			}
-		}
-		if (ops3 && constSpread) {
-			for (int j = constTable.size() - 1; j >= 0; j--) {
-				string definedName = block[getIrBlockNo(constTable[j].no)].funcName;
-				//cout << definedName + " " + nowFuncName << endl;
-				if (constTable[j].op1 == table[i].op3) {
-					if (definedName == nowFuncName || definedName == "GLOBAL") {
-						middleTable.table[i].op3 = constTable[j].op3;
-						break;
-					}
-				}
-			}
-		}
+		
 		if (arrOp) {
 			arraySet.insert(table[i].op2);
 		}
@@ -571,14 +525,21 @@ void calVarUseDefSet() {
 			varCount.erase(it1);
 		}
 		//delete const and char
+		set<string> useList;
 		for (set<string>::iterator it = useSet.begin(); it != useSet.end(); ) {
 			//cout << *it+" ";
-			if (!isVarStr(*it)) {
+			if (regex_match(*it, regex("-[a-zA-Z_][a-zA-Z0-9]*"))) {
+				useList.insert((*it).substr(1));
 				it = useSet.erase(it);
 			}
+			else if (!isVarStr(*it)) {
+				it = useSet.erase(it);
+			} 
 			else {
 				it++;
 			}
+		}for (set<string>::iterator it = useList.begin(); it != useList.end(); it++) {
+			useSet.insert(*it);
 		}
 		//cout << endl;
 		/*cout << "blockDef:";
