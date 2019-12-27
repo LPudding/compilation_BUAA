@@ -1,0 +1,40 @@
+int funcA(int a, int b) {
+    const int _a = 0;
+    const char _B = 'a';
+    return (1);
+}
+
+void main() {
+    const int _b = 1;
+    int _c;
+    char _d;
+    int _e[2];
+    _e[1] = 10;
+    _d = 'd';
+    _c = -1*2 + 1*2;
+    printf("first _c is: ",_c);
+    _c = +1*_b + _e[1]*1 + (1*2+8/4); 
+    printf("second _c is: ",_c);
+
+    if (_b >= 1) {
+        printf("a");
+    }
+
+    if (_b == 1) {
+        printf("b");
+    }
+
+    if (_b <= 1) {
+        printf("c");
+    }
+
+    if (_b != 1) {
+        printf("d");
+    }
+
+    printf("hello compiling\n");
+    printf(1+1);
+    printf(funcA(1,1));
+
+    return;
+}

@@ -1,0 +1,966 @@
+.data
+_string_0 : .asciiz "default"
+_string_1 : .asciiz "This is A String ! #$%&'()*+,-./0123456789:<^_~|`"
+_string_2 : .asciiz "last one"
+_string_ : .asciiz "\n"
+_var_0 : .word 10
+_var_1 : .word 11
+_var_2 : .byte 'x'
+_var_3 : .byte 0
+_var_4 : .word 0
+_var_5 : .word 0
+_var_6 : .word 0
+_var_7 : .word 0
+_var_8 : .word 0
+_var_9 : .word 0
+_var_10 : .word 0
+_var_11 : .word 0
+_var_12 : .word 0
+_var_13 : .word 0
+_var_14 : .word 0
+_var_15 : .word 0
+_var_16 : .word 0
+_array_0 : .word 0:10
+_array_1 : .word 0:100
+.text
+j main
+#midCode CONST con_Int INT 10
+    li $t0 10
+    sw $t0 -0($sp)
+#midCode CONST con_int1 INT 11
+    li $t0 11
+    sw $t0 -4($sp)
+#midCode CONST con_Char CHAR 'x'
+    li $t0 'x'
+    sw $t0 -8($sp)
+#midCode VAR b CHAR 0
+#midCode VAR char_array CHAR 10
+#midCode VAR int_array INT 100
+#midCode VAR _ INT 0
+#midCode VAR _a INT 0
+#midCode VAR _b INT 0
+#midCode VAR _z INT 0
+#midCode VAR _c INT 0
+#midCode VAR _a1__1__ INT 0
+#midCode VAR _1 INT 0
+#midCode VAR a1_22 INT 0
+#midCode VAR A_1 INT 0
+#midCode VAR Z_11 INT 0
+#midCode VAR Z11 INT 0
+#midCode VAR z0 INT 0
+#midCode VAR z_0 INT 0
+#midCode FUNC fib INT 
+fib:
+    sw $ra 0($sp)
+#midCode PARA x INT 
+#midCode FUNCHEAD fib  
+#midCode CONDITION == x 1
+# x == 1
+#midCode BZ not_If0 == 
+    li $t1 1
+    bne $s0 $t1 not_If0
+#midCode FUNCRET 1  
+    li $v0 1
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End1  
+    j if_End1
+#midCode LABEL not_If0  
+not_If0:
+#midCode CONDITION == x 0
+# x == 0
+#midCode BZ not_If2 == 
+    bne $s0 $0 not_If2
+#midCode FUNCRET 0  
+    add $v0 $0 $0
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End3  
+    j if_End3
+#midCode LABEL not_If2  
+not_If2:
+#midCode SUB INT0 x 1
+# SUB x 1->INT0
+    addi $t3 $s0 -1
+#midCode PUSH_PARA INT0 fib 65536
+#midCode CALL_FUNC fib  
+# call function fib
+    sw $s0 -4($sp)
+# para_name:INT0
+    move $s0 $t3
+    addi $sp $sp -12
+    jal fib
+    addi $sp $sp 12
+    lw $s0 -4($sp)
+#midCode ADD INT1 RET 0
+# ADD RET 0->INT1
+    addi $t0 $v0 0
+    sw $t0 -12($sp)
+#midCode SUB INT2 x 2
+# SUB x 2->INT2
+    addi $t3 $s0 -2
+#midCode PUSH_PARA INT2 fib 65536
+#midCode CALL_FUNC fib  
+# call function fib
+    sw $s0 -4($sp)
+# para_name:INT2
+    move $s0 $t3
+    addi $sp $sp -20
+    jal fib
+    addi $sp $sp 20
+    lw $s0 -4($sp)
+#midCode ADD INT3 RET 0
+# ADD RET 0->INT3
+    addi $t3 $v0 0
+#midCode ADD INT4 INT1 INT3
+# ADD INT1 INT3->INT4
+    lw $t0 -12($sp)
+    add $t4 $t0 $t3
+#midCode FUNCRET INT4  
+    move $v0 $t4
+    lw $ra 0($sp)
+    jr $ra
+#midCode LABEL if_End3  
+if_End3:
+#midCode LABEL if_End1  
+if_End1:
+#midCode FUNCTAIL   
+#midCode FUNC test_array VOID 
+test_array:
+    sw $ra 0($sp)
+#midCode FUNCHEAD test_array  
+#midCode VAR a INT 100
+#midCode VAR b INT 100
+#midCode VAR i INT 0
+#midCode ADD i 0 0
+# ADD 0 0->i
+    addi $s0 $0 0
+#midCode LABEL do_while_Begin4  
+do_while_Begin4:
+#midCode STORE_ARR i a i
+    sll $t1 $s0 2
+    sub $t1 $sp $t1
+    sw $s0 -4($t1)
+#midCode STORE_ARR i b i
+    sll $t1 $s0 2
+    sub $t1 $sp $t1
+    sw $s0 -408($t1)
+#midCode ADD i i 1
+# ADD i 1->i
+    addi $s0 $s0 1
+#midCode CONDITION < i 100
+# i < 100
+#midCode BNZ do_while_Begin4 < 
+    li $t1 100
+    blt $s0 $t1 do_while_Begin4
+#midCode LOAD_ARR INT6 a 16
+    lw $t2 -68($sp)
+    move $t3 $t2
+#midCode LOAD_ARR INT7 b INT6
+    sll $t1 $t3 2
+    sub $t1 $sp $t1
+    lw $t2 -408($t1)
+    move $t3 $t2
+#midCode LOAD_ARR INT8 a INT7
+    sll $t1 $t3 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t3 $t2
+#midCode LOAD_ARR INT9 a INT8
+    sll $t1 $t3 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t3 $t2
+#midCode LOAD_ARR INT10 b INT9
+    sll $t1 $t3 2
+    sub $t1 $sp $t1
+    lw $t2 -408($t1)
+    move $t3 $t2
+#midCode LOAD_ARR INT11 a INT10
+    sll $t1 $t3 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t3 $t2
+#midCode LOAD_ARR INT12 a 11
+    lw $t2 -48($sp)
+    move $t4 $t2
+#midCode LOAD_ARR INT13 a INT12
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t4 $t2
+#midCode LOAD_ARR INT14 b INT13
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -408($t1)
+    move $t4 $t2
+#midCode LOAD_ARR INT15 a INT14
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t4 $t2
+#midCode LOAD_ARR INT16 b INT15
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -408($t1)
+    move $t4 $t2
+#midCode LOAD_ARR INT17 a INT16
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t4 $t2
+#midCode LOAD_ARR INT18 b INT17
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -408($t1)
+    move $t4 $t2
+#midCode LOAD_ARR INT19 a INT18
+    sll $t1 $t4 2
+    sub $t1 $sp $t1
+    lw $t2 -4($t1)
+    move $t4 $t2
+#midCode MUL i INT11 INT19
+# MUL INT11 INT19->i
+    mul $s0 $t3 $t4
+#midCode PRINT i 1 INT
+    move $a0 $s0
+    li $v0 1
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode FUNCRET   
+    lw $ra 0($sp)
+    jr $ra
+#midCode FUNCRET   
+    lw $ra 0($sp)
+    jr $ra
+#midCode FUNCTAIL   
+#midCode FUNC cal INT 
+cal:
+    sw $ra 0($sp)
+#midCode FUNCHEAD cal  
+#midCode VAR result INT 0
+#midCode VAR h1 INT 0
+#midCode VAR h2 INT 0
+#midCode VAR h3 INT 0
+#midCode VAR h4 INT 0
+#midCode VAR h5 INT 0
+#midCode VAR i INT 0
+#midCode VAR a INT 5
+#midCode ADD h1 0 0
+# ADD 0 0->h1
+    addi $t3 $0 0
+#midCode ADD h2 0 0
+# ADD 0 0->h2
+    addi $t4 $0 0
+#midCode ADD h3 0 0
+# ADD 0 0->h3
+    addi $t5 $0 0
+#midCode ADD h4 0 0
+# ADD 0 0->h4
+    addi $t6 $0 0
+#midCode ADD h5 0 0
+# ADD 0 0->h5
+    addi $t7 $0 0
+#midCode ADD i 0 0
+# ADD 0 0->i
+    addi $t8 $0 0
+#midCode ADD result 0 0
+# ADD 0 0->result
+    addi $t9 $0 0
+#midCode STORE_ARR 0 a 0
+    sw $0 -32($sp)
+#midCode STORE_ARR 1 a 1
+    li $t0 1
+    sw $t0 -36($sp)
+#midCode STORE_ARR 2 a 2
+    li $t0 2
+    sw $t0 -40($sp)
+#midCode STORE_ARR 3 a 3
+    li $t0 3
+    sw $t0 -44($sp)
+#midCode STORE_ARR 4 a 4
+    li $t0 4
+    sw $t0 -48($sp)
+#midCode MUL h1 h2 h3
+# MUL h2 h3->h1
+    mul $t3 $t4 $t5
+#midCode LOAD_ARR INT22 a 4
+    lw $t2 -48($sp)
+    move $t4 $t2
+#midCode LOAD_ARR INT23 a 2
+    lw $t2 -40($sp)
+    sw $t6 -20($sp)
+    move $t6 $t2
+#midCode DIV h1 INT22 INT23
+# DIV INT22 INT23->h1
+    div $t4 $t6
+    mflo $t3
+#midCode MUL INT25 h1 h3
+# MUL h1 h3->INT25
+    mul $t0 $t3 $t5
+    sw $t0 -64($sp)
+#midCode ADD INT26 -INT25 h1
+# ADD -INT25 h1->INT26
+    lw $t1 -64($sp)
+    sub $t4 $t3 $t1
+#midCode LOAD_ARR INT27 a 4
+    lw $t2 -48($sp)
+    move $t3 $t2
+#midCode LOAD_ARR INT28 a 2
+    lw $t2 -40($sp)
+    move $t5 $t2
+#midCode ADD INT29 INT27 INT28
+# ADD INT27 INT28->INT29
+    sw $t7 -24($sp)
+    add $t7 $t3 $t5
+#midCode SUB INT30 INT26 INT29
+# SUB INT26 INT29->INT30
+    sub $t0 $t4 $t7
+    sw $t0 -84($sp)
+#midCode PUSH_PARA 10 fib 65536
+#midCode CALL_FUNC fib  
+# call function fib
+# para_name:10
+    li $s0 10
+    addi $sp $sp -88
+    jal fib
+    addi $sp $sp 88
+#midCode ADD INT31 RET 0
+# ADD RET 0->INT31
+    addi $t3 $v0 0
+#midCode ADD INT32 INT30 INT31
+# ADD INT30 INT31->INT32
+    lw $t0 -84($sp)
+    add $t4 $t0 $t3
+#midCode SUB h2 INT32 -4
+# SUB INT32 -4->h2
+    addi $t3 $t4 4
+#midCode FUNCRET h2  
+    move $v0 $t3
+    lw $ra 0($sp)
+    jr $ra
+#midCode FUNCTAIL   
+#midCode FUNC test_case INT 
+test_case:
+    sw $ra 0($sp)
+#midCode PARA c INT 
+#midCode PARA _c CHAR 
+#midCode PARA d INT 
+#midCode FUNCHEAD test_case  
+#midCode VAR flag INT 0
+#midCode ADD flag -1 0
+# ADD -1 0->flag
+    addi $s0 $0 -1
+#midCode CONDITION == c 1
+# c == 1
+#midCode BZ not_If5 == 
+    lw $t0 -4($sp)
+    li $t1 1
+    bne $t0 $t1 not_If5
+#midCode ADD flag 1 0
+# ADD 1 0->flag
+    addi $s0 $0 1
+#midCode GOTO if_End6  
+    j if_End6
+#midCode LABEL not_If5  
+not_If5:
+#midCode CONDITION == c 15
+# c == 15
+#midCode BZ not_If7 == 
+    lw $t0 -4($sp)
+    li $t1 15
+    bne $t0 $t1 not_If7
+#midCode CONDITION == d 1
+# d == 1
+#midCode BZ not_If8 == 
+    lw $t0 -12($sp)
+    li $t1 1
+    bne $t0 $t1 not_If8
+#midCode ADD flag -15 0
+# ADD -15 0->flag
+    addi $s0 $0 -15
+#midCode GOTO if_End9  
+    j if_End9
+#midCode LABEL not_If8  
+not_If8:
+#midCode ADD flag -15 0
+# ADD -15 0->flag
+    addi $s0 $0 -15
+#midCode LABEL if_End9  
+if_End9:
+#midCode GOTO if_End10  
+    j if_End10
+#midCode LABEL not_If7  
+not_If7:
+#midCode CONDITION == _c 'a'
+# _c == 'a'
+#midCode BZ not_If11 == 
+    lw $t0 -8($sp)
+    li $t1 'a'
+    bne $t0 $t1 not_If11
+#midCode ADD flag 97 0
+# ADD 97 0->flag
+    addi $s0 $0 97
+#midCode GOTO if_End12  
+    j if_End12
+#midCode LABEL not_If11  
+not_If11:
+#midCode CONDITION == _c 'b'
+# _c == 'b'
+#midCode BZ not_If13 == 
+    lw $t0 -8($sp)
+    li $t1 'b'
+    bne $t0 $t1 not_If13
+#midCode ADD flag 98 0
+# ADD 98 0->flag
+    addi $s0 $0 98
+#midCode GOTO if_End14  
+    j if_End14
+#midCode LABEL not_If13  
+not_If13:
+#midCode ADD flag 0 0
+# ADD 0 0->flag
+    addi $s0 $0 0
+#midCode LABEL if_End14  
+if_End14:
+#midCode LABEL if_End12  
+if_End12:
+#midCode LABEL if_End10  
+if_End10:
+#midCode LABEL if_End6  
+if_End6:
+#midCode FUNCRET flag  
+    move $v0 $s0
+    lw $ra 0($sp)
+    jr $ra
+#midCode FUNCTAIL   
+#midCode FUNC ret_char CHAR 
+#midCode PARA x CHAR 
+#midCode FUNCHEAD ret_char  
+#midCode VAR p CHAR 0
+#midCode ADD p x 0
+# ADD x 0->p
+    addi $t3 $a1 0
+#midCode FUNCRET p  
+    move $v0 $t3
+#midCode FUNCTAIL   
+#midCode FUNC test_if INT 
+test_if:
+    sw $ra 0($sp)
+#midCode PARA a INT 
+#midCode PARA b INT 
+#midCode PARA mod INT 
+#midCode FUNCHEAD test_if  
+#midCode CONDITION == mod 1
+# mod == 1
+#midCode BZ not_If15 == 
+    li $t1 1
+    bne $a1 $t1 not_If15
+#midCode CONDITION < a b
+# a < b
+#midCode BZ not_If16 < 
+    ble $s1 $s0 not_If16
+#midCode FUNCRET 1  
+    li $v0 1
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End17  
+    j if_End17
+#midCode LABEL not_If16  
+not_If16:
+#midCode LABEL if_End17  
+if_End17:
+#midCode CONDITION <= a b
+# a <= b
+#midCode BZ not_If18 <= 
+    blt $s1 $s0 not_If18
+#midCode FUNCRET 2  
+    li $v0 2
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End19  
+    j if_End19
+#midCode LABEL not_If18  
+not_If18:
+#midCode LABEL if_End19  
+if_End19:
+#midCode CONDITION == a b
+# a == b
+#midCode BZ not_If20 == 
+    bne $s0 $s1 not_If20
+#midCode FUNCRET 3  
+    li $v0 3
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End21  
+    j if_End21
+#midCode LABEL not_If20  
+not_If20:
+#midCode LABEL if_End21  
+if_End21:
+#midCode CONDITION > a b
+# a > b
+#midCode BZ not_If22 > 
+    ble $s0 $s1 not_If22
+#midCode FUNCRET 4  
+    li $v0 4
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End23  
+    j if_End23
+#midCode LABEL not_If22  
+not_If22:
+#midCode LABEL if_End23  
+if_End23:
+#midCode CONDITION >= a b
+# a >= b
+#midCode BZ not_If24 >= 
+    blt $s0 $s1 not_If24
+#midCode FUNCRET 5  
+    li $v0 5
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End25  
+    j if_End25
+#midCode LABEL not_If24  
+not_If24:
+#midCode FUNCRET 0  
+    add $v0 $0 $0
+    lw $ra 0($sp)
+    jr $ra
+#midCode LABEL if_End25  
+if_End25:
+#midCode GOTO if_End26  
+    j if_End26
+#midCode LABEL not_If15  
+not_If15:
+#midCode CONDITION != a b
+# a != b
+#midCode BZ not_If27 != 
+    beq $s0 $s1 not_If27
+#midCode FUNCRET 6  
+    li $v0 6
+    lw $ra 0($sp)
+    jr $ra
+#midCode GOTO if_End28  
+    j if_End28
+#midCode LABEL not_If27  
+not_If27:
+#midCode FUNCRET 0  
+    add $v0 $0 $0
+    lw $ra 0($sp)
+    jr $ra
+#midCode LABEL if_End28  
+if_End28:
+#midCode LABEL if_End26  
+if_End26:
+#midCode FUNCTAIL   
+#midCode FUNC test_can INT 
+#midCode PARA a INT 
+#midCode PARA b INT 
+#midCode PARA c INT 
+#midCode PARA d INT 
+    lw $t3 -16($sp)
+#midCode PARA e INT 
+    lw $t4 -20($sp)
+#midCode FUNCHEAD test_can  
+#midCode VAR ha INT 0
+#midCode ADD INT34 a b
+# ADD a b->INT34
+    lw $t0 -4($sp)
+    lw $t1 -8($sp)
+    add $t5 $t0 $t1
+#midCode ADD INT35 INT34 c
+# ADD INT34 c->INT35
+    add $t6 $t5 $a3
+#midCode ADD INT36 INT35 d
+# ADD INT35 d->INT36
+    add $t5 $t6 $t3
+#midCode ADD ha INT36 e
+# ADD INT36 e->ha
+    add $t3 $t5 $t4
+#midCode FUNCRET ha  
+    move $v0 $t3
+#midCode FUNCTAIL   
+#midCode FUNC test_tao VOID 
+test_tao:
+    sw $ra 0($sp)
+#midCode PARA a INT 
+#midCode PARA b CHAR 
+#midCode FUNCHEAD test_tao  
+#midCode CONDITION != a 0
+# a != 0
+#midCode BZ not_If29 != 
+    lw $t0 -4($sp)
+    beq $t0 $0 not_If29
+#midCode CONDITION == b 'x'
+# b == 'x'
+#midCode BZ not_If30 == 
+    lw $t0 -8($sp)
+    li $t1 'x'
+    bne $t0 $t1 not_If30
+#midCode PRINT 'x' 1 INT
+    li $a0 'x'
+    li $v0 11
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode GOTO if_End31  
+    j if_End31
+#midCode LABEL not_If30  
+not_If30:
+#midCode CONDITION == b 'y'
+# b == 'y'
+#midCode BZ not_If32 == 
+    lw $t0 -8($sp)
+    li $t1 'y'
+    bne $t0 $t1 not_If32
+#midCode PRINT 'y' 1 INT
+    li $a0 'y'
+    li $v0 11
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode GOTO if_End33  
+    j if_End33
+#midCode LABEL not_If32  
+not_If32:
+#midCode PRINT default 0 1
+    li $v0 4
+    la $a0 _string_0
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode LABEL if_End33  
+if_End33:
+#midCode LABEL if_End31  
+if_End31:
+#midCode GOTO if_End34  
+    j if_End34
+#midCode LABEL not_If29  
+not_If29:
+#midCode FUNCRET   
+    lw $ra 0($sp)
+    jr $ra
+#midCode LABEL if_End34  
+if_End34:
+#midCode FUNCRET   
+    lw $ra 0($sp)
+    jr $ra
+#midCode FUNCTAIL   
+#midCode MAINHEAD   
+main:
+#midCode CONST c1 INT 1
+    li $t0 1
+    sw $t0 -0($sp)
+#midCode CONST c_c CHAR 'z'
+    li $t0 'z'
+    sw $t0 -4($sp)
+#midCode VAR hahahaha CHAR 0
+#midCode VAR re INT 0
+#midCode VAR i INT 0
+#midCode VAR a INT 100
+#midCode VAR j INT 0
+#midCode VAR result INT 0
+#midCode VAR k1 INT 0
+#midCode VAR k2 INT 0
+#midCode VAR read_in CHAR 0
+#midCode VAR b CHAR 100
+#midCode ADD i 0 0
+# ADD 0 0->i
+    addi $s0 $0 0
+#midCode ADD j 0 0
+# ADD 0 0->j
+    addi $s1 $0 0
+#midCode STORE_ARR 2 a 1
+    li $t0 2
+    sw $t0 -24($sp)
+#midCode LABEL do_while_Begin35  
+do_while_Begin35:
+#midCode STORE_ARR i int_array i
+    la $t1 _array_1
+    sll $t2 $s0 2
+    add $t1 $t1 $t2
+    sw $s0 0($t1)
+#midCode ADD i i 1
+# ADD i 1->i
+    addi $s0 $s0 1
+#midCode CONDITION < i 10
+# i < 10
+#midCode BNZ do_while_Begin35 < 
+    li $t1 10
+    blt $s0 $t1 do_while_Begin35
+#midCode CALL_FUNC test_array  
+# call function test_array
+    sw $s0 -16($sp)
+    addi $sp $sp -848
+    jal test_array
+    addi $sp $sp 848
+    lw $s0 -16($sp)
+#midCode CALL_FUNC cal  
+# call function cal
+    sw $s0 -16($sp)
+    sw $s1 -424($sp)
+    sw $s2 -440($sp)
+    addi $sp $sp -848
+    jal cal
+    addi $sp $sp 848
+    lw $s0 -16($sp)
+    lw $s1 -424($sp)
+    lw $s2 -440($sp)
+#midCode ADD i RET 0
+# ADD RET 0->i
+    addi $s0 $v0 0
+#midCode PRINT i 1 INT
+    move $a0 $s0
+    li $v0 1
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode SCAN read_in  
+    li $v0 12
+    syscall
+    move $s2 $v0
+#midCode SCAN j  
+    li $v0 5
+    syscall
+    move $s1 $v0
+#midCode PUSH_PARA j test_case 196610
+#midCode PUSH_PARA read_in test_case 196609
+#midCode PUSH_PARA 1 test_case 196608
+#midCode CALL_FUNC test_case  
+# call function test_case
+    sw $s0 -16($sp)
+# para_name:j
+    sw $s1 -852($sp)
+# para_name:read_in
+    sw $s2 -856($sp)
+# para_name:1
+    li $t1 1
+    sw $t1 -860($sp)
+    addi $sp $sp -848
+    jal test_case
+    addi $sp $sp 848
+    lw $s0 -16($sp)
+#midCode ADD INT40 RET 0
+# ADD RET 0->INT40
+    addi $t3 $v0 0
+#midCode PRINT INT40 1 INT
+    move $a0 $t3
+    li $v0 1
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode STORE_ARR read_in b 1
+    sw $s2 -448($sp)
+#midCode LOAD_ARR CHAR0 b 1
+    lw $t2 -448($sp)
+    move $t3 $t2
+#midCode PUSH_PARA CHAR0 ret_char 65536
+#midCode CALL_FUNC ret_char  
+# call function ret_char
+# para_name:CHAR0
+    move $a1 $t3
+    addi $sp $sp -856
+    addi $t3 $a1 0
+    move $v0 $t3
+    addi $sp $sp 856
+#midCode ADD hahahaha RET 0
+# ADD RET 0->hahahaha
+    addi $t3 $v0 0
+#midCode PRINT hahahaha 1 INT
+    move $a0 $t3
+    li $v0 11
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode SCAN j  
+    li $v0 5
+    syscall
+    move $s1 $v0
+#midCode PUSH_PARA 1 test_if 196610
+#midCode PUSH_PARA j test_if 196609
+#midCode PUSH_PARA 1 test_if 196608
+#midCode CALL_FUNC test_if  
+# call function test_if
+    sw $s0 -16($sp)
+    sw $s1 -424($sp)
+# para_name:1
+    li $s0 1
+# para_name:j
+# para_name:1
+    li $a1 1
+    addi $sp $sp -856
+    jal test_if
+    addi $sp $sp 856
+    lw $s0 -16($sp)
+    lw $s1 -424($sp)
+#midCode ADD k1 RET 0
+# ADD RET 0->k1
+    addi $t0 $v0 0
+    sw $t0 -432($sp)
+#midCode PUSH_PARA 1 test_if 196610
+#midCode PUSH_PARA j test_if 196609
+#midCode PUSH_PARA 0 test_if 196608
+#midCode CALL_FUNC test_if  
+# call function test_if
+    sw $s0 -16($sp)
+    sw $s1 -424($sp)
+# para_name:1
+    li $s0 1
+# para_name:j
+# para_name:0
+    move $a1 $0
+    addi $sp $sp -856
+    jal test_if
+    addi $sp $sp 856
+    lw $s0 -16($sp)
+    lw $s1 -424($sp)
+#midCode ADD k2 RET 0
+# ADD RET 0->k2
+    addi $t3 $v0 0
+#midCode ADD INT43 k1 k2
+# ADD k1 k2->INT43
+    lw $t0 -432($sp)
+    add $t4 $t0 $t3
+#midCode PRINT INT43 1 INT
+    move $a0 $t4
+    li $v0 1
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PRINT This is A String ! #$%&'()*+,-./0123456789:<^_~|` 0 1
+    li $v0 4
+    la $a0 _string_1
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode SCAN j  
+    li $v0 5
+    syscall
+    move $s1 $v0
+#midCode SCAN read_in  
+    li $v0 12
+    syscall
+    move $s2 $v0
+#midCode PUSH_PARA j test_tao 131073
+#midCode PUSH_PARA read_in test_tao 131072
+#midCode CALL_FUNC test_tao  
+# call function test_tao
+# para_name:j
+    move $a1 $s1
+# para_name:read_in
+    sw $s2 -868($sp)
+    addi $sp $sp -860
+    jal test_tao
+    addi $sp $sp 860
+#midCode PRINT last one 0 1
+    li $v0 4
+    la $a0 _string_2
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode PUSH_PARA 1 test_can 327684
+#midCode PUSH_PARA 2 test_can 327683
+#midCode PUSH_PARA 3 test_can 327682
+#midCode PUSH_PARA 4 test_can 327681
+#midCode PUSH_PARA 5 test_can 327680
+#midCode CALL_FUNC test_can  
+# call function test_can
+# para_name:1
+    li $a1 1
+# para_name:2
+    li $a2 2
+# para_name:3
+    li $a3 3
+# para_name:4
+    li $t1 4
+    sw $t1 -876($sp)
+# para_name:5
+    li $t1 5
+    sw $t1 -880($sp)
+    addi $sp $sp -860
+    lw $t3 -16($sp)
+    lw $t4 -20($sp)
+    lw $t0 -4($sp)
+    lw $t1 -8($sp)
+    add $t5 $t0 $t1
+    add $t6 $t5 $a3
+    add $t5 $t6 $t3
+    add $t3 $t5 $t4
+    move $v0 $t3
+    addi $sp $sp 860
+#midCode ADD INT44 RET 0
+# ADD RET 0->INT44
+    addi $t3 $v0 0
+#midCode PUSH_PARA 1 test_can 327684
+#midCode PUSH_PARA 2 test_can 327683
+#midCode PUSH_PARA 3 test_can 327682
+#midCode PUSH_PARA INT44 test_can 327681
+#midCode PUSH_PARA 4 test_can 327680
+#midCode CALL_FUNC test_can  
+# call function test_can
+# para_name:1
+    li $a1 1
+# para_name:2
+    li $a2 2
+# para_name:3
+    li $a3 3
+# para_name:INT44
+    sw $t3 -880($sp)
+# para_name:4
+    li $t1 4
+    sw $t1 -884($sp)
+    addi $sp $sp -864
+    lw $t3 -16($sp)
+    lw $t4 -20($sp)
+    lw $t0 -4($sp)
+    lw $t1 -8($sp)
+    add $t5 $t0 $t1
+    add $t6 $t5 $a3
+    add $t5 $t6 $t3
+    add $t3 $t5 $t4
+    move $v0 $t3
+    addi $sp $sp 864
+#midCode ADD INT45 RET 0
+# ADD RET 0->INT45
+    addi $t3 $v0 0
+#midCode PRINT INT45 1 INT
+    move $a0 $t3
+    li $v0 1
+    syscall
+    li $v0 4
+    la $a0 _string_
+    syscall
+#midCode EXIT   
+########################### exit:
+    li $v0 10
+    syscall
+#0:c1
+#1:c_c
+#2:hahahaha
+#3:re
+#4:i
+#5:a
+#6:j
+#7:result
+#8:k1
+#9:k2
+#10:read_in
+#11:b
+#12:INT40
+#13:CHAR0
+#14:INT43
+#15:INT44
+#16:INT45

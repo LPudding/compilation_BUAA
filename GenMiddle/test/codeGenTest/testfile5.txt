@@ -1,0 +1,112 @@
+int max(int a,int b)
+{
+    if(a>=b) 
+	    return (a);
+    else 
+	    return (b);
+}
+
+int min(int a,int b)
+{
+    if(a<=b) 
+	    return (a);
+    else 
+	    return (b);
+}
+
+char getchar(){
+    char a;
+	scanf(a);
+    return (a);
+}
+
+void main(){
+	int n,i,j,b,c,ii;
+	int a[10],s[10];
+	char ysf;
+	int ss,x,y,ax1,ay1,ax2,ay2,bx1,by1,bx2,by2;
+	int maxax,minax,maxbx,minbx,maxay,minay,maxby,minby;
+	b=0;
+	c=0;
+	i=0;
+	for(i=0;i<10;i=i+1){
+		for(j=0;j<10;j=j+1){
+			a[i]=i+j;
+			s[j]=i-j;
+		}
+	}
+	scanf(ax1,ay1,ax2,ay2);
+	scanf(bx1,by1,bx2,by2);
+
+	maxax=max(ax1,ax2);
+    printf("max_ax is: ",maxax);
+	minax=min(ax1,ax2);
+    printf("min_ax is:",minax);
+
+	maxbx=max(bx1,bx2);
+    printf("max_bx is:",maxbx);
+	minbx=min(bx1,bx2);
+    printf("min_bx is:",maxbx);
+
+	x=min(maxax,maxbx)-max(minax,minbx);
+    printf("min_x - max_x : ", x);
+
+	maxay=max(ay1,ay2);
+    printf("max_ay is:",maxay);
+	minay=min(ay1,ay2);
+    printf("min_ay is:",minay);
+
+	maxby=max(by1,by2);
+	minby=min(by1,by2);
+	y=min(maxay,maxby)-max(minay,minby);
+    printf(y);
+
+	printf(" !#$%&'()*+,-./:;<=>?@\[\]^_`{}|~_a
+    bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRST
+    UVWXYZ0123456789");
+
+	if(x>0){
+		ss=x*y;
+	}else{
+		ss=0;
+	}
+
+	printf("ss : ",ss);
+	scanf(i,n);
+
+	for(ii=0;1;ii=ii+1){
+		ysf=getchar();
+		if(ysf=='1') {
+		}
+		for(i=0;i<n;i=i+1){ 
+			for(j=0;j<n;j=j+1)
+				scanf(ss); 
+     }
+		if(ysf=='h'){
+			for(i=n;i>0;i=i-1){
+				for(j=0;j<n;j=j+1)
+					a[i]=a[i]+s[j]; 
+			}
+		}
+		if(ysf=='-'){
+			for(i=0;i<n;i=i+1){
+				for(j=0;j<n;j=j+1)
+				a[i]=a[i]-s[j]; 
+			}
+		}
+	}
+	for(i=0;i<n;i=i+1){ 
+		for(j=0;j<n;j=j+1){
+			printf("%5d",a[j]);
+		}
+		printf("\n"); 
+	}
+	i=100*100-99+879/3;
+	do{
+		printf("\n"); 
+		i=i-10;
+	}while(i>=0)
+	while(ss==0){
+		printf("%d",ss);
+	}
+}

@@ -12,7 +12,7 @@ using namespace std;
 class middleCode {
 public:
 	string Type,op1,op2,op3;
-	int no, intensity;
+	int no, intensity,index;
 	middleCode(string aType,string aOp1,string aOp2,string aOp3);
 };
 
@@ -25,7 +25,7 @@ public:
 	const string tempIntName = "INT";
 	const string tempCharName = "CHAR";
 	const string labelName = "label";
-	ofstream midFile;
+	//ofstream midFile;
 
 	middleCodeTable();
 

@@ -1,6 +1,7 @@
 #include "includeH.h"
 FILE* fp, *fl, *fc, * fe;
 char str[100000];
+bool isError = false;
 
 int main() {
 	char c;
@@ -17,9 +18,12 @@ int main() {
 
 	// grama.c
 	project();
-	diffFuncAndExit();
-	optimize();
-	translate();
+	if (!isError) {
+		diffFuncAndExit();
+		optimize();
+		translate();
+
+	}
 	//fseek(fc, -1, SEEK_END);
 	//fputc('\0', fc);
 

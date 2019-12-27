@@ -338,6 +338,19 @@ bool isNumStr(string str, int& val) {
 		val = stoi(str);
 		return true;
 	}
+	if (regex_match(str, regex("[+-]\'[+*0-9_a-zA-Z]\'"))) {
+		if (str[0] == '+') {
+			val = str[2];
+		}
+		else if (str[0] == '-') {
+			val = -str[2];
+
+		}
+		else {
+			val = str[1];
+		}
+		return true;
+	}
 	return false;
 }
 

@@ -1,0 +1,14 @@
+int retArray(){
+    int arr[100];
+    arr[10] = 10;
+    return (arr[10]);
+}
+
+void main(){
+    int a[100];
+    a[1*2+3*4] = 100;
+    if(a[100]){
+        printf("a[100] is :", a[100]);
+    }
+    printf("retArray :: ", retArray());
+}

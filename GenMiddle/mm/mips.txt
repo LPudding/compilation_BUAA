@@ -18,8 +18,16 @@ str_14 : .asciiz " "
 str_15 : .asciiz "The total is "
 str_16 : .asciiz "5 != "
 MAX_NUM : .word 128
+g_val : .word 0 : 1
 .text
 j main
+add_g_val:
+lw $t0,g_val
+add $t2,$t0,$a1
+sw $t2,g_val
+lw $v1,g_val
+jr $ra
+jr $ra
 factorial:
 li $t1,1#33333
 bgt $a1,$t1,else_0
@@ -203,7 +211,7 @@ li $t1,0#2222
 move $s0,$t1
 for_label_2:
 bgt $s0,$s1,end_for_2
-#  wm124= k [i]~~~~~~~~~~~~~~~~~~~~~~~
+#  wm130= k [i]~~~~~~~~~~~~~~~~~~~~~~~
 sll $t1,$s0,2
 addiu $t1,$t1,8
 subu $t1,$sp,$t1
@@ -288,7 +296,7 @@ jal mod
 lw $ra,-4($sp)
 lw $sp,-0($sp)
 move $t3,$v1
-#j [null] = wm151
+#j [null] = wm157
 move $s3,$t3
 move $a1,$s0
 li $a2,10
@@ -299,7 +307,7 @@ jal mod
 lw $ra,-4($sp)
 lw $sp,-0($sp)
 move $t3,$v1
-#a [null] = wm156
+#a [null] = wm162
 move $s4,$t3
 move $a1,$s1
 move $a2,$s3
@@ -351,7 +359,7 @@ lw $s0,-520($sp)#i
 lw $s1,-540($sp)#y
 for_label_4:
 bge $s0,$s1,end_for_4
-#  wm185= k [i]~~~~~~~~~~~~~~~~~~~~~~~
+#  wm191= k [i]~~~~~~~~~~~~~~~~~~~~~~~
 sll $t1,$s0,2
 addiu $t1,$t1,8
 subu $t1,$sp,$t1
@@ -498,6 +506,9 @@ syscall
 jr $ra
 jr $ra
 main:
+#g_val [null] = 0
+li $t1,0#2222
+sw $t1,g_val
 li $a1,5
 sw $sp,-32($sp)
 sw $ra,-36($sp)
@@ -506,7 +517,7 @@ jal factorial
 lw $ra,-4($sp)
 lw $sp,-0($sp)
 move $t3,$v1
-#n [null] = wm252
+#n [null] = wm259
 sw $t3,-8($sp)
 #printf
 la $a0,str_16
@@ -518,17 +529,30 @@ syscall
 la $a0,enter
 li $v0,4
 syscall
-li $a1,5
-li $a2,10
+#g_val [null] = 5
+li $t1,5#2222
+sw $t1,g_val
+lw $t0,g_val
+move $a1,$t0
 sw $sp,-52($sp)
 sw $ra,-56($sp)
 subiu $sp,$sp,52
-jal swap
+jal add_g_val
 lw $ra,-4($sp)
 lw $sp,-0($sp)
+move $t3,$v1
+lw $t0,g_val
+move $a1,$t0
+move $a2,$t3
 sw $sp,-72($sp)
 sw $ra,-76($sp)
 subiu $sp,$sp,72
+jal swap
+lw $ra,-4($sp)
+lw $sp,-0($sp)
+sw $sp,-92($sp)
+sw $ra,-96($sp)
+subiu $sp,$sp,92
 jal complete_flower_num
 lw $ra,-4($sp)
 lw $sp,-0($sp)

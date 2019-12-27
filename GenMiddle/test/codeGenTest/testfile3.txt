@@ -1,0 +1,26 @@
+char funcB(int a) {
+    char _b;
+    scanf(_b);
+    if (1) {
+        printf("_b in funcB", _b);
+    }
+    return ('e');
+}
+
+void main() {
+    const int _a = -1,_b = +1;
+    char chArr[10];
+    int cnt;
+    cnt = 3;
+    chArr[0] = '*';
+    chArr[1] = '-';
+    chArr[2] = '+';
+    chArr[3] = '/';
+    printf("Hello Compileing \n");
+    while(cnt >= 0){
+        printf("cnt is: ", cnt);
+        printf(chArr[cnt]);
+        cnt = cnt -1;
+    }
+    return;
+}

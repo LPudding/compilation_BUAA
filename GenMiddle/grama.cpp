@@ -8,10 +8,12 @@ using namespace std;
 extern char str[];
 extern char token[];
 extern symTable sym_table;
-extern int lastFuncCallIndex,lineNum;
+extern vector<int> lastFuncCallIndex;
+extern int lineNum;
 extern FILE* fc;
 //func 
 //
+
 
 char* func[1000];
 int funcLength = 0;
@@ -291,12 +293,13 @@ void valueTable(string funcName) {
 	string ret;
 	cout << "valueTable" << endl;
 	int id = watch(), index = 0, type, num, enable = 1;
-	if (lastFuncCallIndex == -1) {
+	//==-1
+	if (lastFuncCallIndex.size() < 0) {
 		enable = 0;
 		num = 0;
 	}
 	else {
-		num = sym_table.table[lastFuncCallIndex].parameterNum;
+		num = sym_table.table[lastFuncCallIndex[lastFuncCallIndex.size()-1]].parameterNum;
 	}
 	if (id == 31) {//empty
 		middleTable.addDefine("CALL_FUNC", funcName, "", "");
@@ -337,14 +340,14 @@ void returnFuncStatement(string& name) {
 	string funcName,type;
 	if (id == 0) {//identify
 		funcName = token;
-		lastFuncCallIndex = sym_table.getFunctionIndex();
+		lastFuncCallIndex.push_back(sym_table.getFunctionIndex());
 		printWord(getsym());
 		//middleTable.addDefine("CALL_FUNC", token, "", "");
 		if (sym_table.checkExist() == NOEXIST)
 			printError('c');
 		type = (sym_table.checkExist() == INT) ? "INT" : "CHAR";
 		id = watch();
-		cout << "call_func" << endl;
+		//cout << "call_func" << endl;
 		//fprintf(fc, "id:%d\n", id);
 		if (id == 30) {//(
 			printWord(getsym());
@@ -358,6 +361,7 @@ void returnFuncStatement(string& name) {
 		else if (type == "CHAR") {
 			name = middleTable.addCharTemp("ADD", "RET", "0");
 		}
+		lastFuncCallIndex.pop_back();
 	}
 	if (debug)
 		fprintf(fc, "<有返回值函数调用语句>\n");
@@ -367,7 +371,7 @@ void noReturnFuncStatement() {
 	int id = watch();
 	string funcName;
 	if (id == 0) {//identify
-		lastFuncCallIndex = sym_table.getFunctionIndex();
+		lastFuncCallIndex.push_back(sym_table.getFunctionIndex());
 		funcName = token;
 		printWord(getsym());
 		//middleTable.addDefine("CALL_FUNC", token, "", "");
@@ -383,6 +387,7 @@ void noReturnFuncStatement() {
 				printWord(getsym());
 			}
 		}
+		lastFuncCallIndex.pop_back();
 	}
 	if (debug)
 		fprintf(fc, "<无返回值函数调用语句>\n");
@@ -543,7 +548,7 @@ int expression(string& name) {
 	return type;
 }
 
-void condition(string& condi) {
+middleCode condition(string& condi) {
 	int id, type1, type2 = VOID;
 	string condi1, condi2;
 	type1 = expression(condi1);
@@ -552,41 +557,71 @@ void condition(string& condi) {
 		string op = token;
 		printWord(getsym());
 		type2 = expression(condi2);
+		middleCode mid = middleCode("CONDITION", op, condi1, condi2);
 		middleTable.addDefine("CONDITION", op, condi1, condi2);
 		condi = op;
+		if (type1 != INT)
+			printError('f');
+		else if (type2 == CHAR)
+			printError('f');
+		/* end */
+		if (debug)
+			fprintf(fc, "<条件>\n");
+		return mid;
 	}
 	else {
 		middleTable.addDefine("CONDITION", "!=", condi1, "0");
+		middleCode mid = middleCode("CONDITION", "!=", condi1, "0");
 		condi = "!=";
+		if (type1 != INT)
+			printError('f');
+		else if (type2 == CHAR)
+			printError('f');
+		/* end */
+		if (debug)
+			fprintf(fc, "<条件>\n");
+		return mid;
 	}
-	if (type1 != INT)
+	/*if (type1 != INT)
 		printError('f');
 	else if (type2 == CHAR)
 		printError('f');
-	/* end */
 	if (debug)
-		fprintf(fc, "<条件>\n");
+		fprintf(fc, "<条件>\n");*/
 }
 
 void loopStatement() {
 	int id = watch(), assignId;
+	int condiBegin, condiEnd;
 	if (id == 12) {//while
 		printWord(getsym());
 		id = watch();
 		if (id == 30) { // (
 			printWord(getsym());
 		}
+
 		string label1 = middleTable.genLabel("while_Begin");
-		middleTable.addDefine("LABEL", label1, "", "");
+		string label2 = middleTable.genLabel("while_End");
 		string condi;
-		condition(condi); //condition
+		condiBegin = middleTable.table.size();
+		middleCode condiMid = condition(condi);	 //condition
+		condiEnd = middleTable.table.size();
+		middleTable.addDefine("BZ", label2, condi, "");
+
+
+
+		middleTable.addDefine("LABEL", label1, "", "");
+
 		id = watch();
 		if (id == 31) {// )
 			printWord(getsym());
-			string label2 = middleTable.genLabel("while_End");
-			middleTable.addDefine("BZ", label2, condi, "");
 			statement();//statement
-			middleTable.addDefine("GOTO", label1, "", "");
+			//middleTable.addDefine("GOTO", label1, "", "");
+			//middleTable.table.push_back(condiMid);
+			for (int i = condiBegin; i < condiEnd; i++) {
+				middleTable.table.push_back(middleTable.table[i]);
+			}
+			middleTable.addDefine("BNZ", label1, condi, "");
 			middleTable.addDefine("LABEL", label2, "", "");
 		}
 		else
@@ -608,7 +643,9 @@ void loopStatement() {
 			printWord(getsym());
 		}
 		string condi;
-		condition(condi);
+		condiBegin = middleTable.table.size();
+		middleCode condiMid = condition(condi);
+		condiEnd = middleTable.table.size();
 		id = watch();
 		if (id == 31) {//)
 			printWord(getsym());
@@ -645,12 +682,17 @@ void loopStatement() {
 				}
 				else
 					printError('k');
+
 				string label1 = middleTable.genLabel("for_Begin");
 				string label2 = middleTable.genLabel("for_End");
-				middleTable.addDefine("LABEL", label1, "", "");
 				string condi;
-				condition(condi);//condition
+
+				condiBegin = middleTable.table.size();
+				middleCode condiMid = condition(condi);
+				condiEnd = middleTable.table.size();
+
 				middleTable.addDefine("BZ", label2, condi, "");
+				middleTable.addDefine("LABEL", label1, "", "");
 				id = watch();
 				if (id == 28) {//;
 					printWord(getsym());
@@ -701,7 +743,12 @@ void loopStatement() {
 					printError('l');
 				statement();
 				middleTable.addDefine(op, op1, op2, op3);
-				middleTable.addDefine("GOTO", label1, "", "");
+				//middleTable.table.push_back(condiMid);
+				for (int i = condiBegin; i < condiEnd; i++) {
+					middleTable.table.push_back(middleTable.table[i]);
+				}
+				middleTable.addDefine("BNZ", label1, condi, "");
+				//middleTable.addDefine("GOTO", label1, "", "");
 				middleTable.addDefine("LABEL", label2, "", "");
 			}
 		}
@@ -1312,6 +1359,5 @@ void project() {
 	middleTable.addDefine("EXIT", "", "", "");
 	if (debug)
 		fprintf(fc, "<程序>\n");
-	middleTable.midFile.close();
 	
 }

@@ -34,7 +34,7 @@ int term(string& name);
 
 int expression(string& name);
 
-void condition(string& condi);
+middleCode condition(string& condi);
 
 void loopStatement();
 

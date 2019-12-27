@@ -23,10 +23,13 @@ public:
 extern vector<BB> block;
 
 extern map<string,set<string>> crossBlockTable;
+extern map<string, set<string>> arrayTable;
 extern set<string> globalSet;
 extern set<string> arraySet;
 extern map<string, map<string, int>> impVarCountMap;
 extern set<string> recursiveFuncSet;
+extern map<string, vector<middleCode>> func2mid;
+extern set<string> multiBlockFuncSet;
 
 void change_intensity(middleCode mid, int& intensity);
 
@@ -35,6 +38,8 @@ void definedConstSpread();
 void ImpVarCount();
 
 void printImpVarCount();
+
+void handleMod();
 
 void liveVarLoop();
 
@@ -46,6 +51,8 @@ void varStatics(map<string, int>& varCount, string name);
 
 //local or global
 void varTypeAnalyse();
+
+void inLineReturnHandle();
 
 void deadVarHandle(bool& isOpt);
 
@@ -64,3 +71,5 @@ void divideBlock();
 void calVarUseDefSet();
 
 void optimize();
+
+void tomid(string fileName, middleCodeTable midTable);

@@ -1,22 +1,263 @@
-    FUNC    factorial    INT    
-    PARA    n    INT    
-    FUNCHEAD    factorial        
-    CONDITION    <=    n    1
-    BZ    not_If0    <=    
-    FUNCRET    1        
-    LABEL    not_If0        
-    SUB    INT0    n    1
-    PUSH_PARA    INT0    factorial    65536
-    CALL_FUNC    factorial        
-    ADD    INT1    RET    0
-    MUL    INT2    n    INT1
+    CONST    a1    INT    12
+    CONST    _aa1    INT    -13
+    CONST    b1    CHAR    'b'
+    CONST    bb1    CHAR    'c'
+    VAR    a2    INT    0
+    VAR    a    INT    5
+    VAR    b2    CHAR    0
+    FUNC    test_print    VOID    
+    FUNCHEAD    test_print        
+    PRINT    ----------------    0    1
+    PRINT    here we print all char allowed in string    0    1
+    PRINT     !#$%&'()*+,-./0123456789:;<=    0    1
+    PRINT    >?@[]\\^_`~    0    1
+    PRINT    QWERTYUIOPASFDGHJKLZXCVBNM    0    1
+    PRINT    qwertyuiopasdfghjklzxcvbnm    0    1
+    ADD    INT0    2    0
+    PRINT    INT0    1    INT
+    PRINT    ----------------    0    1
+    PRINT    here we print some parameter/const    0    1
+    PRINT    a1    1    INT
+    PRINT    _aa1    1    INT
+    PRINT    b1    1    INT
+    PRINT    bb1    1    INT
+    PRINT    a1 is %d    0    0
+    PRINT    a1    1    1
+    PRINT         0    1
+    PRINT    finish test print    0    1
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_scanf    VOID    
+    FUNCHEAD    test_scanf        
+    PRINT    ------------    0    1
+    PRINT    here we test function scanf,we will get it and then output a same one    0    1
+    PRINT    first int and then char    0    1
+    SCAN    a2        
+    SCAN    b2        
+    PRINT    a2    1    INT
+    PRINT    b2    1    INT
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_void_value_function    VOID    
+    PARA    a    INT    
+    FUNCHEAD    test_void_value_function        
+    PRINT    ------------    0    1
+    PRINT    here we are in void-value function    0    1
+    PRINT    then we will print what come in    0    1
+    PRINT    a    1    INT
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_int_value_function    INT    
+    PARA    a    INT    
+    PARA    b    INT    
+    FUNCHEAD    test_int_value_function        
+    MUL    INT1    a    b
+    FUNCRET    INT1        
+    FUNCTAIL            
+    FUNC    test_int_none_function    INT    
+    FUNCHEAD    test_int_none_function        
+    VAR    x    INT    0
+    ADD    x    12    0
+    ADD    INT2    12    0
     FUNCRET    INT2        
     FUNCTAIL            
+    FUNC    test_express    VOID    
+    FUNCHEAD    test_express        
+    STORE_ARR    6    a    0
+    LOAD_ARR    INT3    a    0
+    ADD    INT4    INT3    7659
+    SUB    INT5    INT4    01234
+    STORE_ARR    INT5    a    1
+    ADD    INT6    0    0
+    LOAD_ARR    INT7    a    INT6
+    PUSH_PARA    6    test_int_value_function    131073
+    PUSH_PARA    INT7    test_int_value_function    131072
+    CALL_FUNC    test_int_value_function        
+    ADD    INT8    RET    0
+    ADD    INT9    -000    INT8
+    STORE_ARR    INT9    a    2
+    ADD    INT10    36    0
+    LOAD_ARR    INT11    a    0
+    DIV    INT12    INT10    INT11
+    ADD    INT13    INT12    12
+    STORE_ARR    INT13    a    3
+    PUSH_PARA    1    test_int_value_function    131073
+    PUSH_PARA    2    test_int_value_function    131072
+    CALL_FUNC    test_int_value_function        
+    ADD    INT14    RET    0
+    ADD    INT15    1    INT14
+    STORE_ARR    INT15    a    4
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_equal    VOID    
+    FUNCHEAD    test_equal        
+    ADD    a2    666    0
+    PRINT    a2    1    INT
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_for    VOID    
+    FUNCHEAD    test_for        
+    VAR    i    INT    0
+    PRINT    -----test for-----    0    1
+    ADD    i    0    0
+    CONDITION    <    i    5
+    BZ    for_End1    <    
+    LABEL    for_Begin0        
+    LOAD_ARR    INT16    a    i
+    PRINT    INT16    1    INT
+    ADD    i    i    1
+    CONDITION    <    i    5
+    BNZ    for_Begin0    <    
+    LABEL    for_End1        
+    ADD    i    0    0
+    CONDITION    <    i    5
+    BZ    for_End3    <    
+    LABEL    for_Begin2        
+    LOAD_ARR    INT17    a    i
+    ADD    INT18    INT17    1
+    STORE_ARR    INT18    a    i
+    LOAD_ARR    INT19    a    i
+    PRINT    INT19    1    INT
+    ADD    i    i    1
+    CONDITION    <    i    5
+    BNZ    for_Begin2    <    
+    LABEL    for_End3        
+    ADD    i    12    0
+    CONDITION    <    i    5
+    BZ    for_End5    <    
+    LABEL    for_Begin4        
+    PRINT    error    0    1
+    ADD    i    i    1
+    CONDITION    <    i    5
+    BNZ    for_Begin4    <    
+    LABEL    for_End5        
+    PRINT    for testing well    0    1
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_while    VOID    
+    FUNCHEAD    test_while        
+    VAR    i    INT    0
+    ADD    i    0    0
+    PRINT    -----test while-----    0    1
+    CONDITION    <    i    5
+    BZ    while_End7    <    
+    LABEL    while_Begin6        
+    LOAD_ARR    INT20    a    i
+    PRINT    INT20    1    INT
+    ADD    i    i    1
+    CONDITION    <    i    5
+    BNZ    while_Begin6    <    
+    LABEL    while_End7        
+    CONDITION    <    i    5
+    BZ    while_End9    <    
+    LABEL    while_Begin8        
+    PRINT    error    0    1
+    CONDITION    <    i    5
+    BNZ    while_Begin8    <    
+    LABEL    while_End9        
+    PRINT    while testing well    0    1
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_if    VOID    
+    FUNCHEAD    test_if        
+    VAR    i    INT    0
+    VAR    j    INT    0
+    PRINT    ------test if-----    0    1
+    ADD    i    1    0
+    ADD    j    0    0
+    CONDITION    !=    i    0
+    BZ    not_If10    !=    
+    PRINT    express 1 is ok    0    1
+    LABEL    not_If10        
+    CONDITION    !=    j    0
+    BZ    not_If11    !=    
+    PRINT    express 0 is not ok    0    1
+    GOTO    if_End12        
+    LABEL    not_If11        
+    PRINT    express 0 is ok    0    1
+    LABEL    if_End12        
+    ADD    INT22    i    j
+    CONDITION    !=    INT22    0
+    BZ    not_If13    !=    
+    PRINT    express 0+1 is ok    0    1
+    LABEL    not_If13        
+    CONDITION    >    i    j
+    BZ    not_If14    >    
+    PRINT    signal > is ok    0    1
+    LABEL    not_If14        
+    CONDITION    >=    i    j
+    BZ    not_If15    >=    
+    PRINT    signal >= is ok    0    1
+    LABEL    not_If15        
+    CONDITION    !=    i    j
+    BZ    not_If16    !=    
+    PRINT    signal != is ok    0    1
+    LABEL    not_If16        
+    ADD    j    j    1
+    CONDITION    ==    i    j
+    BZ    not_If17    ==    
+    PRINT    signal == is ok    0    1
+    LABEL    not_If17        
+    ADD    j    j    1
+    CONDITION    <    i    j
+    BZ    not_If18    <    
+    PRINT    signal < is ok    0    1
+    LABEL    not_If18        
+    CONDITION    <=    i    j
+    BZ    not_If19    <=    
+    PRINT    signal <= is ok    0    1
+    LABEL    not_If19        
+    PRINT    ------test if finished----    0    1
+    FUNCRET            
+    FUNCTAIL            
+    FUNC    test_digui    INT    
+    PARA    x    INT    
+    FUNCHEAD    test_digui        
+    VAR    re    INT    0
+    ADD    re    0    0
+    CONDITION    ==    x    1
+    BZ    not_If20    ==    
+    FUNCRET    x        
+    GOTO    if_End21        
+    LABEL    not_If20        
+    SUB    INT25    x    1
+    PUSH_PARA    INT25    test_digui    65536
+    CALL_FUNC    test_digui        
+    ADD    INT26    RET    0
+    MUL    re    re    INT26
+    FUNCRET    re        
+    LABEL    if_End21        
+    FUNCTAIL            
     MAINHEAD            
-    VAR    n    INT    0
-    PUSH_PARA    3    factorial    65536
-    CALL_FUNC    factorial        
-    ADD    n    RET    0
-    PRINT    3 !=     0    0
-    PRINT    n    1    1
+    CONST    x    INT    1234
+    VAR    a3    INT    0
+    VAR    b3    CHAR    0
+    ADD    b3    'x'    0
+    ADD    a3    -123    0
+    CALL_FUNC    test_scanf        
+    CALL_FUNC    test_print        
+    PUSH_PARA    a3    test_void_value_function    65536
+    CALL_FUNC    test_void_value_function        
+    CALL_FUNC    test_equal        
+    SUB    INT28    a3    1
+    PUSH_PARA    a3    test_int_value_function    131073
+    PUSH_PARA    INT28    test_int_value_function    131072
+    CALL_FUNC    test_int_value_function        
+    ADD    a3    RET    0
+    PRINT    output above should be 132    0    1
+    CALL_FUNC    test_int_none_function        
+    ADD    a3    RET    0
+    PRINT    a3    1    INT
+    PRINT    x    1    INT
+    PRINT    output about should be 12    0    1
+    CALL_FUNC    test_express        
+    CALL_FUNC    test_for        
+    CALL_FUNC    test_while        
+    CALL_FUNC    test_if        
+    PUSH_PARA    4    test_digui    65536
+    CALL_FUNC    test_digui        
+    ADD    a3    RET    0
+    PRINT    a3    1    INT
+    PRINT    the number above should be 6    0    1
+    PRINT    ------test ending-----    0    1
     EXIT            

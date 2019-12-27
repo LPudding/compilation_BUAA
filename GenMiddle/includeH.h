@@ -17,7 +17,6 @@
 #include <regex>
 #include"mid.h"
 #include"error.h"
-#include"GenMiddle.h"
 #include"grama.h"
 #include"lexicalAna.h"
 #include"opt.h"
@@ -27,3 +26,4 @@
 using namespace std;
 extern FILE* fp, * fl, * fc, * fe;
 #pragma warning(disable:4996)
+extern bool isError;

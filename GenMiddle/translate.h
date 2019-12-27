@@ -1,16 +1,16 @@
 #pragma once
-
 #define condi(x,y) (midCode.op2 == x && midCode.Type == y)
 
 #define regt(x) -x
 #define lowRegt 3
-#define highRegt 9
+#define highRegt 8
+#define regtEnable 1
 
-#define regs(s) (-s-highRegt)
-#define lowRegs 1
+#define regs(s) (-s-(highRegt-lowRegs+1))
+#define lowRegs 0
 #define highRegs 7
 
-#define rega(a) (-a-highRegt-highRegs)
+#define rega(a) (-a-highRegt-(highRegs-lowRegs+1))
 #define lowRega 1
 #define highRega 3
 
@@ -46,6 +46,7 @@ public:
 	map<string, map<string, int>> fun2Name2Remain;
 	vector<string> regPool;
 	vector<string> clashNameNow;
+	set<string> clashSet;
 	set<string> usingRegPool;
 	int intensityNow;
 	int aIndex = 0;
@@ -58,9 +59,13 @@ public:
 	void jalFunc(string funcNow, string jalFunc);
 	void raFunc(string funcNow, string jalFunc);
 	string dispatchaReg(string name);
+	void banReg(string name);
+	void clearBanReg();
 };
 
 string getTempType(string name);
+
+void toMips(string code);
 
 bool cmp(const pair<string, int>& a, const pair<string, int>& b);
 
@@ -106,7 +111,7 @@ void pushParaSentence(middleCode midCode);
 
 void conditionSentence(middleCode midCode);
 
-void conditionJumpSentence(middleCode midCode);
+void conditionJumpSentence(middleCode midCode, middleCode midCode1);
 
 void constDefineSentence(middleCode midCode);
 

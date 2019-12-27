@@ -6,10 +6,18 @@ vector<int> endBlockArr;
 set<string> globalSet;
 //lively through the block
 map<string, set<string>> crossBlockTable;
+map<string, set<string>> arrayTable;
 set<string> arraySet;
+string midName = "middle.txt";
+string optMidName = "optMid.txt";
+
 
 map<string, map<string, int>> impVarCountMap;
 set<string> recursiveFuncSet;
+set<string> multiBlockFuncSet;
+map<string, vector<middleCode>> func2mid;
+
+map<string, map<string, string>> fun2name2value;
 
 BB::BB(int num, int first, int last,string func) {
 	no = num;
@@ -145,15 +153,17 @@ void divideBlock() {
 			if (int(j) >= divideIndex[i])
 				break;
 		}
-		cout << to_string(divideIndex[i]) << " -> " + to_string(divideIndex[i + 1]) << endl;
+		//cout << to_string(divideIndex[i]) << " -> " + to_string(divideIndex[i + 1]) << endl;
 		block.push_back(BB(i+1, divideIndex[i], divideIndex[i + 1],funcName));
 	}
-
+	//cout << to_string(block.size()) << endl;
 	for (size_t i = 0; i < middleTable.table.size(); i++) {
 		string type = middleTable.table[i].Type;
 		if (type == "GOTO" || type == "BNZ" || type == "BZ") {
 			int no1 = getIrBlockNo(i);
 			int no2 = getLabelBlockNo(middleTable.table[i].op1);
+			//cout << middleTable.table[i].op1 << endl;
+			//cout << to_string(no2) << endl;
 			block[no1].nextBB.push_back(no2);
 			block[no2].prevBB.push_back(no1);
 		}
@@ -181,13 +191,37 @@ void divideBlock() {
 }
 
 void definedConstSpread() {
-	cout << "defined Const Spread begin" << endl;
+	//cout << "defined Const Spread begin" << endl;
 	vector<middleCode> table = middleTable.table;
 	vector<middleCode> constTable;
+	string funcNow = "GLOBAL";
 	for (size_t i = 0; i < table.size(); i++) {
 		table[i].no = i;
 		if (table[i].Type == "CONST") {
-			constTable.push_back(table[i]);
+			if (fun2name2value.find(funcNow) == fun2name2value.end()) {
+				map<string, string> map;
+				map.insert(make_pair(table[i].op1, table[i].op3));
+				fun2name2value.insert(make_pair(funcNow, map));
+			}
+			else {
+				fun2name2value[funcNow].insert(make_pair(table[i].op1, table[i].op3));
+			}
+		} 
+		else if (table[i].Type == "VAR" || table[i].Type == "PARA") {
+			if (fun2name2value.find(funcNow) == fun2name2value.end()) {
+				map<string, string> map;
+				map.insert(make_pair(table[i].op1, table[i].op1));
+				fun2name2value.insert(make_pair(funcNow, map));
+			}
+			else {
+				fun2name2value[funcNow].insert(make_pair(table[i].op1, table[i].op1));
+			}
+		}
+		else if (table[i].Type =="FUNC"){
+			funcNow = table[i].op1;
+		}
+		else if (table[i].Type == "MAINHEAD") {
+			funcNow = "MAIN";
 		}
 		bool ops1 = false, ops2 = false, ops3 = false;
 		if (table[i].Type == "ADD" || table[i].Type == "SUB" || table[i].Type == "MUL" || table[i].Type == "DIV") {
@@ -200,7 +234,7 @@ void definedConstSpread() {
 				ops1 = true;
 			}
 		}
-		if (table[i].Type == "PUSH_PARA" || table[i].Type == "SCAN") {//avoid using printf prevent str's influence 
+		if (table[i].Type == "PUSH_PARA") {//avoid using printf prevent str's influence 
 			ops1 = true;
 		}
 		if (table[i].Type == "PRINT" && table[i].op2 == "1") {
@@ -216,52 +250,61 @@ void definedConstSpread() {
 			ops1 = true;
 		}
 		//cout << to_string(i) +":"+ to_string(op1) + to_string(op2) + to_string(op3) << endl;
-		string nowFuncName = block[getIrBlockNo(table[i].no)].funcName;
+		//string nowFuncName = block[getIrBlockNo(table[i].no)].funcName;
 		if (ops1 && constSpread) {
-			for (int j = constTable.size() - 1; j >= 0; j--) {
-				string definedName = block[getIrBlockNo(constTable[j].no)].funcName;
-				if (constTable[j].op1 == table[i].op1) {
-					if (definedName == nowFuncName || definedName == "GLOBAL") {
-						//cout << definedName + " " + nowFuncName << endl;
-						middleTable.table[i].op1 = constTable[j].op3;
-						break;
-					}
+			bool yes = true;
+			if (fun2name2value.find(funcNow) != fun2name2value.end()) {
+				if (fun2name2value[funcNow].find(table[i].op1) != fun2name2value[funcNow].end()) {
+					middleTable.table[i].op1 = fun2name2value[funcNow][table[i].op1];
+					yes = false;
+				}
+			}
+			if (yes && funcNow != "GLOBAL" && fun2name2value.find("GLOBAL") != fun2name2value.end()) {
+
+				if (fun2name2value["GLOBAL"].find(table[i].op1) != fun2name2value["GLOBAL"].end()) {
+					middleTable.table[i].op1 = fun2name2value["GLOBAL"][table[i].op1];
 				}
 			}
 		}
 		if (ops2 && constSpread) {
-			for (int j = constTable.size() - 1; j >= 0; j--) {
-				string definedName = block[getIrBlockNo(constTable[j].no)].funcName;
-				//cout << definedName + " " + nowFuncName << endl;
-				if (constTable[j].op1 == table[i].op2) {
-					if (definedName == nowFuncName || definedName == "GLOBAL") {
-						middleTable.table[i].op2 = constTable[j].op3;
-						break;
-					}
+			bool yes = true;
+			if (fun2name2value.find(funcNow) != fun2name2value.end()) {
+				if (fun2name2value[funcNow].find(table[i].op2) != fun2name2value[funcNow].end()) {
+					middleTable.table[i].op2 = fun2name2value[funcNow][table[i].op2];
+					yes = false;
+				}
+			}
+			if (yes && funcNow != "GLOBAL" && fun2name2value.find("GLOBAL") != fun2name2value.end()) {
+
+				if (fun2name2value["GLOBAL"].find(table[i].op2) != fun2name2value["GLOBAL"].end()) {
+					middleTable.table[i].op2 = fun2name2value["GLOBAL"][table[i].op2];
 				}
 			}
 		}
 		if (ops3 && constSpread) {
-			for (int j = constTable.size() - 1; j >= 0; j--) {
-				string definedName = block[getIrBlockNo(constTable[j].no)].funcName;
-				//cout << definedName + " " + nowFuncName << endl;
-				if (constTable[j].op1 == table[i].op3) {
-					if (definedName == nowFuncName || definedName == "GLOBAL") {
-						middleTable.table[i].op3 = constTable[j].op3;
-						break;
-					}
+			bool yes = true;
+			if (fun2name2value.find(funcNow) != fun2name2value.end()) {
+				if (fun2name2value[funcNow].find(table[i].op3) != fun2name2value[funcNow].end()) {
+					middleTable.table[i].op3 = fun2name2value[funcNow][table[i].op3];
+					yes = false;
+				}
+			}
+			if (yes && funcNow != "GLOBAL" && fun2name2value.find("GLOBAL") != fun2name2value.end()) {
+
+				if (fun2name2value["GLOBAL"].find(table[i].op3) != fun2name2value["GLOBAL"].end()) {
+					middleTable.table[i].op3 = fun2name2value["GLOBAL"][table[i].op3];
 				}
 			}
 		}
 	}
 
-	cout << "defined Const Spread finished" << endl;
-	cout << "##################################################################" << endl;
+	//cout << "defined Const Spread finished" << endl;
+	//cout << "##################################################################" << endl;
 }
 
 //analyse var type(local or global) and const spread
 void varTypeAnalyse() {
-	cout << "cross var analyse begin" << endl;
+	//cout << "cross var analyse begin" << endl;
 	set<string> varSet;
 	vector<middleCode> table = middleTable.table;
 	vector<middleCode> constTable;
@@ -309,46 +352,70 @@ void varTypeAnalyse() {
 		//cout << to_string(i) +":"+ to_string(op1) + to_string(op2) + to_string(op3) << endl;
 		string nowFuncName = block[getIrBlockNo(table[i].no)].funcName;
 		
-		if (arrOp) {
+		/*if (arrOp) {
 			arraySet.insert(table[i].op2);
-		}
+		}*/
 	}
-	printBlock();
-	cout << "##################################################################" << endl;
-	cout << "#var:" << endl;
+	//printBlock();
+	//cout << "##################################################################" << endl;
+	//cout << "#var:" << endl;
 	for (set<string>::iterator it = varSet.begin(); it != varSet.end(); it++) {
-		cout << "  " + *it << endl;
+		//cout << "  " + *it << endl;
 	}
 
 	map<string, set<string>> definedTable;
-	string funcName = "";
+
+
+	string funcName = "GLOBAL";
+	set<string> arraySet;
 	set<string> definedSet;
-	cout << "definedTable!!" << endl;
+	//cout << "definedTable!!" << endl;
 	for (size_t i = 0; i < middleTable.table.size(); i++) {
 		if (middleTable.table[i].Type == "FUNC") {
 			if (funcName != "") {
 				definedTable.insert(make_pair(funcName, definedSet));
+				arrayTable.insert(make_pair(funcName, arraySet));
+				//cout << "func:" + funcName << endl;
+				//cout << "arrayset" << endl;
+				printSet(arraySet);
+				//cout << "definedset" << endl;
 				printSet(definedSet);
 				definedSet.clear();
+				arraySet.clear();
 			}
 			funcName = middleTable.table[i].op1;
 		}
 		else if (middleTable.table[i].Type == "MAINHEAD") {
 			if (funcName != "") {
 				definedTable.insert(make_pair(funcName, definedSet));
+				arrayTable.insert(make_pair(funcName, arraySet));
+				//cout << "func:" + funcName << endl;
+				//cout << "arrayset" << endl;
+				printSet(arraySet);
+				//cout << "definedset" << endl;
 				printSet(definedSet);
 				definedSet.clear();
+				arraySet.clear();
 			}
 			funcName = "MAIN";
 		}
 		else if (middleTable.table[i].Type == "EXIT") {
 			definedTable.insert(make_pair(funcName, definedSet));
+			arrayTable.insert(make_pair(funcName, arraySet));
+			//cout << "func:" + funcName << endl;
+			//cout << "arrayset" << endl;
+			printSet(arraySet);
+			//cout << "definedset" << endl;
 			printSet(definedSet);
-
+			definedSet.clear();
+			arraySet.clear();
 		}
 		if (funcName != "") {
 			if (middleTable.table[i].Type == "VAR") {
 				definedSet.insert(middleTable.table[i].op1);
+				if (stoi(middleTable.table[i].op3) > 0) {
+					arraySet.insert(middleTable.table[i].op1);
+				}
 			} 
 			else if (middleTable.table[i].Type == "CONST") {
 				definedSet.insert(middleTable.table[i].op1);
@@ -359,13 +426,13 @@ void varTypeAnalyse() {
 		}
 	}
 
-	cout << "inOutTable!!" << endl;
+	//cout << "inOutTable!!" << endl;
 	map<string, set<string>> inOutTable;
 	set<string> inOutSet;
 	funcName = "";
 	for (vector<BB>::iterator it = block.begin(); it != block.end(); it++) {
 		string funcNow = it->funcName;
-		cout << funcName + "->" + funcNow << endl;
+		//cout << funcName + "->" + funcNow << endl;
 		if (funcName == "" || funcName == "GLOBAL") {
 			funcName = funcNow;
 		}
@@ -403,12 +470,12 @@ void varTypeAnalyse() {
 				crossSet.insert(*it1);
 			}
 		}
-		cout << funcName << endl;
+		//cout << funcName << endl;
 		printSet(crossSet);
 		crossBlockTable.insert(make_pair(funcName, crossSet));
 	}
-	cout << "cross var analyse finished" << endl;
-	cout << "##################################################################" << endl;
+	//cout << "cross var analyse finished" << endl;
+	//cout << "##################################################################" << endl;
 }
 
 void varStatics(map<string, int>& varCount, string name) {
@@ -601,7 +668,7 @@ void deadVarHandle(bool& isOpt) {
 			int no = getIrBlockNo(index);
 			BB b = block[no];
 			if (b.lvIn.find(it->op1) == b.lvIn.end() && b.lvOut.find(it->op1) == b.lvOut.end() && b.usedSet.find(it->op1) == b.usedSet.end() && globalSet.find(it->op1) == globalSet.end()) {
-				cout << to_string(no) << endl;
+				//cout << to_string(no) << endl;
 				it = middleTable.table.erase(it);
 				isOpt = true;
 				return;
@@ -672,7 +739,8 @@ void simplifyExp(bool& isOpt) {//combine and simplify
 			}
 			if (it->Type == "DIV") {
 				if (isConst2 && isConst3) {
-					it->op1 = "ADD";
+					it->Type = "ADD";
+					cout << to_string(val2) << "/" << to_string(val3) << endl;
 					it->op2 = to_string(val2 / val3);
 					it->op3 = "0";
 					isOpt = true;
@@ -790,7 +858,7 @@ void ImpVarCount() {
 		//change intensity
 		if (funcNow != funcBlock) {
 			if (!impVarCount.empty()) {
-				cout << "!!!!!!!!!!!!!!!!!!!" + funcBlock + "???????????????????" << endl;
+				//cout << "!!!!!!!!!!!!!!!!!!!" + funcBlock + "???????????????????" << endl;
 				impVarCountMap.insert(make_pair(funcBlock, impVarCount));
 				printMap(impVarCount);
 			}
@@ -802,9 +870,15 @@ void ImpVarCount() {
 			change_intensity(middleTable.table[i],useIntensity);
 		}
 		middleTable.table[i].intensity = useIntensity;
+		middleTable.table[i].index = i;
 		//analyse the func call
 		if (middleTable.table[i].Type == "CALL_FUNC") {
 			recursiveFuncSet.insert(funcNow);
+			//cout << "recursiveFuncSet:" + funcNow << endl;
+		}
+		if (middleTable.table[i].Type == "LABEL") {
+			multiBlockFuncSet.insert(funcNow);
+			//cout << "multiBlockFuncSet:" + funcNow << endl;
 		}
 		//cout << "#midCode " + middleTable.table[i].Type + " " + middleTable.table[i].op1 + " " + middleTable.table[i].op2 + " " + middleTable.table[i].op3 << endl;
 
@@ -848,7 +922,7 @@ void ImpVarCount() {
 			else {
 				impVarCount[str1] = impVarCount[str1] + useIntensity;
 			}
-			cout << str1 + ":" + to_string(impVarCount[str1]) << endl;
+			//cout << str1 + ":" + to_string(impVarCount[str1]) << endl;
 		} 
 		if (op2 && crossSet.find(str2) != crossSet.end()) {
 			if (impVarCount.find(str2) == impVarCount.end()) {
@@ -857,7 +931,7 @@ void ImpVarCount() {
 			else {
 				impVarCount[str2] = impVarCount[str2] + useIntensity;
 			}
-			cout << str2 + ":" + to_string(impVarCount[str2]) << endl;
+			//cout << str2 + ":" + to_string(impVarCount[str2]) << endl;
 		}
 		if (op3 && crossSet.find(str3) != crossSet.end()) {
 			if (impVarCount.find(str3) == impVarCount.end()) {
@@ -866,7 +940,7 @@ void ImpVarCount() {
 			else {
 				impVarCount[str3] = impVarCount[str3] + useIntensity;
 			}
-			cout << str3 + ":" + to_string(impVarCount[str3]) << endl;
+			//cout << str3 + ":" + to_string(impVarCount[str3]) << endl;
 		}
 	}
 	impVarCountMap.insert(make_pair("MAIN", impVarCount));
@@ -875,15 +949,152 @@ void ImpVarCount() {
 
 void printImpVarCount() {
 	for (map<string, map<string, int>>::iterator it = impVarCountMap.begin(); it != impVarCountMap.end(); it++) {
-		cout << "##############impVarCountMap################"<<endl<<it->first <<":"<< endl;
+		//cout << "##############impVarCountMap################"<<endl<<it->first <<":"<< endl;
 		for (map<string, int>::iterator it1 = it->second.begin(); it1 != it->second.end(); it1++) {
-			cout << it1->first << ":" + to_string(it1->second) << endl;
+			//cout << it1->first << ":" + to_string(it1->second) << endl;
 		}
 	}
 }
 
+void handleMod() {
+	vector<middleCode> midTable; 
+	size_t i;
+	for (i = 0; i + 2 < middleTable.table.size(); i++) {
+
+		middleCode mid1 = middleTable.table[i];
+		middleCode mid2 = middleTable.table[i+1];
+		middleCode mid3 = middleTable.table[i+2];
+		string x = mid1.op2, y = mid1.op3,z = mid3.op1;
+		string t1 = mid1.op1, t2 = mid1.op1;
+		bool isMod = (mid1.Type == "DIV" && mid2.Type == "MUL" && mid3.Type == "SUB");
+		bool isMod1 = (mid2.op3 == y && mid3.op2 == x);
+		bool isMod2 = (mid1.op1 == mid2.op2 && mid2.op1 == mid3.op3);
+		if (isMod && isMod1 && isMod2) {
+			midTable.push_back(middleCode("MOD", z, x, y));
+			i++;
+			i++;
+		}
+		else {
+			midTable.push_back(middleTable.table[i]);
+		}
+	}
+	for (; i < middleTable.table.size(); i++) {
+
+		midTable.push_back(middleTable.table[i]);
+	}
+	middleTable.table = midTable;
+}
+
+void inLineReturnHandle() {
+	bool isInline = false, isReturn = false;
+	cout << "####################################################################################################" << endl;
+	int i = 0;
+	for (vector<middleCode>::iterator it = middleTable.table.begin(); it != middleTable.table.end(); i++) {
+		string funcNow = block[getIrBlockNo(i)].funcName;
+		if (multiBlockFuncSet.find(funcNow) == multiBlockFuncSet.end() && recursiveFuncSet.find(funcNow) == recursiveFuncSet.end()) {
+			isInline = true;
+		}
+		else {
+			isInline = false;
+			isReturn = false;
+		}
+		if (it->Type == "FUNCTAIL") {
+			isInline = false;
+			isReturn = false;
+
+		}
+		if (isInline && middleTable.table[i].Type == "FUNCRET") {
+			if (!isReturn) {
+				isReturn = true;
+				it++;
+				cout << funcNow + ":return" << endl;
+				continue;
+			}
+		}
+		if (isInline && isReturn && it->Type != "FUNCTAIL" && it->Type != "LABEL") {
+			cout << "delete:";
+			printMiddleCode(*it);
+			it = middleTable.table.erase(it);
+			i--;
+		}
+		else {
+			it++;
+		}
+	}
+	cout << "####################################################################################################" << endl;
+}
+
+
+
+void tomid(string fileName, middleCodeTable midTable) {
+	ofstream fp;
+	fp.open(fileName);
+	for (size_t i = 0; i < midTable.table.size(); i++) {
+		middleCode mid = midTable.table[i];
+		if (mid.Type == "FUNC") {
+			string type = lowerS(mid.op2);
+			fp << type << " " << mid.op1 << "()" << endl;
+		}
+		else if (mid.Type == "PARA") {
+			string type = lowerS(mid.op2);
+			fp << "para " << type << " " << mid.op1 << endl;
+		}
+		else if (mid.Type == "PUSH_PARA") {
+			fp << "push " << mid.op1 << endl;
+		}
+		else if (mid.Type == "CALL_FUNC") {
+			fp << "call " << mid.op1 << endl;
+		}
+		else if (mid.Type == "ADD" && mid.op2 == "RET") {
+			fp << mid.op1 << " = " << mid.op2 << endl;
+		}
+		else if (mid.Type == "FUNCRET") {
+			fp << "ret " << mid.op1 << endl;
+		}
+		else if (mid.Type == "VAR") {
+			string type = lowerS(mid.op2);
+			fp << "var " << type << " " << mid.op1 << "[" << mid.op3 << "]" << endl;
+		} 
+		else if (mid.Type == "CONST") {
+			string type = lowerS(mid.op2);
+			fp << "const " << type << " " << mid.op1 << " = " << mid.op3 << endl;
+		} 
+		else if (mid.Type == "ADD") {
+			if (mid.op3 == "0")
+				fp << mid.op1 << " = " << mid.op2  << endl;
+			else
+				fp << mid.op1 << " = " << mid.op2 << " + " << mid.op3 << endl;
+
+		}
+		else if (mid.Type == "SUB") {
+			fp << mid.op1 << " = " << mid.op2 << " - " << mid.op3 << endl;
+		}
+		else if (mid.Type == "MUL") {
+			fp << mid.op1 << " = " << mid.op2 << " * " << mid.op3 << endl;
+		}
+		else if (mid.Type == "DIV") {
+			fp << mid.op1 << " = " << mid.op2 << " / " << mid.op3 << endl;
+		}
+		else if (mid.Type == "CONDITION") {
+			fp << mid.op2 << " " << mid.op1 << " " << mid.op3 << endl;
+		}
+		else if (mid.Type == "GOTO" || mid.Type == "BNZ" || mid.Type == "BZ") {
+			fp << mid.Type << " " << mid.op1 << endl;
+		}
+		else if (mid.Type == "LABEL") {
+			fp << mid.op1 << ":" << endl;
+		}
+		else if (mid.Type == "LOAD_ARR") {
+			fp << mid.op1 << " = " << mid.op2 << "[" << mid.op3 << "]" << endl;
+		}
+		else if (mid.Type == "STORE_ARR") {
+			fp << mid.op2 << "[" << mid.op3 << "]" << " = " << mid.op1 << endl;
+		}
+	}
+}
 
 void optimize() {
+	tomid(midName, middleTable);
 	cout << "opt begin" << endl;
 	bool isGlobal = true;
 	for (size_t i = 0; i < middleTable.table.size(); i++) {
@@ -896,7 +1107,7 @@ void optimize() {
 	}
 
 	//const spread
-
+	handleMod();
 	pushSentenceHandle();
 
 	bool isOpt = false;
@@ -916,19 +1127,26 @@ void optimize() {
 
 
 
+
 	liveVarAnalyse();
 	/*do {
 		isOpt = false;
 		deadVarHandle(isOpt);
 	} while (isOpt);*/
 	varTypeAnalyse();
-
 	ImpVarCount();
 
-	ofstream opt_mid;
-	opt_mid.open("opt_middle.txt");
-	for (size_t i = 0; i < middleTable.table.size(); i++) {
-		middleCode mid = middleTable.table[i];
-		opt_mid << "    " << mid.Type << "    " << mid.op1 << "    " << mid.op2 << "    " << mid.op3 << endl;
-	}
+	inLineReturnHandle();
+
+	liveVarAnalyse();
+	/*do {
+		isOpt = false;
+		deadVarHandle(isOpt);
+	} while (isOpt);*/
+	varTypeAnalyse();
+	ImpVarCount();
+
+
+
+	tomid(optMidName,middleTable);
 }

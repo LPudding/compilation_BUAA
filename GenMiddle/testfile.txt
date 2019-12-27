@@ -1,17 +1,13 @@
-
-
-int factorial(int n){
-   if(n<=1) return (1);
-
-   return(n*factorial(n-1)) ;
+int add(int a, int b) {
+    return (a+b+0);
 }
 
+void print(int a) {
+    printf(a);
+}
 
-void main()
-{
-   int n ;
-
-   n = factorial(3) ;
-   printf("3 != ", n) ;
-
+void main() {
+    const int a = 10;
+    int s[10];
+    print(add(a,5));
 }

@@ -1,127 +1,64 @@
 .data
-_string_0 : .asciiz "3 != "
-_string_ : .asciiz "\n"
+_strings_ : .asciiz "\n"
 .text
-#midCode VAR n INT 0
-#					define:n type:INT
-#midCode PUSH_PARA 3 factorial 65536
-# all:1 index:1
-#midCode CALL_FUNC factorial  
-# call function factorial
-    addi $s0 $sp -4
-#       para:                     1
-				# load 3->$t1
-    li $t1 3
-# para_name:3
-    sw $t1 -4($s0)
-    move $sp $s0
-    jal factorial
-    addi $sp $sp 4
-#midCode ADD n RET 0
-# ADD RET 0->n
-			#######cache t n
-#cal:op1=$t3
-				# load RET->$t0
-    addi $t3 $v0 0
-#midCode PRINT 3 !=  0 0
-# print _string_0
-    li $v0 4
-    la $a0 _string_0
-    syscall
-#midCode PRINT n 1 1
-# print n
-				# load n->$a0
-			#######cache t n
-				# offset: -3 no: 0
-    move $a0 $t3
+j main
+#midCode FUNC add INT 
+#midCode PARA a INT 
+#midCode PARA b INT 
+#midCode FUNCHEAD add  
+#midCode ADD INT1 a b
+# ADD a b->INT1
+    add $t3 $a1 $a2
+#midCode FUNCRET INT1  
+    move $v0 $t3
+#midCode FUNCTAIL   
+#midCode FUNC print VOID 
+#midCode PARA a INT 
+#midCode FUNCHEAD print  
+#midCode PRINT a 1 INT
+    lw $a0 -4($sp)
     li $v0 1
     syscall
-# print \n
     li $v0 4
-    la $a0 _string_
+    la $a0 _strings_
     syscall
+#midCode FUNCRET   
+#midCode FUNCTAIL   
+#midCode MAINHEAD   
+main:
+#midCode CONST a INT 10
+    li $t0 10
+    sw $t0 -0($sp)
+#midCode VAR s INT 10
+#midCode PUSH_PARA a add 131073
+#midCode PUSH_PARA 5 add 131072
+#midCode CALL_FUNC add  
+# call function add
+    lw $a1 -0($sp)
+    li $a2 5
+    addi $sp $sp -48
+    add $t3 $a1 $a2
+    move $v0 $t3
+    addi $sp $sp 48
+#midCode ADD INT2 RET 0
+# ADD RET 0->INT2
+    addi $t3 $v0 0
+#midCode PUSH_PARA INT2 print 65536
+#midCode CALL_FUNC print  
+# call function print
+    sw $t3 -56($sp)
+    addi $sp $sp -52
+    lw $a0 -4($sp)
+    li $v0 1
+    syscall
+    li $v0 4
+    la $a0 _strings_
+    syscall
+    addi $sp $sp 52
 #midCode EXIT   
 ########################### exit:
-######## program exit
     li $v0 10
     syscall
-#midCode FUNC factorial INT 
-#					define:_ra type:INT
-#					define:n type:INT
-factorial:
-    sw $ra 0($sp)
-# in func______
-#midCode PARA n INT 
-#midCode FUNCHEAD factorial  
-#midCode CONDITION <= n 1
-# n <= 1
-				# load n->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-    addi $t0 $t0 -1
-#midCode BZ not_If0 <= 
-    bgtz $t0 not_If0
-#midCode FUNCRET 1  
-				# load 1->$v0
-    li $v0 1
-    lw $ra 0($sp)
-    jr $ra
-#midCode LABEL not_If0  
-not_If0:
-#midCode SUB INT0 n 1
-# SUB n 1->INT0
-#					define:INT0 type:INT
-			#######cache t INT0
-#cal:op1=$t3
-				# load n->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-    addi $t3 $t0 -1
-#midCode PUSH_PARA INT0 factorial 65536
-# all:1 index:1
-#midCode CALL_FUNC factorial  
-# call function factorial
-    addi $s0 $sp -12
-#       para:                     1
-				# load INT0->$t1
-			#######cache t INT0
-				# offset: -3 no: 0
-# para_name:INT0
-    sw $t3 -4($s0)
-    move $sp $s0
-    jal factorial
-    addi $sp $sp 12
-#midCode ADD INT1 RET 0
-# ADD RET 0->INT1
-#					define:INT1 type:INT
-			#######cache t INT1
-#cal:op1=$t3
-				# load RET->$t0
-    addi $t3 $v0 0
-#midCode MUL INT2 n INT1
-# MUL n INT1->INT2
-#					define:INT2 type:INT
-			#######cache t INT2
-#cal:op1=$t4
-				# load n->$t0
-				# offset: 4 no: 0
-    lw $t0 -4($sp)
-				# load INT1->$t1
-			#######cache t INT1
-				# offset: -3 no: 0
-    mul $t4 $t0 $t3
-#midCode FUNCRET INT2  
-				# load INT2->$v0
-			#######cache t INT2
-				# offset: -4 no: 0
-    move $v0 $t4
-    lw $ra 0($sp)
-    jr $ra
-#midCode FUNCTAIL   
-# out func______
-#######################################################
-#0:_ra
-#1:n
-#2:INT0
-#3:INT1
-#4:INT2
+#0:a
+#1:s
+#2:INT2

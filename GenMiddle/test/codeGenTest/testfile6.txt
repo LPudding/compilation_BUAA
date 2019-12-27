@@ -1,0 +1,24 @@
+void swap(int a,int b,int c,int d,int e){
+	int tmp;
+	printf(a);
+	printf(b);
+	printf(c);
+	printf(d);
+	printf(e);
+	tmp = e;
+	e = a;
+	a = b;
+	b = c ;
+	c = d;
+	d = tmp;
+	printf("After Swap: ");
+	printf(a);
+	printf(b);
+	printf(c);
+	printf(d);
+	printf(e);
+}
+
+void main(){
+	swap(1,2,3,4,5);
+}

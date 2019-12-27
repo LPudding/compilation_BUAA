@@ -1,0 +1,16 @@
+int add()
+para int a
+para int b
+INT1 = a + b
+ret INT1
+void print()
+para int a
+ret 
+const int a = 10
+var int s[10]
+push a
+push 5
+call add
+INT2 = RET
+push INT2
+call print

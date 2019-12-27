@@ -1,4 +1,9 @@
  4 const int MAX_NUM 128
+ 3 var int g_val 
+ 0 int add_g_val  
+ 1 para int i 
+ 5 + g_val i g_val
+ 9 ret g_val  
  0 int factorial  
  1 para int n 
  -1 if_state_0   
@@ -8,18 +13,18 @@
  11 goto end_if_1  
  12 else_0:   
  12 end_if_1:   
- 5 - n 1 wm10
- 7 push wm10  
+ 5 - n 1 wm16
+ 7 push wm16  
  8 call factorial  
- 17 wm13 ret  
- 5 * n wm13 wm10
- 9 ret wm10  
+ 17 wm19 ret  
+ 5 * n wm19 wm16
+ 9 ret wm16  
  0 int mod  
  1 para int x 
  1 para int y 
- 5 / x y wm19
- 5 * wm19 y wm19
- 5 - x wm19 x
+ 5 / x y wm25
+ 5 * wm25 y wm25
+ 5 - x wm25 x
  9 ret x  
  0 void swap  
  1 para int x 
@@ -37,24 +42,24 @@
  1 para int n 
  1 para int j 
  1 para int a 
- 5 * n 100 wm40
- 5 * j 10 wm41
- 5 + wm40 wm41 wm40
- 5 + wm40 a wm40
- 9 ret wm40  
+ 5 * n 100 wm46
+ 5 * j 10 wm47
+ 5 + wm46 wm47 wm46
+ 5 + wm46 a wm46
+ 9 ret wm46  
  0 int flower_num  
  1 para int n 
  1 para int j 
  1 para int a 
- 5 * n n wm49
- 5 * wm49 n wm49
- 5 * j j wm51
- 5 * wm51 j wm51
- 5 + wm49 wm51 wm49
- 5 * a a wm54
- 5 * wm54 a wm54
- 5 + wm49 wm54 wm49
- 9 ret wm49  
+ 5 * n n wm55
+ 5 * wm55 n wm55
+ 5 * j j wm57
+ 5 * wm57 j wm57
+ 5 + wm55 wm57 wm55
+ 5 * a a wm60
+ 5 * wm60 a wm60
+ 5 + wm55 wm60 wm55
+ 9 ret wm55  
  0 void complete_flower_num  
  3 var int k 128
  3 var int i 
@@ -83,14 +88,14 @@
  12 for_label_1:   1
  10 i < j 
  11 bz end_for_1  
- 5 / j i wm87
- 5 * wm87 i x1
+ 5 / j i wm93
+ 5 * wm93 i x1
  -1 if_state_2   
  7 push j  
  7 push i  
  8 call mod  
- 17 wm94 ret  
- 10 wm94 == 0 
+ 17 wm100 ret  
+ 10 wm100 == 0 
  11 bz else_2  
  5 + n 1 n
  5 - s i s
@@ -117,8 +122,8 @@
  12 for_label_2:   1
  10 i <= n 
  11 bz end_for_2  
- 16 wm124 = k i
- 13 printf    wm124 6
+ 16 wm130 = k i
+ 13 printf    wm130 6
  15 i = + 1
  11 goto for_label_2  
  12 end_for_2:   0
@@ -135,33 +140,33 @@
  -1 for_state   
  6 i null = 100
  12 for_label_3:   1
- 5 + 100 MAX_NUM wm142
- 10 i < wm142 
+ 5 + 100 MAX_NUM wm148
+ 10 i < wm148 
  11 bz end_for_3  
  5 / i 100 n
- 5 / i 10 wm147
- 7 push wm147  
+ 5 / i 10 wm153
+ 7 push wm153  
  7 push 10  
  8 call mod  
- 17 wm151 ret  
- 6 j null = wm151
+ 17 wm157 ret  
+ 6 j null = wm157
  7 push i  
  7 push 10  
  8 call mod  
- 17 wm156 ret  
- 6 a null = wm156
+ 17 wm162 ret  
+ 6 a null = wm162
  -1 if_state_8   
  7 push n  
  7 push j  
  7 push a  
  8 call full_num  
- 17 wm163 ret  
+ 17 wm169 ret  
  7 push n  
  7 push j  
  7 push a  
  8 call flower_num  
- 17 wm168 ret  
- 10 wm163 == wm168 
+ 17 wm174 ret  
+ 10 wm169 == wm174 
  11 bz else_8  
  6 k y = i
  5 + y 1 y
@@ -176,8 +181,8 @@
  12 for_label_4:   1
  10 i < y 
  11 bz end_for_4  
- 16 wm185 = k i
- 13 printf    wm185 10
+ 16 wm191 = k i
+ 13 printf    wm191 10
  15 i = + 1
  11 goto for_label_4  
  12 end_for_4:   0
@@ -196,14 +201,14 @@
  12 for_label_6:   1
  10 i <= k2 
  11 bz end_for_6  
- 5 / m i wm206
- 5 * wm206 i x2
+ 5 / m i wm212
+ 5 * wm212 i x2
  -1 if_state_10   
  7 push m  
  7 push i  
  8 call mod  
- 17 wm213 ret  
- 10 wm213 == 0 
+ 17 wm219 ret  
+ 10 wm219 == 0 
  11 bz else_10  
  6 leap null = 0
  11 goto end_if_11  
@@ -217,8 +222,8 @@
  11 bz else_12  
  13 printf   m 13
  5 + h 1 h
- 5 / h 10 wm229
- 5 * wm229 10 x2
+ 5 / h 10 wm235
+ 5 * wm235 10 x2
  -1 if_state_14   
  10 x2 == h 
  11 bz else_14  
@@ -237,12 +242,17 @@
  9 ret   
  0 void main  
  3 var int n 
+ 6 g_val null = 0
  7 push 5  
  8 call factorial  
- 17 wm252 ret  
- 6 n null = wm252
+ 17 wm259 ret  
+ 6 n null = wm259
  13 printf 5 !=  n 16
- 7 push 5  
- 7 push 10  
+ 6 g_val null = 5
+ 7 push g_val  
+ 8 call add_g_val  
+ 17 wm265 ret  
+ 7 push g_val  
+ 7 push wm265  
  8 call swap  
  8 call complete_flower_num  
